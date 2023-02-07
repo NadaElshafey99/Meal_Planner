@@ -1,4 +1,4 @@
-package com.example.mealplannerapplication.searchByCategories.view;
+package com.example.mealplannerapplication.searchByCountry.view;
 
 
 import android.content.Context;
@@ -33,7 +33,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder>{
     }
     @NonNull
     @Override
-    public MyAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         inflater= (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View view=inflater.inflate(R.layout.design_item_for_search_by_categories,parent,false);
         MyViewHolder myViewHolder=new MyViewHolder(view);
@@ -41,7 +41,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder>{
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyAdapter.MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         category=new Categories();
         category=categoriesList.get(position);
         holder.categoryName.setText(category.getStrCategory());

@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.mealplannerapplication.searchByCategories.view.SearchByCategoriesActivity;
+import com.example.mealplannerapplication.searchByIngredients.view.SearchByIngredientActivity;
 
 public class MainActivity extends AppCompatActivity {
  Button btn;
@@ -20,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this, SearchByCategoriesActivity.class));
+                startActivity(new Intent(MainActivity.this, SearchByIngredientActivity.class));
             }
         });
     }

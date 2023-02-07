@@ -5,10 +5,14 @@ public class Ingredients {
    private String strDescription;
    private String strIngredient;
    private String strType;
+   private String image;
 
     public Ingredients(){
     }
-
+    public Ingredients(String strIngredient,String image){
+        this.strIngredient=strIngredient;
+        this.image=image;
+    }
     public Ingredients(String idIngredient, String strDescription, String strIngredient, String strType) {
         this.idIngredient = idIngredient;
         this.strDescription = strDescription;
@@ -46,5 +50,13 @@ public class Ingredients {
 
     public void setStrType(String strType) {
         this.strType = strType;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 }
