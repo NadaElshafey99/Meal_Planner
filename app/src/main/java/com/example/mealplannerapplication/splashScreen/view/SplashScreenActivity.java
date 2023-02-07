@@ -10,7 +10,9 @@ import android.widget.ImageView;
 import com.airbnb.lottie.LottieAnimationView;
 import com.example.mealplannerapplication.MainActivity;
 import com.example.mealplannerapplication.R;
+import com.example.mealplannerapplication.search.view.SearchActivity;
 import com.example.mealplannerapplication.searchByCategories.view.SearchByCategoriesActivity;
+import com.example.mealplannerapplication.searchByIngredients.view.SearchByIngredientActivity;
 
 public class SplashScreenActivity extends AppCompatActivity {
 
@@ -36,6 +38,7 @@ public class SplashScreenActivity extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
+
                 Intent intent=new Intent(SplashScreenActivity.this,SearchByCategoriesActivity.class);
                 startActivity(intent);
                 finish();
