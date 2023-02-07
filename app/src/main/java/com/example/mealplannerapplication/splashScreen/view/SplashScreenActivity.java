@@ -38,7 +38,8 @@ public class SplashScreenActivity extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent intent=new Intent(SplashScreenActivity.this, SearchActivity.class);
+
+                Intent intent=new Intent(SplashScreenActivity.this,SearchByCategoriesActivity.class);
                 startActivity(intent);
                 finish();
             }
