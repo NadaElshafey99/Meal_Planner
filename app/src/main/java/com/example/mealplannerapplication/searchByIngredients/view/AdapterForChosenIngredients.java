@@ -61,7 +61,7 @@ public class AdapterForChosenIngredients extends RecyclerView.Adapter<AdapterFor
         ImageView ingredientImage;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            ingredientImage=itemView.findViewById(R.id.ingredient_image);
+            ingredientImage=itemView.findViewById(R.id.meal_image);
             ingredientName=itemView.findViewById(R.id.tv_ingredient);
 
         }

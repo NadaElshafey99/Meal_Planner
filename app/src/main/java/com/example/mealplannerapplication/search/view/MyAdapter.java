@@ -1,4 +1,4 @@
-package com.example.mealplannerapplication.searchByIngredients.view;
+package com.example.mealplannerapplication.search.view;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -8,8 +8,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
+
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -18,42 +19,35 @@ import com.example.mealplannerapplication.model.Ingredients;
 
 import java.util.List;
 
-public class AdapterForAllIngredients extends RecyclerView.Adapter<AdapterForAllIngredients.MyViewHolder>{
+public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder>{
 
     Context context;
     Ingredients ingredient;
-    Communicator communicator;
     private List<Ingredients> ingredientsList;
     private LayoutInflater inflater;
 
-    public AdapterForAllIngredients(Context context,List<Ingredients> ingredientsList,Communicator communicator){
+    public MyAdapter(Context context, List<Ingredients> ingredientsList){
         this.context=context;
         this.ingredientsList=ingredientsList;
-        this.communicator=communicator;
     }
     @NonNull
     @Override
-    public AdapterForAllIngredients.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         inflater= (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View view=inflater.inflate(R.layout.design_item_for_search_by_ingrdients,parent,false);
-        AdapterForAllIngredients.MyViewHolder myViewHolder=new AdapterForAllIngredients.MyViewHolder(view);
+        View view=inflater.inflate(R.layout.design_item_for_search_by_categories,parent,false);
+        MyViewHolder myViewHolder=new MyViewHolder(view);
         return myViewHolder;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull AdapterForAllIngredients.MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+        ingredient=new Ingredients();
         ingredient=ingredientsList.get(position);
         holder.ingredientName.setText(ingredient.getStrIngredient());
         Glide.with(context).load(ingredient.getImage())
                 .placeholder(new ColorDrawable(Color.TRANSPARENT))
                 .into(holder.ingredientImage);
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                communicator.addIngredients(ingredient);
-                Toast.makeText(context,ingredient.getStrIngredient(),Toast.LENGTH_LONG);
-            }
-        });
+
     }
 
     @Override
@@ -62,12 +56,13 @@ public class AdapterForAllIngredients extends RecyclerView.Adapter<AdapterForAll
     }
 
     class MyViewHolder extends RecyclerView.ViewHolder {
+        ConstraintLayout layout;
         TextView ingredientName;
         ImageView ingredientImage;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             ingredientImage=itemView.findViewById(R.id.meal_image);
-            ingredientName=itemView.findViewById(R.id.tv_ingredient);
+            ingredientName=itemView.findViewById(R.id.tv_meal);
 
         }
     }

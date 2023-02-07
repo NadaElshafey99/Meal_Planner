@@ -17,4 +17,6 @@
     <string name="all_Ingredients">All Ingredients</string>
     <string name="ingredients">Ingredients</string>
     <string name="countries">Countries</string>
+    <string name="viewAll">View All</string>
+    <string name="AddToFavourite">Add To Favourite</string>
 </resources>
