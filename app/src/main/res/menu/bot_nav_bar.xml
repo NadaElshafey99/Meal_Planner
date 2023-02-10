@@ -11,7 +11,7 @@
         android:icon="@android:drawable/ic_menu_search"
         android:title="search" />
     <item
-        android:id="@+id/favoriteScreen"
+        android:id="@+id/favoriteScreen2"
         android:icon="@drawable/bookmark"
         android:title="bookmark" />
     <item
