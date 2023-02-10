@@ -40,6 +40,10 @@
             android:label="@string/title_activity_search_by_categories"
             android:theme="@style/Theme.MealPlannerApplication.NoActionBar" />
         <activity
+            android:name=".NavigationActivity"
+            android:exported="false"
+            android:label="NavigationActivity" />
+        <activity
             android:name=".MainActivity"
             android:exported="false" />
     </application>
