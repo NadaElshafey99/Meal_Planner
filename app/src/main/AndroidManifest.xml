@@ -14,6 +14,9 @@
         android:theme="@style/Theme.MealPlannerApplication"
         tools:targetApi="31">
         <activity
+            android:name=".meal_details.view.MealDetails"
+            android:exported="false" />
+        <activity
             android:name=".resultFromSearchView.view.ResultFromSearchActivity"
             android:exported="false" />
         <activity
@@ -39,6 +42,10 @@
             android:exported="false"
             android:label="@string/title_activity_search_by_categories"
             android:theme="@style/Theme.MealPlannerApplication.NoActionBar" />
+        <activity
+            android:name=".NavigationActivity"
+            android:exported="false"
+            android:label="NavigationActivity" />
         <activity
             android:name=".MainActivity"
             android:exported="false" />
