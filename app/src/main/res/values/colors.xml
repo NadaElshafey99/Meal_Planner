@@ -10,4 +10,6 @@
     <color name="mainColor">#f25c54</color>
     <color name="background">#A6F25C54</color>
     <color name="backgroundForResultItem">#37FFC107</color>
+    <color name="error">#f70012</color>
+    <color name="light_gray">#81A3A2A2</color>
 </resources>
