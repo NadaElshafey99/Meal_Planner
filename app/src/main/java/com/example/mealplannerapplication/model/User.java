@@ -1,18 +1,37 @@
-package com.example.mealplannerapplication;
+package com.example.mealplannerapplication.model;
 
 import androidx.annotation.Keep;
 
 @Keep
-public class UserDetails {
+public class User {
    private String userName;
    private String userEmail;
    private String userPassword;
+   private String userConfirmPassword;
 
-    public UserDetails(String userName, String userEmail, String userPassword)
+       public User()
+       {
+
+       }
+    public User(String userEmail, String userPassword)
+    {
+        this.userEmail=userEmail;
+        this.userPassword=userPassword;
+    }
+    public User(String userName, String userEmail, String userPassword,String userConfirmPassword)
     {
         this.userName=userName;
         this.userEmail=userEmail;
         this.userPassword=userPassword;
+        this.userConfirmPassword=userConfirmPassword;
+    }
+
+    public String getUserConfirmPassword() {
+        return userConfirmPassword;
+    }
+
+    public void setUserConfirmPassword(String userConfirmPassword) {
+        this.userConfirmPassword = userConfirmPassword;
     }
 
     public String getUserName() {
