@@ -16,18 +16,18 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.mealplannerapplication.R;
 import com.example.mealplannerapplication.model.Categories;
+import com.example.mealplannerapplication.model.Meal;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder>{
 
     Context context;
-    Categories category;
-    private List<Categories> categoriesList=new ArrayList<>();
+    Meal category;
+    private List<Meal> categoriesList;
     private LayoutInflater inflater;
 
-    public MyAdapter(Context context,List<Categories> categoriesList){
+    public MyAdapter(Context context,List<Meal> categoriesList){
         this.context=context;
         this.categoriesList=categoriesList;
     }
@@ -42,10 +42,9 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder>{
 
     @Override
     public void onBindViewHolder(@NonNull MyAdapter.MyViewHolder holder, int position) {
-        category=new Categories();
         category=categoriesList.get(position);
         holder.categoryName.setText(category.getStrCategory());
-        Glide.with(context).load(category.getStrCategoryThumb())
+        Glide.with(context).load("https://www.themealdb.com//images//category//"+category.getStrCategory()+".png")
                 .placeholder(new ColorDrawable(Color.TRANSPARENT))
                 .into(holder.categoryImage);
     }
@@ -53,6 +52,10 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder>{
     @Override
     public int getItemCount() {
         return categoriesList.size();
+    }
+        public void setList(List<?> updatedCategories){
+            this.categoriesList = (List<Meal>) updatedCategories;
+
     }
 
     class MyViewHolder extends RecyclerView.ViewHolder {
@@ -62,8 +65,8 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder>{
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             layout=itemView.findViewById(R.id.recyclerViewCategories);
-            categoryImage=itemView.findViewById(R.id.meal_image);
-            categoryName=itemView.findViewById(R.id.tv_meal);
+            categoryImage=itemView.findViewById(R.id.categories_image);
+            categoryName=itemView.findViewById(R.id.tv_categories);
 
         }
     }

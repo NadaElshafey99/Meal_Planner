@@ -66,7 +66,7 @@ public class ForgetPasswordFragment extends Fragment {
                     public void onComplete(@NonNull Task<Void> task) {
                         if(task.isSuccessful())
                         {
-                            Toast.makeText(getActivity(), getString(R.string.pleaseCheckyourInboxForPasswordResetLink), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(), getString(R.string.pleaseCheckYourInboxForPasswordResetLink), Toast.LENGTH_SHORT).show();
                             Intent myIntent = new Intent(getActivity(), MainActivity.class);
                             startActivity(myIntent);
                             getActivity().finish();

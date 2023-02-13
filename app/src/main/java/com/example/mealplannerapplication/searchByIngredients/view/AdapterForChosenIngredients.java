@@ -44,7 +44,7 @@ public class AdapterForChosenIngredients extends RecyclerView.Adapter<AdapterFor
         ingredient=new Ingredients();
         ingredient=ingredientsList.get(position);
         holder.ingredientName.setText(ingredient.getStrIngredient());
-        Glide.with(context).load(ingredient.getImage())
+        Glide.with(context).load("https://www.themealdb.com/images/ingredients/"+ingredient.getStrIngredient()+".png")
                 .placeholder(new ColorDrawable(Color.TRANSPARENT))
                 .into(holder.ingredientImage);
 
@@ -61,7 +61,7 @@ public class AdapterForChosenIngredients extends RecyclerView.Adapter<AdapterFor
         ImageView ingredientImage;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            ingredientImage=itemView.findViewById(R.id.meal_image);
+            ingredientImage=itemView.findViewById(R.id.ingredients_image);
             ingredientName=itemView.findViewById(R.id.tv_ingredient);
 
         }

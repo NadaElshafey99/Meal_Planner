@@ -25,10 +25,10 @@ import java.util.ArrayList;
 public class DailyAdapter extends RecyclerView.Adapter<DailyAdapter.MyViewHolder> {
 
     Context myContext;
-    ArrayList<Meal> meals;
+    ArrayList<?> meals;
 
 
-    public DailyAdapter(@NonNull Context context, @Nullable ArrayList<Meal> meals) {
+    public DailyAdapter(@NonNull Context context, @Nullable ArrayList<?> meals) {
         this.myContext = context;
         this.meals = meals;
     }
@@ -43,7 +43,7 @@ public class DailyAdapter extends RecyclerView.Adapter<DailyAdapter.MyViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        Meal currentProduct = meals.get(position);
+        Meal currentProduct = (Meal) meals.get(position);
         holder.getMealName().setText(currentProduct.getStrMeal());
         holder.getMealBtn().setOnClickListener(view -> System.out.println("meal added to plan"));
         holder.getBookmark().setOnClickListener(view -> System.out.println("meal added to favorite"));

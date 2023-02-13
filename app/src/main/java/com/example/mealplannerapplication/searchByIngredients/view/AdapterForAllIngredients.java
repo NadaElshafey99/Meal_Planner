@@ -14,22 +14,28 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.mealplannerapplication.R;
+import com.example.mealplannerapplication.model.Categories;
 import com.example.mealplannerapplication.model.Ingredients;
+import com.example.mealplannerapplication.model.Meal;
 
 import java.util.List;
 
 public class AdapterForAllIngredients extends RecyclerView.Adapter<AdapterForAllIngredients.MyViewHolder>{
 
     Context context;
-    Ingredients ingredient;
+    Meal ingredient;
     Communicator communicator;
-    private List<Ingredients> ingredientsList;
+    private List<Meal> ingredientsList;
     private LayoutInflater inflater;
 
-    public AdapterForAllIngredients(Context context,List<Ingredients> ingredientsList,Communicator communicator){
+    public AdapterForAllIngredients(Context context,List<Meal> ingredientsList,Communicator communicator){
         this.context=context;
         this.ingredientsList=ingredientsList;
         this.communicator=communicator;
+    }
+    public void setList(List<?> updatedCategories){
+        this.ingredientsList = (List<Meal>) updatedCategories;
+
     }
     @NonNull
     @Override
@@ -42,18 +48,11 @@ public class AdapterForAllIngredients extends RecyclerView.Adapter<AdapterForAll
 
     @Override
     public void onBindViewHolder(@NonNull AdapterForAllIngredients.MyViewHolder holder, int position) {
-        ingredient=ingredientsList.get(position);
+        ingredient= ingredientsList.get(position);
         holder.ingredientName.setText(ingredient.getStrIngredient());
-        Glide.with(context).load(ingredient.getImage())
+        Glide.with(context).load("https://www.themealdb.com/images/ingredients/"+ingredient.getStrIngredient()+".png")
                 .placeholder(new ColorDrawable(Color.TRANSPARENT))
                 .into(holder.ingredientImage);
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                communicator.addIngredients(ingredient);
-                Toast.makeText(context,ingredient.getStrIngredient(),Toast.LENGTH_LONG);
-            }
-        });
     }
 
     @Override
@@ -64,10 +63,26 @@ public class AdapterForAllIngredients extends RecyclerView.Adapter<AdapterForAll
     class MyViewHolder extends RecyclerView.ViewHolder {
         TextView ingredientName;
         ImageView ingredientImage;
+        View itemView;
+
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            ingredientImage=itemView.findViewById(R.id.meal_image);
+            this.itemView=itemView;
+            ingredientImage=itemView.findViewById(R.id.ingredients_image);
             ingredientName=itemView.findViewById(R.id.tv_ingredient);
+
+            itemView.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View v) {
+                    int pos = getAdapterPosition();
+                    // check if item still exists
+                    if(pos != RecyclerView.NO_POSITION){
+                        Meal clickedDataItem = ingredientsList.get(pos);
+                        communicator.addIngredients(clickedDataItem);
+//                        Toast.makeText(v.getContext(), "You clicked " + clickedDataItem.getStrIngredient(), Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
 
         }
     }

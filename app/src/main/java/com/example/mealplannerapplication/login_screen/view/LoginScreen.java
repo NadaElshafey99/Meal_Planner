@@ -1,4 +1,4 @@
-package com.example.mealplannerapplication.main_screen.view;
+package com.example.mealplannerapplication.login_screen.view;
 
 import android.content.Context;
 import android.content.Intent;
@@ -10,16 +10,12 @@ import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextPaint;
 import android.text.TextUtils;
-import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.LinkMovementMethod;
-import android.text.method.PasswordTransformationMethod;
 import android.text.style.ClickableSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,10 +25,10 @@ import androidx.navigation.Navigation;
 
 import com.example.mealplannerapplication.NavigationActivity;
 import com.example.mealplannerapplication.R;
-import com.example.mealplannerapplication.home_screen.view.HomeScreen;
+import com.example.mealplannerapplication.login_screen.presenter.LoginPresenter;
+import com.example.mealplannerapplication.model.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -41,43 +37,33 @@ import com.google.firebase.auth.FirebaseAuthInvalidUserException;
 import com.google.firebase.auth.FirebaseUser;
 
 
-public class MainScreen extends Fragment {
+public class LoginScreen extends Fragment implements LoginScreenInterface{
     private TextView forgotten;
     Button mySkip;
     private Button signInButton;
-    private FirebaseAuth firebaseAuth;
-    private FirebaseUser firebaseUser;
     private TextInputLayout email;
     private TextInputLayout password;
     private Editable userEmail;
     private Editable userPassword;
-    private SharedPreferences sharedPreferences;
-    public static final String SHRED_PREFERENCE_FILE="LoginFile";
-    private static final String KEY_EMAIL="email";
-    private static final String KEY_PASSWORD="password";
-    public MainScreen() {
+    private LoginPresenter loginPresenter;
+    private User user;
+    SharedPreferences sharedPreferences;
+
+    public LoginScreen() {
         // Required empty public constructor
     }
 
     @Override
     public void onStart() {
         super.onStart();
-
-                sharedPreferences= MainScreen.this.getActivity().getSharedPreferences(SHRED_PREFERENCE_FILE,Context.MODE_PRIVATE);
-                String userName=sharedPreferences.getString(KEY_EMAIL,null);
-                String password=sharedPreferences.getString(KEY_PASSWORD,null);
-                if(userName!=null && password!=null)
-                {
-                    Intent intent=new Intent(getActivity(),  NavigationActivity.class);
-                    startActivity(intent);
-                }
-
+        sharedPreferences= this.getActivity().getSharedPreferences(LoginPresenter.SHRED_PREFERENCE_FILE, Context.MODE_PRIVATE);
+        loginPresenter.userToStillLogin(sharedPreferences);
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        firebaseAuth=FirebaseAuth.getInstance();
+
 
     }
     @Override
@@ -90,6 +76,7 @@ public class MainScreen extends Fragment {
         password=view.findViewById(R.id.passwordLayout);
         userEmail=email.getEditText().getText();
         userPassword=password.getEditText().getText();
+        loginPresenter=new LoginPresenter(this);
         signInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -100,13 +87,14 @@ public class MainScreen extends Fragment {
                 }
 
                 if (TextUtils.isEmpty(userPassword)) {
-                    password.setError(getString(R.string.pleaseEnterEmail));
+                    password.setError(getString(R.string.pleaseEnterPassword));
                 } else {
                     password.setError(null);
                 }
                 if(!TextUtils.isEmpty(userEmail) && !TextUtils.isEmpty(userPassword))
                 {
-                    loginUser(userEmail.toString(),userPassword.toString());
+                    user=new User(userEmail.toString(),userPassword.toString());
+                    loginPresenter.checkUser(user);
                 }
             }
         });
@@ -114,7 +102,13 @@ public class MainScreen extends Fragment {
             Intent myIntent = new Intent(getActivity(), NavigationActivity.class);
             startActivity(myIntent);
         });
-        forgotten.setOnClickListener(view1 -> System.out.println("it works!"));
+        forgotten.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                 Navigation.findNavController(view).navigate(R.id.action_mainScreen_to_forgetPasswordFragment2);
+
+            }
+        });
         SpannableString ss = new SpannableString(getString(R.string.HaveAnAccountQuestion));
         ClickableSpan clickableSpan = new ClickableSpan() {
             @Override
@@ -137,41 +131,35 @@ public class MainScreen extends Fragment {
         return view;
     }
 
-    private void loginUser(String userEmail, String userPassword) {
-        firebaseAuth.signInWithEmailAndPassword(userEmail,userPassword)
-                .addOnCompleteListener(MainScreen.this.getActivity(),new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if(task.isSuccessful())
-                        {
-                            Toast.makeText(MainScreen.this.getActivity(), "Successful", Toast.LENGTH_SHORT).show();
-                            //Get instance of current user
-                            firebaseUser=firebaseAuth.getCurrentUser();
-                            SharedPreferences.Editor editor = sharedPreferences.edit();
-                            editor.putString(KEY_EMAIL,userEmail);
-                            editor.putString(KEY_PASSWORD,userPassword);
-                            editor.commit();
-                            Intent intent=new Intent(getActivity(),  NavigationActivity.class);
-                            startActivity(intent);
-
-                        }
-                        else {
-                            try {
-                                throw task.getException();
-                            } catch (FirebaseAuthInvalidUserException e) {
-                                email.setError(getString(R.string.emailNotExist));
-                            }
-                            catch (FirebaseAuthInvalidCredentialsException e) {
-                                email.setError(getString(R.string.invalidCredentials));
-                                password.setError(getString(R.string.invalidCredentials));
-                            }
-                            catch (Exception e) {
-                                Toast.makeText(MainScreen.this.getActivity(), e.getMessage(), Toast.LENGTH_SHORT).show();
-
-                            }
-                        }
-
-                    }
-                });
+    @Override
+    public void onSuccessCheckUser() {
+        Toast.makeText(getActivity(), "Successful", Toast.LENGTH_SHORT).show();
+        Intent intent=new Intent(getActivity(),  NavigationActivity.class);
+        startActivity(intent);
     }
+    @Override
+    public void onFailureCheckUser() {
+        Toast.makeText(getActivity(),getString(R.string.somethingWentWrong), Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void alreadyLogin() {
+        Intent intent=new Intent(getActivity(), NavigationActivity.class);
+        startActivity(intent);
+    }
+
+    @Override
+    public void onFailureAuthInvalidUser() {
+        email.setError(getString(R.string.emailNotExist));
+    }
+
+    @Override
+    public void onFailureAuthInvalidCredentials() {
+        email.setError(getString(R.string.invalidCredentials));
+        password.setError(getString(R.string.invalidCredentials));
+
+    }
+
+
+
 }

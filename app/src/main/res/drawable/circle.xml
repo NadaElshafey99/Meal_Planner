@@ -5,7 +5,6 @@
         <solid android:color="@color/background"/>
         <size android:width="48dp" android:height="48dp"/>
 
-
       </shape>
   </item>
 </selector>

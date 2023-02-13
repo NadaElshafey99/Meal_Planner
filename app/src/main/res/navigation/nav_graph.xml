@@ -6,16 +6,24 @@
     app:startDestination="@id/mainScreen">
     <fragment
         android:id="@+id/mainScreen"
-        android:name="com.example.mealplannerapplication.main_screen.view.MainScreen"
+        android:name="com.example.mealplannerapplication.login_screen.view.LoginScreen"
         android:label="fragment_home_screen"
         tools:layout="@layout/fragment_main_screen" >
         <action
             android:id="@+id/action_mainScreen_to_signupScreen"
             app:destination="@id/signupScreen" />
+        <action
+            android:id="@+id/action_mainScreen_to_forgetPasswordFragment2"
+            app:destination="@id/forgetPasswordFragment2" />
     </fragment>
     <fragment
         android:id="@+id/signupScreen"
         android:name="com.example.mealplannerapplication.signup_screen.view.SignupScreen"
         android:label="fragment_signup_screen"
         tools:layout="@layout/fragment_signup_screen" />
+    <fragment
+        android:id="@+id/forgetPasswordFragment2"
+        android:name="com.example.mealplannerapplication.forgetPassword.view.ForgetPasswordFragment"
+        android:label="fragment_forget_password"
+        tools:layout="@layout/fragment_forget_password" />
 </navigation>

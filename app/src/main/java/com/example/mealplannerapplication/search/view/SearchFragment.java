@@ -91,8 +91,8 @@ public class SearchFragment extends Fragment {
         viewCountries_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Intent intent=new Intent(getActivity(), SearchByCountriesActivity.class);
-                Intent intent=new Intent(getActivity(), ResultFromSearchActivity.class);
+                Intent intent=new Intent(getActivity(), SearchByCountriesActivity.class);
+//                Intent intent=new Intent(getActivity(), ResultFromSearchActivity.class);
                 startActivity(intent);
             }
         });

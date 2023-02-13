@@ -1,7 +1,6 @@
 package com.example.mealplannerapplication.home_screen.view;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,15 +13,12 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.mealplannerapplication.MainActivity;
 import com.example.mealplannerapplication.R;
-import com.example.mealplannerapplication.main_screen.view.MainScreen;
-import com.example.mealplannerapplication.model.Meal;
+import com.example.mealplannerapplication.login_screen.presenter.LoginPresenter;
 import com.example.mealplannerapplication.network.NetworkInterface;
 import com.example.mealplannerapplication.network.RetrofitClient;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class HomeScreen extends Fragment implements NetworkInterface {
 
@@ -57,7 +53,7 @@ public class HomeScreen extends Fragment implements NetworkInterface {
         logoutBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                sharedPreferences= HomeScreen.this.getActivity().getSharedPreferences(MainScreen.SHRED_PREFERENCE_FILE, Context.MODE_PRIVATE);
+                sharedPreferences= HomeScreen.this.getActivity().getSharedPreferences(LoginPresenter.SHRED_PREFERENCE_FILE, Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 editor.clear();
                 editor.commit();
@@ -67,9 +63,10 @@ public class HomeScreen extends Fragment implements NetworkInterface {
         });
     }
 
+
     @Override
-    public void onSuccess(ArrayList<Meal> meals) {
-        dailyAdapter = new DailyAdapter(this.getContext(),meals);
+    public void onSuccess(ArrayList<?> list) {
+        dailyAdapter = new DailyAdapter(this.getContext(),list);
         myDailyRec.setAdapter(dailyAdapter);
     }
 
