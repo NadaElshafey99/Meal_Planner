@@ -16,19 +16,22 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.mealplannerapplication.R;
 import com.example.mealplannerapplication.model.Ingredients;
+import com.example.mealplannerapplication.model.Meal;
+import com.example.mealplannerapplication.searchByCategories.view.SearchByCategoriesFragment;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class AdapterForChosenIngredients extends RecyclerView.Adapter<AdapterForChosenIngredients.MyViewHolder>{
 
     Context context;
-    Ingredients ingredient;
-    private List<Ingredients> ingredientsList;
+    Meal ingredient;
+    protected static List<Meal> ingredientsList;
     private LayoutInflater inflater;
 
-    public AdapterForChosenIngredients(Context context, List<Ingredients> ingredientsList){
+    public AdapterForChosenIngredients(Context context, List<?> ingredientsList){
         this.context=context;
-        this.ingredientsList=ingredientsList;
+        this.ingredientsList= (List<Meal>) ingredientsList;
     }
     @NonNull
     @Override
@@ -41,10 +44,9 @@ public class AdapterForChosenIngredients extends RecyclerView.Adapter<AdapterFor
 
     @Override
     public void onBindViewHolder(@NonNull AdapterForChosenIngredients.MyViewHolder holder, int position) {
-        ingredient=new Ingredients();
         ingredient=ingredientsList.get(position);
         holder.ingredientName.setText(ingredient.getStrIngredient());
-        Glide.with(context).load(ingredient.getImage())
+        Glide.with(context).load("https://www.themealdb.com/images/ingredients/"+ingredient.getStrIngredient()+".png")
                 .placeholder(new ColorDrawable(Color.TRANSPARENT))
                 .into(holder.ingredientImage);
 
@@ -61,7 +63,7 @@ public class AdapterForChosenIngredients extends RecyclerView.Adapter<AdapterFor
         ImageView ingredientImage;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            ingredientImage=itemView.findViewById(R.id.meal_image);
+            ingredientImage=itemView.findViewById(R.id.ingredients_image);
             ingredientName=itemView.findViewById(R.id.tv_ingredient);
 
         }

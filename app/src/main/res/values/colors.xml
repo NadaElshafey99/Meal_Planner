@@ -12,4 +12,5 @@
     <color name="backgroundForResultItem">#37FFC107</color>
     <color name="error">#f70012</color>
     <color name="light_gray">#81A3A2A2</color>
+    <color name="myGrayColor">#919191</color>
 </resources>

@@ -5,17 +5,19 @@
     <item
         android:id="@+id/homeScreen"
         android:icon="@drawable/home"
-        android:title="home" />
+        android:title="@string/home"
+        android:textSize="32sp"/>
+
     <item
         android:id="@+id/searchFragment2"
         android:icon="@android:drawable/ic_menu_search"
-        android:title="search" />
+        android:title="@string/search" />
     <item
         android:id="@+id/favoriteScreen2"
         android:icon="@drawable/bookmark"
-        android:title="bookmark" />
+        android:title="@string/favorite" />
     <item
         android:id="@+id/mealPlan"
         android:icon="@drawable/diet"
-        android:title="My Plan" />
+        android:title="@string/myPlan" />
 </menu>

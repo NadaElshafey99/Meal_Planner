@@ -15,8 +15,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mealplannerapplication.R;
 import com.example.mealplannerapplication.login_screen.presenter.LoginPresenter;
-import com.example.mealplannerapplication.login_screen.view.LoginScreen;
-import com.example.mealplannerapplication.model.Meal;
 import com.example.mealplannerapplication.network.NetworkInterface;
 import com.example.mealplannerapplication.network.RetrofitClient;
 
@@ -65,9 +63,10 @@ public class HomeScreen extends Fragment implements NetworkInterface {
         });
     }
 
+
     @Override
-    public void onSuccess(ArrayList<Meal> meals) {
-        dailyAdapter = new DailyAdapter(this.getContext(),meals);
+    public void onSuccess(ArrayList<?> list) {
+        dailyAdapter = new DailyAdapter(this.getContext(),list);
         myDailyRec.setAdapter(dailyAdapter);
     }
 

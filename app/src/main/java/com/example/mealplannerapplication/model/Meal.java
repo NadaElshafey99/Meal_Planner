@@ -1,6 +1,8 @@
 package com.example.mealplannerapplication.model;
 
-public class Meal {
+import java.io.Serializable;
+
+public class Meal implements Serializable {
     private String idMeal;
     private String strMeal;
     private Object strDrinkAlternate;
@@ -10,6 +12,7 @@ public class Meal {
     private String strMealThumb;
     private Object strTags;
     private String strYoutube;
+    private String strIngredient;
     private String strIngredient1;
     private String strIngredient2;
     private String strIngredient3;
@@ -108,6 +111,15 @@ public class Meal {
     public void setStrYoutube(String strYoutube) {
         this.strYoutube = strYoutube;
     }
+
+    public String getStrIngredient() {
+        return strIngredient;
+    }
+
+    public void setStrIngredient(String strIngredient) {
+        this.strIngredient = strIngredient;
+    }
+
     public String getStrIngredient1() {
         return strIngredient1;
     }

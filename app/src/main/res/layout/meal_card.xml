@@ -5,12 +5,23 @@
     android:id="@+id/meal_card_View"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    app:cardElevation="4dp">
+    android:layout_margin="7dp"
+    android:layout_marginStart="7dp"
+    android:layout_marginTop="7dp"
+    android:layout_marginEnd="7dp"
+    android:layout_marginBottom="7dp"
+    app:cardElevation="4dp"
+    app:layout_marginBaseline="7dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/meal_const_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_margin="5dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="5dp">
 
         <ImageView
             android:id="@+id/meal_img"
@@ -24,12 +35,13 @@
 
         <Button
             android:id="@+id/addBtn"
-            android:layout_width="218dp"
-            android:layout_height="48dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:backgroundTint="#f25c54"
-            android:text="Add To Plan"
+            android:text="@string/addToPlan"
             app:cornerRadius="25dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/meal_img"
             app:layout_constraintHorizontal_bias="0.428"
             app:layout_constraintStart_toStartOf="@+id/meal_img"
@@ -37,21 +49,25 @@
 
         <ImageView
             android:id="@+id/bookmark_meal"
-            android:layout_width="45dp"
-            android:layout_height="41dp"
-            android:layout_marginTop="12dp"
-            app:layout_constraintEnd_toEndOf="@+id/meal_img"
-            app:layout_constraintHorizontal_bias="0.977"
-            app:layout_constraintStart_toStartOf="@+id/meal_img"
-            app:layout_constraintTop_toTopOf="@+id/meal_img"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:background="@color/light_gray"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/bookmark" />
 
         <TextView
             android:id="@+id/meal_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="8dp"
+            android:gravity="center"
+            android:lines="2"
             android:text="Long Meal Name"
+            android:textColor="@color/black"
+            android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="@+id/meal_img"
             app:layout_constraintHorizontal_bias="0.495"
             app:layout_constraintStart_toStartOf="@+id/meal_img"
