@@ -2,8 +2,10 @@ package com.example.mealplannerapplication.searchByCountry.view;
 
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,10 +14,12 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.mealplannerapplication.R;
 import com.example.mealplannerapplication.model.Categories;
+import com.example.mealplannerapplication.model.Meal;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,14 +27,20 @@ import java.util.List;
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder>{
 
     Context context;
-    Categories category;
-    private List<Categories> categoriesList=new ArrayList<>();
+    Meal country;
+    private List<Meal> countriesList;
     private LayoutInflater inflater;
+    private String countryImage;
 
-    public MyAdapter(Context context,List<Categories> categoriesList){
+    public MyAdapter(Context context,List<Meal> countriesList){
         this.context=context;
-        this.categoriesList=categoriesList;
+        this.countriesList=countriesList;
     }
+
+    public void setList(List<Meal> countriesList) {
+        this.countriesList = countriesList;
+    }
+
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -42,28 +52,29 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder>{
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        category=new Categories();
-        category=categoriesList.get(position);
-        holder.categoryName.setText(category.getStrCategory());
-        Glide.with(context).load(category.getStrCategoryThumb())
-                .placeholder(new ColorDrawable(Color.TRANSPARENT))
-                .into(holder.categoryImage);
+        country=countriesList.get(position);
+        holder.countryName.setText(country.getStrArea());
+        String countryName=country.getStrArea().toLowerCase();
+        String countryImage="@drawable/"+countryName;
+        int imageResource = SearchByCountriesActivity.res.getIdentifier(countryImage, null,SearchByCountriesActivity.pck);
+        Drawable drawable = SearchByCountriesActivity.res.getDrawable(imageResource);
+        holder.countryImage.setImageDrawable(drawable);
+
     }
 
     @Override
     public int getItemCount() {
-        return categoriesList.size();
+        return countriesList.size();
     }
 
     class MyViewHolder extends RecyclerView.ViewHolder {
         ConstraintLayout layout;
-        TextView categoryName;
-        ImageView categoryImage;
+        TextView countryName;
+        ImageView countryImage;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            layout=itemView.findViewById(R.id.recyclerViewCategories);
-            categoryImage=itemView.findViewById(R.id.meal_image);
-            categoryName=itemView.findViewById(R.id.tv_meal);
+            countryImage=itemView.findViewById(R.id.categories_image);
+            countryName=itemView.findViewById(R.id.tv_categories);
 
         }
     }

@@ -45,4 +45,6 @@
     <string name="pleaseCheckYourInboxForPasswordResetLink">Please check your inbox for password reset link</string>
     <string name="registeredIsFailed">Registered is failed, Please try again</string>
     <string name="logout">Logout</string>
+    <string name="searchCategories">Search Categories</string>
+    <string name="SearchByCountries">Search Countries</string>
 </resources>

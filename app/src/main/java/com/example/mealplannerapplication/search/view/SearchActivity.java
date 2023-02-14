@@ -28,8 +28,6 @@ public class SearchActivity extends AppCompatActivity {
         fragmentTransaction= fragmentManager.beginTransaction();
         fragmentTransaction.add(R.id.fragmentContainerView,searchFragment);
         fragmentTransaction.commit();
-
-
     }
 
 }
