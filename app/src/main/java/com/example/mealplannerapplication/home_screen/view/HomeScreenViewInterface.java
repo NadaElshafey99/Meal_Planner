@@ -6,7 +6,16 @@ import java.util.ArrayList;
 
 public interface HomeScreenViewInterface {
 
+//    DailyAdapter dailyAdapter;
+//
+//    DailyAdapter beefAdapter;
+//    DailyAdapter breakfastAdapter;
+//    DailyAdapter chickenAdapter;
+//    DailyAdapter desertAdapter;
     void showDailyMeals(ArrayList<Meal> meals);
-    void showCategoryMeals(ArrayList<Meal> meals);
+    void showBeefCategory(ArrayList<Meal> meals);
+    void breakfast(ArrayList<Meal> meals);
+    void showChickenCategory(ArrayList<Meal> meals);
+    void showDesertCategory(ArrayList<Meal> meals);
     void addMeal (Meal meal);
 }

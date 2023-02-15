@@ -31,6 +31,11 @@ public class HomeScreen extends Fragment implements HomeScreenViewInterface {
     LinearLayoutManager chickenLayout;
     LinearLayoutManager desertLayout;
     DailyAdapter dailyAdapter;
+
+    DailyAdapter beefAdapter;
+    DailyAdapter breakfastAdapter;
+    DailyAdapter chickenAdapter;
+    DailyAdapter desertAdapter;
     HomeScreenPresenterInterface presenterInterface;
 
 
@@ -39,16 +44,14 @@ public class HomeScreen extends Fragment implements HomeScreenViewInterface {
         super.onCreate(savedInstanceState);
         initLayouts();
         presenterInterface = new HomeScreenPresenter(this, Repository.getInstance(RetrofitClient.getInstance()));
-        presenterInterface.getDailyMeals();
-        //presenterInterface.getChickenCategory();
-
+        loadData();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home_screen, container, false);
         initUI(view);
-        dailyAdapter = new DailyAdapter(requireContext(), new ArrayList<>());
+        initAdapter();
         return view;
     }
 
@@ -61,10 +64,31 @@ public class HomeScreen extends Fragment implements HomeScreenViewInterface {
     }
 
     @Override
-    public void showCategoryMeals(ArrayList<Meal> meals) {
-        dailyAdapter.setDailyList(meals);
-        dailyAdapter.notifyDataSetChanged();
-        beefRec.setAdapter(dailyAdapter);
+    public void showBeefCategory(ArrayList<Meal> meals) {
+        beefAdapter.setDailyList(meals);
+        beefAdapter.notifyDataSetChanged();
+        beefRec.setAdapter(beefAdapter);
+    }
+
+    @Override
+    public void breakfast(ArrayList<Meal> meals) {
+        breakfastAdapter.setDailyList(meals);
+        breakfastAdapter.notifyDataSetChanged();
+        breakfastRec.setAdapter(breakfastAdapter);
+    }
+
+    @Override
+    public void showChickenCategory(ArrayList<Meal> meals) {
+        chickenAdapter.setDailyList(meals);
+        chickenAdapter.notifyDataSetChanged();
+        chickenRec.setAdapter(chickenAdapter);
+    }
+
+    @Override
+    public void showDesertCategory(ArrayList<Meal> meals) {
+        desertAdapter.setDailyList(meals);
+        desertAdapter.notifyDataSetChanged();
+        desertRec.setAdapter(desertAdapter);
     }
 
     @Override
@@ -72,7 +96,7 @@ public class HomeScreen extends Fragment implements HomeScreenViewInterface {
 
     }
 
-    private void initUI(View view){
+    private void initUI(View view) {
         myDailyRec = view.findViewById(R.id.daily_rec);
         beefRec = view.findViewById(R.id.beef_rec);
         breakfastRec = view.findViewById(R.id.breakfast_rec);
@@ -86,7 +110,7 @@ public class HomeScreen extends Fragment implements HomeScreenViewInterface {
         desertRec.setLayoutManager(desertLayout);
     }
 
-    private void initLayouts(){
+    private void initLayouts() {
         dailyLayout = new LinearLayoutManager(this.getContext());
         dailyLayout.setOrientation(RecyclerView.HORIZONTAL);
 
@@ -105,5 +129,22 @@ public class HomeScreen extends Fragment implements HomeScreenViewInterface {
         desertLayout = new LinearLayoutManager(this.getContext());
         desertLayout.setOrientation(RecyclerView.HORIZONTAL);
 
+    }
+
+    private void initAdapter() {
+        dailyAdapter = new DailyAdapter(requireContext(), new ArrayList<>());
+        beefAdapter = new DailyAdapter(requireContext(), new ArrayList<>());
+        breakfastAdapter = new DailyAdapter(requireContext(), new ArrayList<>());
+        chickenAdapter = new DailyAdapter(requireContext(), new ArrayList<>());
+        desertAdapter = new DailyAdapter(requireContext(), new ArrayList<>());
+
+    }
+
+    private void loadData(){
+        presenterInterface.getDailyMeals();
+        presenterInterface.getBeefCategory();
+        presenterInterface.getBreakfastCategory();
+        presenterInterface.getChickenCategory();
+        presenterInterface.getDesertCategory();
     }
 }

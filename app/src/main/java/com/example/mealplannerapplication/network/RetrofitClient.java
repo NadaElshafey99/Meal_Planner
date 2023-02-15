@@ -53,11 +53,10 @@ public class RetrofitClient implements RemoteSource {
     }
 
     @Override
-    public void getMealsByCategories(NetworkInterface interfaceRef,String category) {
+    public Observable <Root> getMealsByCategories(String category) {
         Observable<Root> meals = callsToServer.getMealByCategory(category);
-        Disposable d = meals.subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(i -> interfaceRef.onSuccessCategory(i.getMeals()),
-                        throwable -> interfaceRef.onFailure(throwable.getMessage()));
+        return meals.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+
     }
 }

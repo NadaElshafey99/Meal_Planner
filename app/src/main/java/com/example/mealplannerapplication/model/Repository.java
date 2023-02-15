@@ -5,6 +5,10 @@ import android.content.Context;
 import com.example.mealplannerapplication.network.NetworkInterface;
 import com.example.mealplannerapplication.network.RemoteSource;
 
+import java.util.ArrayList;
+
+import io.reactivex.rxjava3.core.Observable;
+
 public class Repository implements RepositoryInterface {
 
     RemoteSource remoteSource;
@@ -29,8 +33,8 @@ public class Repository implements RepositoryInterface {
     }
 
     @Override
-    public void getChickenCategory(NetworkInterface networkInterface, String chicken) {
-        remoteSource.getMealsByCategories(networkInterface,chicken);
+    public Observable <Root> GetMealByCategory(String category) {
+        return remoteSource.getMealsByCategories(category);
     }
 
 }

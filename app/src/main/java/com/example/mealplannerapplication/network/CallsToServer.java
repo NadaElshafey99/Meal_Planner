@@ -12,8 +12,8 @@ import retrofit2.http.Query;
 public interface CallsToServer {
     @GET("random.php/")
     Observable<Root> getRandomMeal();
-    @GET("filter.php/")
-    Observable<Root> getMealByCategory(@Query("category") String category);
+    @GET("filter.php")
+    Observable<Root> getMealByCategory(@Query("c") String category);
 
 
 }

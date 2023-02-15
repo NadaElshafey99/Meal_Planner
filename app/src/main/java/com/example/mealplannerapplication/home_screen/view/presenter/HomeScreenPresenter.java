@@ -9,6 +9,8 @@ import com.example.mealplannerapplication.network.NetworkInterface;
 
 import java.util.ArrayList;
 
+import io.reactivex.rxjava3.disposables.Disposable;
+
 public class HomeScreenPresenter implements HomeScreenPresenterInterface, NetworkInterface {
 
     HomeScreenViewInterface viewInterfaceRef;
@@ -29,10 +31,26 @@ public class HomeScreenPresenter implements HomeScreenPresenterInterface, Networ
 
     }
 
+
+    public void getBeefCategory() {
+        Disposable d = repoRef.GetMealByCategory("Beef").subscribe(i -> viewInterfaceRef.showBeefCategory(i.getMeals()));
+    }
+
+    @Override
+    public void getBreakfastCategory() {
+        Disposable d = repoRef.GetMealByCategory("Breakfast").subscribe(i -> viewInterfaceRef.breakfast(i.getMeals()));
+    }
+
     @Override
     public void getChickenCategory() {
-        repoRef.getChickenCategory(this,"Chicken");
+       Disposable d = repoRef.GetMealByCategory("Chicken").subscribe(i -> viewInterfaceRef.showChickenCategory(i.getMeals()));
     }
+
+    @Override
+    public void getDesertCategory() {
+        Disposable d = repoRef.GetMealByCategory("Dessert").subscribe(i -> viewInterfaceRef.showDesertCategory(i.getMeals()));
+    }
+
 
     @Override
     public void addToFav(Meal meal) {
@@ -41,7 +59,6 @@ public class HomeScreenPresenter implements HomeScreenPresenterInterface, Networ
 
     @Override
     public void onSucessDaily(ArrayList<Meal> meals) {
-            Log.i("TAG", "onSuccess: " + meals.get(0).getStrMeal());
             mealArrayList.add(meals.get(0));
             viewInterfaceRef.showDailyMeals(mealArrayList);
 
@@ -49,11 +66,11 @@ public class HomeScreenPresenter implements HomeScreenPresenterInterface, Networ
 
     @Override
     public void onSuccessCategory(ArrayList<Meal> meals) {
-        viewInterfaceRef.showCategoryMeals(meals);
+        viewInterfaceRef.showChickenCategory(meals);
     }
 
     @Override
     public void onFailure(String errMsg) {
-
+        Log.i("TAG", "onFailure: ");
     }
 }
