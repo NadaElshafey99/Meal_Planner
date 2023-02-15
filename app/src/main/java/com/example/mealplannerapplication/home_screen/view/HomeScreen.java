@@ -10,40 +10,49 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mealplannerapplication.R;
+import com.example.mealplannerapplication.home_screen.view.presenter.HomeScreenPresenter;
+import com.example.mealplannerapplication.home_screen.view.presenter.HomeScreenPresenterInterface;
 import com.example.mealplannerapplication.model.Meal;
 import com.example.mealplannerapplication.network.NetworkInterface;
 import com.example.mealplannerapplication.network.RetrofitClient;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class HomeScreen extends Fragment implements NetworkInterface {
 
     RecyclerView myDailyRec;
     LinearLayoutManager layoutManager;
     DailyAdapter dailyAdapter;
+    ArrayList<Meal> mealArrayList;
+HomeScreenPresenterInterface presenterInterface;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mealArrayList = new ArrayList<>();
+        layoutManager = new LinearLayoutManager(this.getContext());
+        layoutManager.setOrientation(RecyclerView.HORIZONTAL);
 
+        RetrofitClient retroFitClient = RetrofitClient.getInstance(myDailyRec);
+        for (int i = 0; i < 5; i++) {
+            retroFitClient.getRandomMeal(this);
+        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home_screen, container, false);
         myDailyRec = view.findViewById(R.id.daily_rec);
-        layoutManager = new LinearLayoutManager(this.getContext());
-        layoutManager.setOrientation(RecyclerView.VERTICAL);
         myDailyRec.setLayoutManager(layoutManager);
-        RetrofitClient retroFitClient = new RetrofitClient(myDailyRec,getContext());
-        retroFitClient.startCall(this);
+
         return view;
     }
 
+
     @Override
     public void onSuccess(ArrayList<Meal> meals) {
-        dailyAdapter = new DailyAdapter(this.getContext(),meals);
+        mealArrayList.add(meals.get(0));
+        dailyAdapter = new DailyAdapter(this.getContext(), mealArrayList);
         myDailyRec.setAdapter(dailyAdapter);
     }
 

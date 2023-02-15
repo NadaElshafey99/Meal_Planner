@@ -21,6 +21,7 @@ import com.example.mealplannerapplication.R;
 import com.example.mealplannerapplication.model.Meal;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class DailyAdapter extends RecyclerView.Adapter<DailyAdapter.MyViewHolder> {
 
@@ -41,13 +42,17 @@ public class DailyAdapter extends RecyclerView.Adapter<DailyAdapter.MyViewHolder
         return new MyViewHolder(view);
     }
 
+    public void setList(ArrayList<Meal> updatedMeals){
+        this.meals = updatedMeals;
+    }
+
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        Meal currentProduct = meals.get(position);
-        holder.getMealName().setText(currentProduct.getStrMeal());
+        Meal currentMeal = meals.get(position);
+        holder.getMealName().setText(currentMeal.getStrMeal());
         holder.getMealBtn().setOnClickListener(view -> System.out.println("meal added to plan"));
         holder.getBookmark().setOnClickListener(view -> System.out.println("meal added to favorite"));
-        Glide.with(myContext).load(currentProduct.getStrMealThumb()).into(holder.getMealImg());
+        Glide.with(myContext).load(currentMeal.getStrMealThumb()).into(holder.getMealImg());
     }
 
     @Override
