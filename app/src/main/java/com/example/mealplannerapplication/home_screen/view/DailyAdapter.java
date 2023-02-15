@@ -1,13 +1,11 @@
 package com.example.mealplannerapplication.home_screen.view;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.RatingBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -21,17 +19,15 @@ import com.example.mealplannerapplication.R;
 import com.example.mealplannerapplication.model.Meal;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class DailyAdapter extends RecyclerView.Adapter<DailyAdapter.MyViewHolder> {
 
     Context myContext;
-    ArrayList<Meal> meals;
-
+    ArrayList<Meal> dailyMeal;
 
     public DailyAdapter(@NonNull Context context, @Nullable ArrayList<Meal> meals) {
         this.myContext = context;
-        this.meals = meals;
+        this.dailyMeal = meals;
     }
 
     @NonNull
@@ -42,13 +38,13 @@ public class DailyAdapter extends RecyclerView.Adapter<DailyAdapter.MyViewHolder
         return new MyViewHolder(view);
     }
 
-    public void setList(ArrayList<Meal> updatedMeals){
-        this.meals = updatedMeals;
+    public void setDailyList(ArrayList<Meal> updatedMeals){
+        this.dailyMeal = updatedMeals;
     }
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        Meal currentMeal = meals.get(position);
+        Meal currentMeal = dailyMeal.get(position);
         holder.getMealName().setText(currentMeal.getStrMeal());
         holder.getMealBtn().setOnClickListener(view -> System.out.println("meal added to plan"));
         holder.getBookmark().setOnClickListener(view -> System.out.println("meal added to favorite"));
@@ -57,7 +53,7 @@ public class DailyAdapter extends RecyclerView.Adapter<DailyAdapter.MyViewHolder
 
     @Override
     public int getItemCount() {
-        return meals.size();
+        return dailyMeal.size();
     }
 
     static class MyViewHolder extends RecyclerView.ViewHolder {

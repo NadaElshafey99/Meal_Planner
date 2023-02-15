@@ -1,11 +1,7 @@
 package com.example.mealplannerapplication.network;
 
-import android.content.Context;
-import android.view.View;
-
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.mealplannerapplication.home_screen.view.DailyAdapter;
 import com.example.mealplannerapplication.model.Meal;
 import com.example.mealplannerapplication.model.Root;
 import com.google.gson.Gson;
@@ -18,9 +14,6 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -32,7 +25,7 @@ public class RetrofitClient implements RemoteSource {
 
     private static RetrofitClient client = null;
 
-    public static RetrofitClient getInstance() {
+    public static synchronized RetrofitClient getInstance() {
         if (client == null) {
             client = new RetrofitClient();
         }
@@ -40,12 +33,6 @@ public class RetrofitClient implements RemoteSource {
     }
 
     private RetrofitClient() {
-
-    }
-
-
-    @Override
-    public void getRandomMeal(NetworkInterface interfaceRef) {
         Gson gson = new GsonBuilder().create();
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
@@ -54,12 +41,23 @@ public class RetrofitClient implements RemoteSource {
                 .build();
 
         callsToServer = retrofit.create(CallsToServer.class);
+    }
 
+
+    @Override
+    public void getRandomMeal(NetworkInterface interfaceRef) {
         Observable<Root> meals = callsToServer.getRandomMeal();
-       Disposable d = meals.subscribeOn(Schedulers.io())
+        Disposable d = meals.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(i -> interfaceRef.onSuccess(i.getMeals()), throwable -> interfaceRef.onFailure(throwable.getMessage()));
+                .subscribe(i -> interfaceRef.onSucessDaily(i.getMeals()), throwable -> interfaceRef.onFailure(throwable.getMessage()));
+    }
 
-
+    @Override
+    public void getMealsByCategories(NetworkInterface interfaceRef,String category) {
+        Observable<Root> meals = callsToServer.getMealByCategory(category);
+        Disposable d = meals.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(i -> interfaceRef.onSuccessCategory(i.getMeals()),
+                        throwable -> interfaceRef.onFailure(throwable.getMessage()));
     }
 }

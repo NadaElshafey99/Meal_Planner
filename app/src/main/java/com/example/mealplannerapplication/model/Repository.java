@@ -27,4 +27,10 @@ public class Repository implements RepositoryInterface {
     public void getDailyMeal(NetworkInterface networkInterfaceRef) {
         remoteSource.getRandomMeal(networkInterfaceRef);
     }
+
+    @Override
+    public void getChickenCategory(NetworkInterface networkInterface, String chicken) {
+        remoteSource.getMealsByCategories(networkInterface,chicken);
+    }
+
 }

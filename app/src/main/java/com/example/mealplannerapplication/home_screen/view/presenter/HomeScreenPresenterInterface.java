@@ -6,5 +6,6 @@ import java.util.ArrayList;
 
 public interface HomeScreenPresenterInterface {
  void getDailyMeals();
+ void getChickenCategory();
  void addToFav(Meal meal);
 }

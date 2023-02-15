@@ -6,6 +6,7 @@ import com.example.mealplannerapplication.model.Meal;
 import java.util.ArrayList;
 
 public interface NetworkInterface {
-     void onSuccess(ArrayList<Meal> meals);
+     void onSucessDaily(ArrayList<Meal> meals);
+     void onSuccessCategory(ArrayList<Meal> meals);
       void onFailure(String errMsg);
 }
