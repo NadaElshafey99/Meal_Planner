@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import hu.akarnokd.rxjava3.retrofit.RxJava3CallAdapterFactory;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -31,15 +32,15 @@ public class RetrofitClient implements RemoteSource {
 
     private static RetrofitClient client = null;
 
-    public static RetrofitClient getInstance(RecyclerView rc) {
+    public static RetrofitClient getInstance() {
         if (client == null) {
-            client = new RetrofitClient(rc);
+            client = new RetrofitClient();
         }
         return client;
     }
 
-    private RetrofitClient(RecyclerView rc) {
-        this.recyclerView = rc;
+    private RetrofitClient() {
+
     }
 
 
@@ -55,8 +56,7 @@ public class RetrofitClient implements RemoteSource {
         callsToServer = retrofit.create(CallsToServer.class);
 
         Observable<Root> meals = callsToServer.getRandomMeal();
-
-        meals.subscribeOn(Schedulers.io())
+       Disposable d = meals.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(i -> interfaceRef.onSuccess(i.getMeals()), throwable -> interfaceRef.onFailure(throwable.getMessage()));
 
