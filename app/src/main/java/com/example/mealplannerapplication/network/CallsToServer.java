@@ -10,7 +10,7 @@ import retrofit2.http.Path;
 
 public interface CallsToServer {
     @GET("random.php/")
-    Call<Root> getRandomMeal();
+    Observable<Root> getRandomMeal();
 
 
 }

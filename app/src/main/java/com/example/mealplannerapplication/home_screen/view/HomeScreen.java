@@ -24,7 +24,7 @@ public class HomeScreen extends Fragment implements NetworkInterface {
     LinearLayoutManager layoutManager;
     DailyAdapter dailyAdapter;
     ArrayList<Meal> mealArrayList;
-HomeScreenPresenterInterface presenterInterface;
+    HomeScreenPresenterInterface presenterInterface;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -33,9 +33,8 @@ HomeScreenPresenterInterface presenterInterface;
         layoutManager = new LinearLayoutManager(this.getContext());
         layoutManager.setOrientation(RecyclerView.HORIZONTAL);
 
-        RetrofitClient retroFitClient = RetrofitClient.getInstance(myDailyRec);
         for (int i = 0; i < 5; i++) {
-            retroFitClient.getRandomMeal(this);
+            RetrofitClient.getInstance(myDailyRec).getRandomMeal(this);
         }
     }
 
