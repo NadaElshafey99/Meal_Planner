@@ -49,8 +49,36 @@
             </androidx.recyclerview.widget.RecyclerView>
 
             <TextView
-                android:id="@+id/chicken_label"
+                android:id="@+id/beef_label"
                 android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Beef :"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/beef_rec"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal" />
+
+            <TextView
+                android:id="@+id/breakfast_label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Breakfast :"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/breakfast_rec"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal" />
+
+            <TextView
+                android:id="@+id/chicken_label"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Chicken :"
                 android:textSize="18sp"
@@ -60,21 +88,9 @@
                 android:id="@+id/chicken_rec"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="horizontal" />
+                android:orientation="horizontal" >
 
-            <TextView
-                android:id="@+id/Pasta_label"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Pasta :"
-                android:textSize="18sp"
-                android:textStyle="bold" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/pasta_rec"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal" />
+            </androidx.recyclerview.widget.RecyclerView>
 
             <TextView
                 android:id="@+id/desert_label"
@@ -87,8 +103,8 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/desert_rec"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal" />
+                android:layout_height="match_parent" />
+
         </LinearLayout>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,13 +1,11 @@
 package com.example.mealplannerapplication.home_screen.view;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.RatingBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -25,12 +23,11 @@ import java.util.ArrayList;
 public class DailyAdapter extends RecyclerView.Adapter<DailyAdapter.MyViewHolder> {
 
     Context myContext;
-    ArrayList<?> meals;
-
+    ArrayList<Meal> dailyMeal;
 
     public DailyAdapter(@NonNull Context context, @Nullable ArrayList<?> meals) {
         this.myContext = context;
-        this.meals = meals;
+        this.dailyMeal = meals;
     }
 
     @NonNull
@@ -41,18 +38,22 @@ public class DailyAdapter extends RecyclerView.Adapter<DailyAdapter.MyViewHolder
         return new MyViewHolder(view);
     }
 
+    public void setDailyList(ArrayList<Meal> updatedMeals){
+        this.dailyMeal = updatedMeals;
+    }
+
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        Meal currentProduct = (Meal) meals.get(position);
-        holder.getMealName().setText(currentProduct.getStrMeal());
+        Meal currentMeal = dailyMeal.get(position);
+        holder.getMealName().setText(currentMeal.getStrMeal());
         holder.getMealBtn().setOnClickListener(view -> System.out.println("meal added to plan"));
         holder.getBookmark().setOnClickListener(view -> System.out.println("meal added to favorite"));
-        Glide.with(myContext).load(currentProduct.getStrMealThumb()).into(holder.getMealImg());
+        Glide.with(myContext).load(currentMeal.getStrMealThumb()).into(holder.getMealImg());
     }
 
     @Override
     public int getItemCount() {
-        return meals.size();
+        return dailyMeal.size();
     }
 
     static class MyViewHolder extends RecyclerView.ViewHolder {
