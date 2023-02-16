@@ -9,7 +9,9 @@ import io.reactivex.rxjava3.core.Observable;
 
 public interface RemoteSource {
     //instead of enqueue
-    void getRandomMeal(NetworkInterface networkInterfaceRef);
+   // void getRandomMeal(NetworkInterface networkInterfaceRef);
     Observable <Root> getMealsByCategories(String category);
+    void enqueueCall(NetworkInterface networkInterface);
+    void getUrl(String url);
 
 }

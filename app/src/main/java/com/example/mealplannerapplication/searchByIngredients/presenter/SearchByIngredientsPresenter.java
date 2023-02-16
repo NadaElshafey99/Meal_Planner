@@ -1,5 +1,6 @@
 package com.example.mealplannerapplication.searchByIngredients.presenter;
 
+import com.example.mealplannerapplication.model.Meal;
 import com.example.mealplannerapplication.model.Repository;
 import com.example.mealplannerapplication.model.RepositoryInterface;
 import com.example.mealplannerapplication.network.NetworkInterface;
@@ -21,11 +22,17 @@ public class SearchByIngredientsPresenter implements SearchByIngredientsPresente
     public void getIngredients(String url) {
         repository.getUrl(url);
         repository.getData(this);
+
     }
 
     @Override
-    public void onSuccess(ArrayList<?> list) {
+    public void onSuccess(ArrayList<Meal> list) {
         searchByIngredientsViewInterface.showCategories(list);
+    }
+
+    @Override
+    public void onSuccessCategory(ArrayList<Meal> meals) {
+
     }
 
     @Override

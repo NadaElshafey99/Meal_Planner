@@ -1,6 +1,7 @@
 package com.example.mealplannerapplication.search.view;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
@@ -15,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.mealplannerapplication.R;
+import com.example.mealplannerapplication.SearchByGroupActivity;
 import com.example.mealplannerapplication.model.Ingredients;
 
 import java.util.List;
@@ -63,6 +65,14 @@ public class AdapterForIngredients extends RecyclerView.Adapter<AdapterForIngred
             super(itemView);
             ingredientImage=itemView.findViewById(R.id.ingredients_image);
             ingredientName=itemView.findViewById(R.id.tv_ingredient);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(context, SearchByGroupActivity.class);
+                    intent.putExtra(SearchFragment.FRAGMENT_NAME, "searchByIngredientFragment");
+                    context.startActivity(intent);
+                }
+            });
 
         }
     }

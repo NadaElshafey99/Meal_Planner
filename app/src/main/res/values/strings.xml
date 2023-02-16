@@ -10,7 +10,7 @@
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="categories">Categories</string>
-    <string name="search">Search Ingredients</string>
+    <string name="searchIngredients">Search Ingredients</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="selectedIngredients">Selected Ingredients</string>
@@ -47,4 +47,18 @@
     <string name="logout">Logout</string>
     <string name="searchCategories">Search Categories</string>
     <string name="SearchByCountries">Search Countries</string>
+    <string name="searchMeal">Search Meal</string>
+    <string name="addToPlan">Add To Plan</string>
+    <string name="meal">Meal</string>
+    <string name="SearchMealWithIngredients">Search meal with ingredients</string>
+    <string name="home">home</string>
+    <string name="search">search</string>
+    <string name="favorite">favorite</string>
+    <string name="myPlan">my plan</string>
+    <string name="noIngredientsAdded">No ingredients selected</string>
+    <string name="mealName">Meal name: </string>
+    <string name="mealCountry">Meal country</string>
+    <string name="mealDescription">Meal Description</string>
+    <string name="step">Steps</string>
+    <string name="showDetails">Show details</string>
 </resources>

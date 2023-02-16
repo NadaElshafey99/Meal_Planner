@@ -10,9 +10,6 @@ import android.widget.ImageView;
 import com.airbnb.lottie.LottieAnimationView;
 import com.example.mealplannerapplication.MainActivity;
 import com.example.mealplannerapplication.R;
-import com.example.mealplannerapplication.search.view.SearchActivity;
-import com.example.mealplannerapplication.searchByCategories.view.SearchByCategoriesActivity;
-import com.example.mealplannerapplication.searchByIngredients.view.SearchByIngredientActivity;
 
 public class SplashScreenActivity extends AppCompatActivity {
 
