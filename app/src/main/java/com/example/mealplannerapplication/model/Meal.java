@@ -1,13 +1,23 @@
 package com.example.mealplannerapplication.model;
 
+import androidx.annotation.NonNull;
+import androidx.room.Entity;
+import androidx.room.Ignore;
+import androidx.room.PrimaryKey;
+
+@Entity(tableName = "meals")
 public class Meal {
+    @PrimaryKey
+    @NonNull
     private String idMeal;
     private String strMeal;
+    @Ignore
     private Object strDrinkAlternate;
     private String strCategory;
     private String strArea;
     private String strInstructions;
     private String strMealThumb;
+    @Ignore
     private Object strTags;
     private String strYoutube;
     private String strIngredient1;
@@ -51,8 +61,11 @@ public class Meal {
     private String strMeasure19;
     private String strMeasure20;
     private String strSource;
+    @Ignore
     private Object strImageSource;
+    @Ignore
     private Object strCreativeCommonsConfirmed;
+    @Ignore
     private Object dateModified;
     public String getIdMeal() {
         return idMeal;
