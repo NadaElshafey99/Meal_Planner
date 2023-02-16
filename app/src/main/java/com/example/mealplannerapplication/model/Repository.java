@@ -4,32 +4,36 @@ import android.content.Context;
 
 import com.example.mealplannerapplication.network.NetworkInterface;
 import com.example.mealplannerapplication.network.RemoteSource;
+import java.util.ArrayList;
 
-public class Repository implements RepositoryInterface{
+import io.reactivex.rxjava3.core.Observable;
 
-    private Context context;
-    private RemoteSource remoteSource;
-    private static Repository repository = null;
+public class Repository implements RepositoryInterface {
 
-    public static Repository getInstance(RemoteSource remoteSource, Context context) {
-        if (repository == null) {
-            repository = new Repository(remoteSource, context);
+    RemoteSource remoteSource;
+
+    private static Repository repo = null;
+
+    public static Repository getInstance(RemoteSource remoteSource) {
+        if (repo == null) {
+            repo = new Repository(remoteSource);
         }
-        return repository;
+        return repo;
     }
-    private Repository(RemoteSource remoteSource, Context context)
-    {
-        this.remoteSource=remoteSource;
-        this.context=context;
+
+    private Repository(RemoteSource remoteSource) {
+        this.remoteSource = remoteSource;
+
     }
 
     @Override
-    public void getData(NetworkInterface networkInterface) {
-        remoteSource.enqueueCall(networkInterface);
+    public void getDailyMeal(NetworkInterface networkInterfaceRef) {
+        remoteSource.getRandomMeal(networkInterfaceRef);
     }
 
     @Override
-    public void getUrl(String url) {
-        remoteSource.getUrl(url);
+    public Observable <Root> GetMealByCategory(String category) {
+        return remoteSource.getMealsByCategories(category);
     }
+
 }

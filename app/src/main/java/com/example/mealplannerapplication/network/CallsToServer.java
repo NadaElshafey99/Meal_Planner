@@ -8,14 +8,13 @@ import io.reactivex.rxjava3.core.Observable;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
-import retrofit2.http.Url;
+import retrofit2.http.Query;
 
 public interface CallsToServer {
-    @GET("meals")
-    Call<Root> getRandomMeal();
-    @GET
-    Observable<RetrievedList> getDataFomApi(@Url String url);
-    @GET("products/{id}")
-    Call<Meal> getProduct(@Path("id") int id);
+    @GET("random.php/")
+    Observable<Root> getRandomMeal();
+    @GET("filter.php")
+    Observable<Root> getMealByCategory(@Query("c") String category);
+
 
 }

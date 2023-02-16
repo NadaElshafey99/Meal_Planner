@@ -27,15 +27,7 @@ public class NavigationActivity extends AppCompatActivity {
         NavController navController = navHostFragment.getNavController();
         //NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
-//        navView.setOnNavigationItemSelectedListener(item -> {
-//            switch (item.getItemId()) {
-//                case R.id.srch_icon:
-//                    Intent intent = new Intent(NavigationActivity.this, SearchActivity.class);
-//                    startActivity(intent);
-//                    break;
-//            }
-//            return true;
-//        });
+
 
 
     }

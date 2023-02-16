@@ -14,65 +14,148 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mealplannerapplication.R;
-import com.example.mealplannerapplication.login_screen.presenter.LoginPresenter;
-import com.example.mealplannerapplication.network.NetworkInterface;
+
+import com.example.mealplannerapplication.home_screen.view.presenter.HomeScreenPresenter;
+import com.example.mealplannerapplication.home_screen.view.presenter.HomeScreenPresenterInterface;
+import com.example.mealplannerapplication.model.Meal;
+import com.example.mealplannerapplication.model.Repository;
+
 import com.example.mealplannerapplication.network.RetrofitClient;
 
 import java.util.ArrayList;
 
-public class HomeScreen extends Fragment implements NetworkInterface {
+public class HomeScreen extends Fragment implements HomeScreenViewInterface {
 
     RecyclerView myDailyRec;
-    LinearLayoutManager layoutManager;
+    RecyclerView beefRec;
+    RecyclerView breakfastRec;
+    RecyclerView chickenRec;
+    RecyclerView desertRec;
+    LinearLayoutManager dailyLayout;
+    LinearLayoutManager beefLayout;
+    LinearLayoutManager breakfastLayout;
+    LinearLayoutManager chickenLayout;
+    LinearLayoutManager desertLayout;
     DailyAdapter dailyAdapter;
     private Button logoutBtn;
     SharedPreferences sharedPreferences;
 
+    DailyAdapter beefAdapter;
+    DailyAdapter breakfastAdapter;
+    DailyAdapter chickenAdapter;
+    DailyAdapter desertAdapter;
+    HomeScreenPresenterInterface presenterInterface;
+
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        initLayouts();
+        presenterInterface = new HomeScreenPresenter(this, Repository.getInstance(RetrofitClient.getInstance()));
+        loadData();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home_screen, container, false);
-        myDailyRec = view.findViewById(R.id.daily_rec);
-        logoutBtn=view.findViewById(R.id.logoutBtn);
-        layoutManager = new LinearLayoutManager(this.getContext());
-        layoutManager.setOrientation(RecyclerView.VERTICAL);
-        myDailyRec.setLayoutManager(layoutManager);
-        RetrofitClient retroFitClient = new RetrofitClient(myDailyRec,getContext());
-        retroFitClient.startCall(this);
+
+        initUI(view);
+        initAdapter();
         return view;
     }
 
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        logoutBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                sharedPreferences= HomeScreen.this.getActivity().getSharedPreferences(LoginPresenter.SHRED_PREFERENCE_FILE, Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.clear();
-                editor.commit();
-                getActivity().finish();
-
-            }
-        });
-    }
-
 
     @Override
-    public void onSuccess(ArrayList<?> list) {
-        dailyAdapter = new DailyAdapter(this.getContext(),list);
+    public void showDailyMeals(ArrayList<Meal> meals) {
+        dailyAdapter.setDailyList(meals);
+        dailyAdapter.notifyDataSetChanged();
+
         myDailyRec.setAdapter(dailyAdapter);
     }
 
     @Override
-    public void onFailure(String errMsg) {
+    public void showBeefCategory(ArrayList<Meal> meals) {
+        beefAdapter.setDailyList(meals);
+        beefAdapter.notifyDataSetChanged();
+        beefRec.setAdapter(beefAdapter);
+    }
 
+    @Override
+    public void breakfast(ArrayList<Meal> meals) {
+        breakfastAdapter.setDailyList(meals);
+        breakfastAdapter.notifyDataSetChanged();
+        breakfastRec.setAdapter(breakfastAdapter);
+    }
+
+    @Override
+    public void showChickenCategory(ArrayList<Meal> meals) {
+        chickenAdapter.setDailyList(meals);
+        chickenAdapter.notifyDataSetChanged();
+        chickenRec.setAdapter(chickenAdapter);
+    }
+
+    @Override
+    public void showDesertCategory(ArrayList<Meal> meals) {
+        desertAdapter.setDailyList(meals);
+        desertAdapter.notifyDataSetChanged();
+        desertRec.setAdapter(desertAdapter);
+    }
+
+    @Override
+    public void addMeal(Meal meal) {
+
+    }
+
+    private void initUI(View view) {
+        myDailyRec = view.findViewById(R.id.daily_rec);
+        beefRec = view.findViewById(R.id.beef_rec);
+        breakfastRec = view.findViewById(R.id.breakfast_rec);
+        chickenRec = view.findViewById(R.id.chicken_rec);
+        desertRec = view.findViewById(R.id.desert_rec);
+
+        myDailyRec.setLayoutManager(dailyLayout);
+        beefRec.setLayoutManager(beefLayout);
+        breakfastRec.setLayoutManager(breakfastLayout);
+        chickenRec.setLayoutManager(chickenLayout);
+        desertRec.setLayoutManager(desertLayout);
+    }
+
+    private void initLayouts() {
+        dailyLayout = new LinearLayoutManager(this.getContext());
+        dailyLayout.setOrientation(RecyclerView.HORIZONTAL);
+
+        beefLayout = new LinearLayoutManager(this.getContext());
+        beefLayout.setOrientation(RecyclerView.HORIZONTAL);
+
+        beefLayout = new LinearLayoutManager(this.getContext());
+        beefLayout.setOrientation(RecyclerView.HORIZONTAL);
+
+        breakfastLayout = new LinearLayoutManager(this.getContext());
+        breakfastLayout.setOrientation(RecyclerView.HORIZONTAL);
+
+        chickenLayout = new LinearLayoutManager(this.getContext());
+        chickenLayout.setOrientation(RecyclerView.HORIZONTAL);
+
+        desertLayout = new LinearLayoutManager(this.getContext());
+        desertLayout.setOrientation(RecyclerView.HORIZONTAL);
+
+    }
+
+    private void initAdapter() {
+        dailyAdapter = new DailyAdapter(requireContext(), new ArrayList<>());
+        beefAdapter = new DailyAdapter(requireContext(), new ArrayList<>());
+        breakfastAdapter = new DailyAdapter(requireContext(), new ArrayList<>());
+        chickenAdapter = new DailyAdapter(requireContext(), new ArrayList<>());
+        desertAdapter = new DailyAdapter(requireContext(), new ArrayList<>());
+
+    }
+
+    private void loadData(){
+        presenterInterface.getDailyMeals();
+        presenterInterface.getBeefCategory();
+        presenterInterface.getBreakfastCategory();
+        presenterInterface.getChickenCategory();
+        presenterInterface.getDesertCategory();
     }
 }
 
