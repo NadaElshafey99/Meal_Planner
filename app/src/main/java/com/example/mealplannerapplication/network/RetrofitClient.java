@@ -1,12 +1,11 @@
 package com.example.mealplannerapplication.network;
 
-import androidx.recyclerview.widget.RecyclerView;
 
+import androidx.recyclerview.widget.RecyclerView;
 import com.example.mealplannerapplication.model.Meal;
 import com.example.mealplannerapplication.model.Root;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-
 import java.util.ArrayList;
 
 import hu.akarnokd.rxjava3.retrofit.RxJava3CallAdapterFactory;
@@ -31,6 +30,9 @@ public class RetrofitClient implements RemoteSource {
         }
         return client;
     }
+//    private RetrofitClient() {
+//
+//    }
 
     private RetrofitClient() {
         Gson gson = new GsonBuilder().create();
@@ -41,6 +43,7 @@ public class RetrofitClient implements RemoteSource {
                 .build();
 
         callsToServer = retrofit.create(CallsToServer.class);
+
     }
 
 
@@ -57,6 +60,5 @@ public class RetrofitClient implements RemoteSource {
         Observable<Root> meals = callsToServer.getMealByCategory(category);
         return meals.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
-
     }
 }

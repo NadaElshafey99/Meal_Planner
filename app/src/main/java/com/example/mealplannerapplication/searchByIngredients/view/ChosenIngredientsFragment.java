@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import com.example.mealplannerapplication.R;
 import com.example.mealplannerapplication.model.Ingredients;
+import com.example.mealplannerapplication.model.Meal;
 
 import java.util.ArrayList;
 
@@ -45,9 +46,9 @@ public class ChosenIngredientsFragment extends Fragment {
         ingredientsChosenRecyclerView.setAdapter(adapterForChosenIngredients);
 
     }
-    public void updateRecyclerView(Ingredients ingredients)
+    public void updateRecyclerView(Meal ingredients)
     {
-        chosenIngredientList.add(new Ingredients(ingredients.getStrIngredient(),"https://www.themealdb.com/images/category/beef.png"));
+        chosenIngredientList.add(new Ingredients(ingredients.getStrIngredient(),"https://www.themealdb.com/images/"+ingredients.getStrIngredient()+"/beef.png"));
         adapterForChosenIngredients.notifyDataSetChanged();
     }
 }

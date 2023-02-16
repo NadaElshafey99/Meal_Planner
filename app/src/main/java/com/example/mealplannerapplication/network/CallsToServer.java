@@ -1,5 +1,6 @@
 package com.example.mealplannerapplication.network;
 
+import com.example.mealplannerapplication.model.RetrievedList;
 import com.example.mealplannerapplication.model.Meal;
 import com.example.mealplannerapplication.model.Root;
 

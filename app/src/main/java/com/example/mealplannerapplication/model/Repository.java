@@ -4,7 +4,6 @@ import android.content.Context;
 
 import com.example.mealplannerapplication.network.NetworkInterface;
 import com.example.mealplannerapplication.network.RemoteSource;
-
 import java.util.ArrayList;
 
 import io.reactivex.rxjava3.core.Observable;

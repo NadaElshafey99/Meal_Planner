@@ -1,19 +1,25 @@
 package com.example.mealplannerapplication.home_screen.view;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mealplannerapplication.R;
+
 import com.example.mealplannerapplication.home_screen.view.presenter.HomeScreenPresenter;
 import com.example.mealplannerapplication.home_screen.view.presenter.HomeScreenPresenterInterface;
 import com.example.mealplannerapplication.model.Meal;
 import com.example.mealplannerapplication.model.Repository;
+
 import com.example.mealplannerapplication.network.RetrofitClient;
 
 import java.util.ArrayList;
@@ -31,6 +37,8 @@ public class HomeScreen extends Fragment implements HomeScreenViewInterface {
     LinearLayoutManager chickenLayout;
     LinearLayoutManager desertLayout;
     DailyAdapter dailyAdapter;
+    private Button logoutBtn;
+    SharedPreferences sharedPreferences;
 
     DailyAdapter beefAdapter;
     DailyAdapter breakfastAdapter;
@@ -50,6 +58,7 @@ public class HomeScreen extends Fragment implements HomeScreenViewInterface {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home_screen, container, false);
+
         initUI(view);
         initAdapter();
         return view;
@@ -60,6 +69,7 @@ public class HomeScreen extends Fragment implements HomeScreenViewInterface {
     public void showDailyMeals(ArrayList<Meal> meals) {
         dailyAdapter.setDailyList(meals);
         dailyAdapter.notifyDataSetChanged();
+
         myDailyRec.setAdapter(dailyAdapter);
     }
 
@@ -148,3 +158,35 @@ public class HomeScreen extends Fragment implements HomeScreenViewInterface {
         presenterInterface.getDesertCategory();
     }
 }
+
+/*
+private FirebaseAuth firebaseAuth;
+private FirebaseUser firebaseUser;
+firebaseAuth= FirebaseAuth.getInstance();
+firebaseUser= firebaseAuth.getCurrent();
+if(firebaseUser==null)
+{
+  Toast.makeText(HomeScreen.this.getActivity(), "Failed", Toast.LENGTH_SHORT).show();
+}
+else
+{
+ String userID= firebaseUser.getUid();
+ DatabaseReference databaseReference =FirebaseDatabase.getInstance().getReference("Registered Users");
+ databaseReference.child(userID).addListenerForSingleValueEvent(new ValueEventListener(){
+ public void onDataChanged()
+ {
+ UserDetails userDetails=snapshot.getValue(UserDetails.class);
+     if(userDetails!=null)
+     {
+
+     }
+ }
+  public void onCancelled()
+ {
+   Toast.makeText(HomeScreen.this.getActivity(), "Failed", Toast.LENGTH_SHORT).show();
+ }
+
+ });
+
+}
+ */

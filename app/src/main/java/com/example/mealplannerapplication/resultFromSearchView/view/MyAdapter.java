@@ -18,7 +18,6 @@ import com.bumptech.glide.Glide;
 import com.example.mealplannerapplication.R;
 import com.example.mealplannerapplication.model.Categories;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder>{
@@ -63,8 +62,8 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder>{
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             layout=itemView.findViewById(R.id.recyclerViewCategories);
-            mealImage=itemView.findViewById(R.id.meal_image);
-            mealName=itemView.findViewById(R.id.tv_meal);
+            mealImage=itemView.findViewById(R.id.categories_image);
+            mealName=itemView.findViewById(R.id.tv_categories);
 
         }
     }

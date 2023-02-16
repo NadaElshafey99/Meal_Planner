@@ -20,7 +20,7 @@
         android:elevation="10dp">
 
         <ImageView
-            android:id="@+id/meal_image"
+            android:id="@+id/categories_image"
             android:layout_width="0dp"
             android:layout_height="100dp"
             android:layout_marginStart="16dp"
@@ -32,7 +32,7 @@
             app:srcCompat="@android:drawable/ic_menu_report_image" />
 
         <TextView
-            android:id="@+id/tv_meal"
+            android:id="@+id/tv_categories"
             android:layout_width="0dp"
             android:layout_height="52dp"
             android:gravity="center"
@@ -42,7 +42,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/meal_image" />
+            app:layout_constraintTop_toBottomOf="@+id/categories_image" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

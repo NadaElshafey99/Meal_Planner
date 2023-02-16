@@ -5,21 +5,21 @@
     android:id="@+id/category_item"
     android:layout_width="wrap_content"
     android:layout_height="200dp"
-    android:layout_margin="10dp"
-    android:layout_marginStart="10dp"
-    android:layout_marginTop="10dp"
-    android:layout_marginEnd="10dp"
-    android:layout_marginBottom="10dp"
-    app:cardCornerRadius="15dp"
+    android:layout_margin="7dp"
+    android:layout_marginStart="7dp"
+    android:layout_marginTop="7dp"
+    android:layout_marginEnd="7dp"
+    android:layout_marginBottom="7dp"
+    app:cardCornerRadius="7dp"
     app:cardElevation="20dp"
-    app:layout_marginBaseline="10dp">
+    app:layout_marginBaseline="7dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <ImageView
-            android:id="@+id/meal_image"
+            android:id="@+id/categories_image"
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -46,16 +46,16 @@
             app:layout_marginBaseline="10dp" />
 
         <TextView
-            android:id="@+id/tv_meal"
+            android:id="@+id/tv_categories"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="32dp"
+            android:gravity="center"
             android:textColor="@color/white"
-            android:textSize="42sp"
+            android:textSize="28sp"
             android:textStyle="normal"
-            app:layout_constraintBottom_toBottomOf="@+id/meal_image"
-            app:layout_constraintEnd_toEndOf="@+id/meal_image"
-            app:layout_constraintStart_toStartOf="@+id/meal_image"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintBottom_toBottomOf="@+id/categories_image"
+            app:layout_constraintEnd_toEndOf="@+id/categories_image"
+            app:layout_constraintStart_toStartOf="@+id/categories_image" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

@@ -11,4 +11,5 @@ public interface RemoteSource {
     //instead of enqueue
     void getRandomMeal(NetworkInterface networkInterfaceRef);
     Observable <Root> getMealsByCategories(String category);
+
 }
