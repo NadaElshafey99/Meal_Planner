@@ -4,6 +4,7 @@ package com.example.mealplannerapplication.resultFromSearchView.view;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,37 +18,42 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.mealplannerapplication.R;
 import com.example.mealplannerapplication.model.Categories;
+import com.example.mealplannerapplication.model.Meal;
 
 import java.util.List;
 
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder>{
 
     Context context;
-    Categories category;
-    private List<Categories> categoriesList;
+    Meal category;
+    private List<Meal> categoriesList;
     private LayoutInflater inflater;
 
-    public MyAdapter(Context context, List<Categories> categoriesList){
+    public MyAdapter(Context context, List<Meal> categoriesList){
         this.context=context;
         this.categoriesList=categoriesList;
+    }
+    public void setList(List<Meal> updatedCategories){
+        this.categoriesList = updatedCategories;
+
     }
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         inflater= (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View view=inflater.inflate(R.layout.design_item_for_result_search,parent,false);
+        View view=inflater.inflate(R.layout.meal_card,parent,false);
         MyViewHolder myViewHolder=new MyViewHolder(view);
         return myViewHolder;
     }
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        category=new Categories();
         category=categoriesList.get(position);
-        holder.mealName.setText(category.getStrCategory());
-        Glide.with(context).load(category.getStrCategoryThumb())
+        holder.mealName.setText(category.getStrMeal());
+        Glide.with(context).load(category.getStrMealThumb())
                 .placeholder(new ColorDrawable(Color.TRANSPARENT))
                 .into(holder.mealImage);
+        Log.i("TAG", category.getStrMealThumb());
     }
 
     @Override
@@ -61,9 +67,8 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder>{
         ImageView mealImage;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            layout=itemView.findViewById(R.id.recyclerViewCategories);
-            mealImage=itemView.findViewById(R.id.categories_image);
-            mealName=itemView.findViewById(R.id.tv_categories);
+            mealImage=itemView.findViewById(R.id.meal_img);
+            mealName=itemView.findViewById(R.id.meal_name);
 
         }
     }

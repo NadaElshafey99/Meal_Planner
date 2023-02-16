@@ -20,6 +20,7 @@ import com.bumptech.glide.Glide;
 import com.example.mealplannerapplication.R;
 import com.example.mealplannerapplication.model.Categories;
 import com.example.mealplannerapplication.model.Meal;
+import com.example.mealplannerapplication.searchByCategories.view.SearchByCategoriesFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +32,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder>{
     private List<Meal> countriesList;
     private LayoutInflater inflater;
     private String countryImage;
+    private Meal clickedDataItem;
 
     public MyAdapter(Context context,List<Meal> countriesList){
         this.context=context;
@@ -56,8 +58,8 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder>{
         holder.countryName.setText(country.getStrArea());
         String countryName=country.getStrArea().toLowerCase();
         String countryImage="@drawable/"+countryName;
-        int imageResource = SearchByCountriesActivity.res.getIdentifier(countryImage, null,SearchByCountriesActivity.pck);
-        Drawable drawable = SearchByCountriesActivity.res.getDrawable(imageResource);
+        int imageResource = SearchByCountriesFragment.resource.getIdentifier(countryImage, null,SearchByCountriesFragment.pck);
+        Drawable drawable = SearchByCountriesFragment.resource.getDrawable(imageResource);
         holder.countryImage.setImageDrawable(drawable);
 
     }
@@ -75,6 +77,17 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder>{
             super(itemView);
             countryImage=itemView.findViewById(R.id.categories_image);
             countryName=itemView.findViewById(R.id.tv_categories);
+            itemView.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View v) {
+                    int pos = getAdapterPosition();
+                    // check if item still exists
+                    if(pos != RecyclerView.NO_POSITION){
+                        clickedDataItem = countriesList.get(pos);
+                        SearchByCountriesFragment.getMealsOfSelectedItem(clickedDataItem);
+                    }
+                }
+            });
 
         }
     }

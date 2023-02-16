@@ -1,25 +1,28 @@
-package com.example.mealplannerapplication.searchByCategories.presenter;
+package com.example.mealplannerapplication.resultFromSearchView.presenter;
 
 import com.example.mealplannerapplication.model.Meal;
+import com.example.mealplannerapplication.model.Repository;
 import com.example.mealplannerapplication.model.RepositoryInterface;
 import com.example.mealplannerapplication.network.NetworkInterface;
 import com.example.mealplannerapplication.searchByCategories.view.SearchByCategoriesScreenInterface;
 
 import java.util.ArrayList;
 
-public class SearchByCategoriesPresenter implements SearchByCategoriesPresenterInterface, NetworkInterface {
-
-    private SearchByCategoriesScreenInterface searchByCategoriesScreenInterface;
+public class ResultFromSearchPresenter implements ResultFromSearchPresenterInterface, NetworkInterface {
+    SearchByCategoriesScreenInterface searchByCategoriesScreenInterface;
     private RepositoryInterface repositoryInterface;
-    public SearchByCategoriesPresenter(SearchByCategoriesScreenInterface searchByCategoriesScreenInterface, RepositoryInterface repositoryInterface)
+
+    public ResultFromSearchPresenter(SearchByCategoriesScreenInterface searchByCategoriesScreenInterface, RepositoryInterface repositoryInterface)
     {
         this.searchByCategoriesScreenInterface=searchByCategoriesScreenInterface;
         this.repositoryInterface=repositoryInterface;
-    }
+
+    };
+
 
     @Override
-    public void onSuccess(ArrayList<Meal> categories) {
-        searchByCategoriesScreenInterface.showCategories(categories);
+    public void onSuccess(ArrayList<Meal> list) {
+        searchByCategoriesScreenInterface.showCategories(list);
     }
 
     @Override
@@ -33,9 +36,8 @@ public class SearchByCategoriesPresenter implements SearchByCategoriesPresenterI
     }
 
     @Override
-    public void getCategories(String url) {
-        repositoryInterface.getUrl(url);
+    public void getCategoriesSelected(String Url) {
+        repositoryInterface.getUrl(Url);
         repositoryInterface.getData(this);
     }
-
 }

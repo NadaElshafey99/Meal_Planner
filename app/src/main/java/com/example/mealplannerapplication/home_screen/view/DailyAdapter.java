@@ -25,7 +25,7 @@ public class DailyAdapter extends RecyclerView.Adapter<DailyAdapter.MyViewHolder
     Context myContext;
     ArrayList<Meal> dailyMeal;
 
-    public DailyAdapter(@NonNull Context context, @Nullable ArrayList<?> meals) {
+    public DailyAdapter(@NonNull Context context, @Nullable ArrayList<Meal> meals) {
         this.myContext = context;
         this.dailyMeal = meals;
     }

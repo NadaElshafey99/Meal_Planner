@@ -10,30 +10,36 @@ import io.reactivex.rxjava3.core.Observable;
 
 public class Repository implements RepositoryInterface {
 
-    RemoteSource remoteSource;
-
-    private static Repository repo = null;
-
-    public static Repository getInstance(RemoteSource remoteSource) {
-        if (repo == null) {
-            repo = new Repository(remoteSource);
+    private Context context;
+    private RemoteSource remoteSource;
+    private static Repository repository = null;
+    public static Repository getInstance(RemoteSource remoteSource,Context context) {
+        if (repository == null) {
+            repository = new Repository(remoteSource,context);
         }
-        return repo;
+        return repository;
     }
 
-    private Repository(RemoteSource remoteSource) {
-        this.remoteSource = remoteSource;
+    private Repository(RemoteSource remoteSource, Context context)
+    {
+        this.remoteSource=remoteSource;
+        this.context=context;
+    }
 
+
+    @Override
+    public void getData(NetworkInterface networkInterfaceRef) {
+        remoteSource.enqueueCall(networkInterfaceRef);
     }
 
     @Override
-    public void getDailyMeal(NetworkInterface networkInterfaceRef) {
-        remoteSource.getRandomMeal(networkInterfaceRef);
-    }
-
-    @Override
-    public Observable <Root> GetMealByCategory(String category) {
+    public Observable <Root> getMealByCategory(String category) {
         return remoteSource.getMealsByCategories(category);
+    }
+
+    @Override
+    public void getUrl(String url) {
+        remoteSource.getUrl(url);
     }
 
 }

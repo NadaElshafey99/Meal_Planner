@@ -4,6 +4,8 @@ import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -13,14 +15,19 @@ import android.view.ViewGroup;
 import com.example.mealplannerapplication.R;
 import com.example.mealplannerapplication.model.Ingredients;
 import com.example.mealplannerapplication.model.Meal;
+import com.example.mealplannerapplication.resultFromSearchView.view.ResultFromSearchFragment;
 
 import java.util.ArrayList;
 
 public class ChosenIngredientsFragment extends Fragment {
 
     private RecyclerView ingredientsChosenRecyclerView;
-    private ArrayList<Ingredients> chosenIngredientList;
+    private ArrayList<Meal> chosenIngredientList;
     private AdapterForChosenIngredients adapterForChosenIngredients;
+    private static FragmentManager fragmentManager;
+    private static ResultFromSearchFragment resultFromSearchFragment;
+
+    private static FragmentTransaction fragmentTransaction;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -48,7 +55,8 @@ public class ChosenIngredientsFragment extends Fragment {
     }
     public void updateRecyclerView(Meal ingredients)
     {
-        chosenIngredientList.add(new Ingredients(ingredients.getStrIngredient(),"https://www.themealdb.com/images/"+ingredients.getStrIngredient()+"/beef.png"));
+        chosenIngredientList.add(ingredients);
         adapterForChosenIngredients.notifyDataSetChanged();
     }
+
 }

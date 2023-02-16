@@ -1,6 +1,7 @@
 package com.example.mealplannerapplication.search.view;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
@@ -15,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.mealplannerapplication.R;
+import com.example.mealplannerapplication.SearchByGroupActivity;
 import com.example.mealplannerapplication.model.Ingredients;
 
 import java.util.List;
@@ -23,12 +25,14 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder>{
 
     Context context;
     Ingredients ingredient;
+    private String fragment;
     private List<Ingredients> ingredientsList;
     private LayoutInflater inflater;
 
-    public MyAdapter(Context context, List<Ingredients> ingredientsList){
+    public MyAdapter(Context context, List<Ingredients> ingredientsList,String fragment){
         this.context=context;
         this.ingredientsList=ingredientsList;
+        this.fragment=fragment;
     }
     @NonNull
     @Override
@@ -63,6 +67,22 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder>{
             super(itemView);
             ingredientImage=itemView.findViewById(R.id.categories_image);
             ingredientName=itemView.findViewById(R.id.tv_categories);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if(fragment.equals("categories"))
+                    {
+                        Intent intent = new Intent(context, SearchByGroupActivity.class);
+                        intent.putExtra(SearchFragment.FRAGMENT_NAME, "searchByCategoriesFragment");
+                        context.startActivity(intent);
+                    }
+                    else {
+                        Intent intent = new Intent(context, SearchByGroupActivity.class);
+                        intent.putExtra(SearchFragment.FRAGMENT_NAME, "searchByCountriesFragment");
+                        context.startActivity(intent);
+                    }
+                }
+            });
 
         }
     }

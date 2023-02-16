@@ -4,9 +4,27 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".searchByIngredients.view.SearchByIngredientActivity">
+    tools:context=".searchByIngredients.view.SearchByIngredientFragment">
+
+    <Button
+        android:id="@+id/search_btn"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="48dp"
+        android:layout_marginEnd="48dp"
+        android:layout_marginBottom="32dp"
+        android:backgroundTint="@color/light_gray"
+        android:clickable="true"
+        android:text="@string/SearchMealWithIngredients"
+        android:textSize="14sp"
+        app:cornerRadius="25dp"
+        app:layout_constraintBottom_toBottomOf="@+id/scrollView4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.428"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <ScrollView
+        android:id="@+id/scrollView4"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -84,7 +102,7 @@
                 android:layout_height="wrap_content"
                 android:drawableStart="@drawable/search"
                 android:ems="10"
-                android:hint="@string/search"
+                android:hint="@string/searchIngredients"
                 android:inputType="textPersonName"
                 android:textSize="20sp"
                 app:layout_constraintEnd_toEndOf="@+id/country_title2"

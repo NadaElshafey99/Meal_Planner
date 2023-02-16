@@ -3,6 +3,7 @@ package com.example.mealplannerapplication.searchByIngredients.view;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,7 @@ import com.example.mealplannerapplication.model.Categories;
 import com.example.mealplannerapplication.model.Ingredients;
 import com.example.mealplannerapplication.model.Meal;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class AdapterForAllIngredients extends RecyclerView.Adapter<AdapterForAllIngredients.MyViewHolder>{
@@ -25,16 +27,16 @@ public class AdapterForAllIngredients extends RecyclerView.Adapter<AdapterForAll
     Context context;
     Meal ingredient;
     Communicator communicator;
-    private List<Meal> ingredientsList;
+    protected static ArrayList<? extends Parcelable>  ingredientsList;
     private LayoutInflater inflater;
 
-    public AdapterForAllIngredients(Context context,List<Meal> ingredientsList,Communicator communicator){
+    public AdapterForAllIngredients(Context context,ArrayList<? extends Parcelable> ingredientsList ,Communicator communicator){
         this.context=context;
         this.ingredientsList=ingredientsList;
         this.communicator=communicator;
     }
     public void setList(List<?> updatedCategories){
-        this.ingredientsList = (List<Meal>) updatedCategories;
+        this.ingredientsList = (ArrayList<? extends Parcelable>) updatedCategories;
 
     }
     @NonNull
@@ -48,7 +50,7 @@ public class AdapterForAllIngredients extends RecyclerView.Adapter<AdapterForAll
 
     @Override
     public void onBindViewHolder(@NonNull AdapterForAllIngredients.MyViewHolder holder, int position) {
-        ingredient= ingredientsList.get(position);
+        ingredient= (Meal) ingredientsList.get(position);
         holder.ingredientName.setText(ingredient.getStrIngredient());
         Glide.with(context).load("https://www.themealdb.com/images/ingredients/"+ingredient.getStrIngredient()+".png")
                 .placeholder(new ColorDrawable(Color.TRANSPARENT))
@@ -77,9 +79,9 @@ public class AdapterForAllIngredients extends RecyclerView.Adapter<AdapterForAll
                     int pos = getAdapterPosition();
                     // check if item still exists
                     if(pos != RecyclerView.NO_POSITION){
-                        Meal clickedDataItem = ingredientsList.get(pos);
+                        Meal clickedDataItem = (Meal) ingredientsList.get(pos);
                         communicator.addIngredients(clickedDataItem);
-//                        Toast.makeText(v.getContext(), "You clicked " + clickedDataItem.getStrIngredient(), Toast.LENGTH_SHORT).show();
+
                     }
                 }
             });

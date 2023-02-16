@@ -20,7 +20,7 @@ public class RetrievedList {
         this.categories = categories;
     }
 
-    public ArrayList<?> getMeals() {
+    public ArrayList<Meal> getMeals() {
         return meals;
     }
 
