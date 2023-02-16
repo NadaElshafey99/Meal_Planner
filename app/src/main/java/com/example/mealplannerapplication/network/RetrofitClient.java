@@ -3,6 +3,7 @@ package com.example.mealplannerapplication.network;
 
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.mealplannerapplication.model.Meal;
+import com.example.mealplannerapplication.model.RetrievedList;
 import com.example.mealplannerapplication.model.Root;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -19,6 +20,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class RetrofitClient implements RemoteSource {
     ArrayList<Meal> mealsList;
     CallsToServer callsToServer;
+    private String url;
     private static final String BASE_URL = "https://www.themealdb.com/api/json/v1/1/";
     RecyclerView recyclerView;
 
@@ -43,16 +45,20 @@ public class RetrofitClient implements RemoteSource {
                 .build();
 
         callsToServer = retrofit.create(CallsToServer.class);
-
     }
-
-
     @Override
-    public void getRandomMeal(NetworkInterface interfaceRef) {
-        Observable<Root> meals = callsToServer.getRandomMeal();
-        Disposable d = meals.subscribeOn(Schedulers.io())
+    public void enqueueCall(NetworkInterface networkInterface) {
+        Observable<RetrievedList> call = callsToServer.getDataFomApi(url);
+        call.subscribeOn(Schedulers.io())
+                .map(RetrievedList::getMeals)
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(i -> interfaceRef.onSucessDaily(i.getMeals()), throwable -> interfaceRef.onFailure(throwable.getMessage()));
+                .subscribe(
+                        item -> {
+                            mealsList = (ArrayList<Meal>) item;
+                            networkInterface.onSuccess(mealsList);
+                        }
+
+                );
     }
 
     @Override
@@ -60,5 +66,9 @@ public class RetrofitClient implements RemoteSource {
         Observable<Root> meals = callsToServer.getMealByCategory(category);
         return meals.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
+    }
+    @Override
+    public void getUrl(String url) {
+        this.url=url;
     }
 }

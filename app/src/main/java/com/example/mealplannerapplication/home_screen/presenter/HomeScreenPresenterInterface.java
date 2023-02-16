@@ -1,4 +1,4 @@
-package com.example.mealplannerapplication.home_screen.view.presenter;
+package com.example.mealplannerapplication.home_screen.presenter;
 
 import com.example.mealplannerapplication.model.Meal;
 

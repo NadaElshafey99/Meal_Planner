@@ -1,5 +1,6 @@
 package com.example.mealplannerapplication.resultFromSearchView.presenter;
 
+import com.example.mealplannerapplication.model.Meal;
 import com.example.mealplannerapplication.model.Repository;
 import com.example.mealplannerapplication.model.RepositoryInterface;
 import com.example.mealplannerapplication.network.NetworkInterface;
@@ -18,9 +19,15 @@ public class ResultFromSearchPresenter implements ResultFromSearchPresenterInter
 
     };
 
+
     @Override
-    public void onSuccess(ArrayList<?> list) {
+    public void onSuccess(ArrayList<Meal> list) {
         searchByCategoriesScreenInterface.showCategories(list);
+    }
+
+    @Override
+    public void onSuccessCategory(ArrayList<Meal> meals) {
+
     }
 
     @Override

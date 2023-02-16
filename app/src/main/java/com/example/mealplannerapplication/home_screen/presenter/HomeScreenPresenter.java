@@ -1,4 +1,4 @@
-package com.example.mealplannerapplication.home_screen.view.presenter;
+package com.example.mealplannerapplication.home_screen.presenter;
 
 import android.util.Log;
 
@@ -26,29 +26,30 @@ public class HomeScreenPresenter implements HomeScreenPresenterInterface, Networ
     @Override
     public void getDailyMeals() {
         for(int i=0; i<5; i++) {
-            repoRef.getDailyMeal(this);
+            repoRef.getUrl("random.php/");
+            repoRef.getData(this);
         }
 
     }
 
 
     public void getBeefCategory() {
-        Disposable d = repoRef.GetMealByCategory("Beef").subscribe(i -> viewInterfaceRef.showBeefCategory(i.getMeals()));
+        Disposable d = repoRef.getMealByCategory("Beef").subscribe(i -> viewInterfaceRef.showBeefCategory(i.getMeals()));
     }
 
     @Override
     public void getBreakfastCategory() {
-        Disposable d = repoRef.GetMealByCategory("Breakfast").subscribe(i -> viewInterfaceRef.breakfast(i.getMeals()));
+        Disposable d = repoRef.getMealByCategory("Breakfast").subscribe(i -> viewInterfaceRef.breakfast(i.getMeals()));
     }
 
     @Override
     public void getChickenCategory() {
-       Disposable d = repoRef.GetMealByCategory("Chicken").subscribe(i -> viewInterfaceRef.showChickenCategory(i.getMeals()));
+       Disposable d = repoRef.getMealByCategory("Chicken").subscribe(i -> viewInterfaceRef.showChickenCategory(i.getMeals()));
     }
 
     @Override
     public void getDesertCategory() {
-        Disposable d = repoRef.GetMealByCategory("Dessert").subscribe(i -> viewInterfaceRef.showDesertCategory(i.getMeals()));
+        Disposable d = repoRef.getMealByCategory("Dessert").subscribe(i -> viewInterfaceRef.showDesertCategory(i.getMeals()));
     }
 
 
@@ -56,12 +57,10 @@ public class HomeScreenPresenter implements HomeScreenPresenterInterface, Networ
     public void addToFav(Meal meal) {
 
     }
-
     @Override
-    public void onSucessDaily(ArrayList<Meal> meals) {
-            mealArrayList.add(meals.get(0));
-            viewInterfaceRef.showDailyMeals(mealArrayList);
-
+    public void onSuccess(ArrayList<Meal> list) {
+        mealArrayList.add(list.get(0));
+        viewInterfaceRef.showDailyMeals(mealArrayList);
     }
 
     @Override

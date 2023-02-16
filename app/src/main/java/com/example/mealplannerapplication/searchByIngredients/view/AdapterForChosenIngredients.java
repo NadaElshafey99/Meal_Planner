@@ -15,11 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.mealplannerapplication.R;
-import com.example.mealplannerapplication.model.Ingredients;
 import com.example.mealplannerapplication.model.Meal;
-import com.example.mealplannerapplication.searchByCategories.view.SearchByCategoriesFragment;
-
-import java.util.ArrayList;
 import java.util.List;
 
 public class AdapterForChosenIngredients extends RecyclerView.Adapter<AdapterForChosenIngredients.MyViewHolder>{
@@ -29,9 +25,9 @@ public class AdapterForChosenIngredients extends RecyclerView.Adapter<AdapterFor
     protected static List<Meal> ingredientsList;
     private LayoutInflater inflater;
 
-    public AdapterForChosenIngredients(Context context, List<?> ingredientsList){
+    public AdapterForChosenIngredients(Context context, List<Meal> ingredientsList){
         this.context=context;
-        this.ingredientsList= (List<Meal>) ingredientsList;
+        this.ingredientsList= ingredientsList;
     }
     @NonNull
     @Override

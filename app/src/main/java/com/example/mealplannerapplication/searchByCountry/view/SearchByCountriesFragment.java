@@ -67,7 +67,7 @@ public class SearchByCountriesFragment extends Fragment implements SearchByCount
     }
 
     @Override
-    public void showCountries(ArrayList<?> countries) {
+    public void showCountries(ArrayList<Meal> countries) {
         myAdapter.setList(countries);
         myAdapter.notifyDataSetChanged();
     }

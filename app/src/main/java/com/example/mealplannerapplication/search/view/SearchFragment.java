@@ -17,9 +17,6 @@ import android.widget.Button;
 import com.example.mealplannerapplication.R;
 import com.example.mealplannerapplication.SearchByGroupActivity;
 import com.example.mealplannerapplication.model.Ingredients;
-import com.example.mealplannerapplication.resultFromSearchView.view.ResultFromSearchActivity;
-import com.example.mealplannerapplication.searchByCountry.view.SearchByCountriesFragment;
-//import com.example.mealplannerapplication.searchByCategories.view.SearchByCategoriesActivity;
 
 import java.util.ArrayList;
 

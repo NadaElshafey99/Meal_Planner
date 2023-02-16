@@ -39,8 +39,8 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder>{
         this.countriesList=countriesList;
     }
 
-    public void setList(List<?> countriesList) {
-        this.countriesList =  (List<Meal>) countriesList;
+    public void setList(List<Meal> countriesList) {
+        this.countriesList = countriesList;
     }
 
     @NonNull

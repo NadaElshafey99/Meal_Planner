@@ -4,6 +4,7 @@ package com.example.mealplannerapplication.resultFromSearchView.view;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,8 +33,8 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder>{
         this.context=context;
         this.categoriesList=categoriesList;
     }
-    public void setList(List<?> updatedCategories){
-        this.categoriesList = (List<Meal>) updatedCategories;
+    public void setList(List<Meal> updatedCategories){
+        this.categoriesList = updatedCategories;
 
     }
     @NonNull
@@ -52,6 +53,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder>{
         Glide.with(context).load(category.getStrMealThumb())
                 .placeholder(new ColorDrawable(Color.TRANSPARENT))
                 .into(holder.mealImage);
+        Log.i("TAG", category.getStrMealThumb());
     }
 
     @Override

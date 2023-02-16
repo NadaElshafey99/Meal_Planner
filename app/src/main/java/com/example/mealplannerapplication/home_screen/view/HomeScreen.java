@@ -1,6 +1,5 @@
 package com.example.mealplannerapplication.home_screen.view;
 
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -8,15 +7,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mealplannerapplication.R;
 
-import com.example.mealplannerapplication.home_screen.view.presenter.HomeScreenPresenter;
-import com.example.mealplannerapplication.home_screen.view.presenter.HomeScreenPresenterInterface;
+import com.example.mealplannerapplication.home_screen.presenter.HomeScreenPresenter;
+import com.example.mealplannerapplication.home_screen.presenter.HomeScreenPresenterInterface;
 import com.example.mealplannerapplication.model.Meal;
 import com.example.mealplannerapplication.model.Repository;
 
@@ -51,7 +49,7 @@ public class HomeScreen extends Fragment implements HomeScreenViewInterface {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initLayouts();
-        presenterInterface = new HomeScreenPresenter(this, Repository.getInstance(RetrofitClient.getInstance()));
+        presenterInterface = new HomeScreenPresenter(this, Repository.getInstance(RetrofitClient.getInstance(),getContext()));
         loadData();
     }
 
@@ -63,7 +61,6 @@ public class HomeScreen extends Fragment implements HomeScreenViewInterface {
         initAdapter();
         return view;
     }
-
 
     @Override
     public void showDailyMeals(ArrayList<Meal> meals) {
@@ -119,6 +116,7 @@ public class HomeScreen extends Fragment implements HomeScreenViewInterface {
         chickenRec.setLayoutManager(chickenLayout);
         desertRec.setLayoutManager(desertLayout);
     }
+
 
     private void initLayouts() {
         dailyLayout = new LinearLayoutManager(this.getContext());

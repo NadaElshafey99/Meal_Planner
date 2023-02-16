@@ -105,7 +105,7 @@ public class SearchByIngredientFragment extends Fragment implements SearchByIngr
     }
 
     @Override
-    public void showCategories(ArrayList<?> ingredients) {
+    public void showCategories(ArrayList<Meal> ingredients) {
         allIngredientsFragment.showCategories(ingredients);
     }
 
@@ -129,6 +129,7 @@ public class SearchByIngredientFragment extends Fragment implements SearchByIngr
             resultFromSearchFragment.setArguments(bundle);
             fragmentTransaction=fragmentManager.beginTransaction();
             fragmentTransaction.replace(R.id.fragmentContainerView,resultFromSearchFragment);
+//            fragmentTransaction.addToBackStack("searchByCategoriesFragment");
             fragmentTransaction.commit();
         }
 

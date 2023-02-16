@@ -71,8 +71,8 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder>{
         return categoriesList.size();
     }
 
-    public void setList(List<?> updatedCategories){
-            this.categoriesList = (List<Meal>) updatedCategories;
+    public void setList(List<Meal> updatedCategories){
+            this.categoriesList =  updatedCategories;
     }
 
     class MyViewHolder extends RecyclerView.ViewHolder {

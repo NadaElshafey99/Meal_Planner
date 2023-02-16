@@ -68,7 +68,7 @@ public class ResultFromSearchFragment extends Fragment implements SearchByCatego
     }
 
     @Override
-    public void showCategories(ArrayList<?> categories) {
+    public void showCategories(ArrayList<Meal> categories) {
         myAdapter.setList(categories);
         myAdapter.notifyDataSetChanged();
     }

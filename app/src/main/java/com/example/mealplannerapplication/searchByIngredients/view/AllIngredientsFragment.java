@@ -26,7 +26,6 @@ public class AllIngredientsFragment extends Fragment{
     private AdapterForAllIngredients adapterForAllIngredients;
     private Communicator communicator;
     private static final String KEY_ARRAYLIST = "ArrayList";
-    private static AllIngredientsFragment allIngredientsFragment=null;
 
     public AllIngredientsFragment(Communicator communicator)
     {
@@ -68,7 +67,7 @@ public class AllIngredientsFragment extends Fragment{
         allIngredientsRecyclerView.setAdapter(adapterForAllIngredients);
 
     }
-    public void showCategories(ArrayList<?> ingredients) {
+    public void showCategories(ArrayList<Meal> ingredients) {
         adapterForAllIngredients.setList(ingredients);
         adapterForAllIngredients.notifyDataSetChanged();
     }

@@ -1,5 +1,6 @@
 package com.example.mealplannerapplication.searchByCategories.presenter;
 
+import com.example.mealplannerapplication.model.Meal;
 import com.example.mealplannerapplication.model.RepositoryInterface;
 import com.example.mealplannerapplication.network.NetworkInterface;
 import com.example.mealplannerapplication.searchByCategories.view.SearchByCategoriesScreenInterface;
@@ -17,8 +18,13 @@ public class SearchByCategoriesPresenter implements SearchByCategoriesPresenterI
     }
 
     @Override
-    public void onSuccess(ArrayList<?> categories) {
+    public void onSuccess(ArrayList<Meal> categories) {
         searchByCategoriesScreenInterface.showCategories(categories);
+    }
+
+    @Override
+    public void onSuccessCategory(ArrayList<Meal> meals) {
+
     }
 
     @Override

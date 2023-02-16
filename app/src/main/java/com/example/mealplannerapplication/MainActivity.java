@@ -4,13 +4,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
-
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.Button;
-
-//import com.example.mealplannerapplication.searchByCategories.view.SearchByCategoriesActivity;
-
 
 public class MainActivity extends AppCompatActivity {
  Button btn;
