@@ -7,12 +7,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mealplannerapplication.R;
 
+import com.example.mealplannerapplication.db.ConcreteLocalSource;
 import com.example.mealplannerapplication.home_screen.presenter.HomeScreenPresenter;
 import com.example.mealplannerapplication.home_screen.presenter.HomeScreenPresenterInterface;
 import com.example.mealplannerapplication.model.Meal;
@@ -22,7 +25,7 @@ import com.example.mealplannerapplication.network.RetrofitClient;
 
 import java.util.ArrayList;
 
-public class HomeScreen extends Fragment implements HomeScreenViewInterface {
+public class HomeScreen extends Fragment implements HomeScreenViewInterface,OnMealClickListener {
 
     RecyclerView myDailyRec;
     RecyclerView beefRec;
@@ -48,25 +51,31 @@ public class HomeScreen extends Fragment implements HomeScreenViewInterface {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        initLayouts();
-        presenterInterface = new HomeScreenPresenter(this, Repository.getInstance(RetrofitClient.getInstance(),getContext()));
+
+        presenterInterface = new HomeScreenPresenter(this,
+                Repository.getInstance(RetrofitClient.getInstance(),
+                        ConcreteLocalSource.getInstance(getContext()),getContext()));
+
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        //initLayouts();
+        initUI(view);
+        initAdapter();
         loadData();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_home_screen, container, false);
-
-        initUI(view);
-        initAdapter();
-        return view;
+        return inflater.inflate(R.layout.fragment_home_screen, container, false);
     }
 
     @Override
     public void showDailyMeals(ArrayList<Meal> meals) {
         dailyAdapter.setDailyList(meals);
         dailyAdapter.notifyDataSetChanged();
-
         myDailyRec.setAdapter(dailyAdapter);
     }
 
@@ -98,9 +107,26 @@ public class HomeScreen extends Fragment implements HomeScreenViewInterface {
         desertRec.setAdapter(desertAdapter);
     }
 
-    @Override
-    public void addMeal(Meal meal) {
 
+
+    @Override
+    public void handleFavBookmark(Meal meal) {
+        presenterInterface.handleFavMeal(meal);
+    }
+
+    @Override
+    public void handlePlanBtn(Meal meal) {
+        presenterInterface.handlePlanMeal(meal);
+    }
+
+    @Override
+    public void onFavClicked(Meal meal) {
+            handleFavBookmark(meal);
+    }
+
+    @Override
+    public void onPlanClicked(Meal meal) {
+        handlePlanBtn(meal);
     }
 
     private void initUI(View view) {
@@ -110,41 +136,42 @@ public class HomeScreen extends Fragment implements HomeScreenViewInterface {
         chickenRec = view.findViewById(R.id.chicken_rec);
         desertRec = view.findViewById(R.id.desert_rec);
 
-        myDailyRec.setLayoutManager(dailyLayout);
-        beefRec.setLayoutManager(beefLayout);
-        breakfastRec.setLayoutManager(breakfastLayout);
-        chickenRec.setLayoutManager(chickenLayout);
-        desertRec.setLayoutManager(desertLayout);
+        myDailyRec.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false));
+        beefRec.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false));
+        breakfastRec.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false));
+        chickenRec.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false));
+        desertRec.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false));
     }
+//ingredientsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false));
+//    categoriesRecyclerView.setLayoutManager(new GridLayoutManager(getContext(),2));
 
-
-    private void initLayouts() {
-        dailyLayout = new LinearLayoutManager(this.getContext());
-        dailyLayout.setOrientation(RecyclerView.HORIZONTAL);
-
-        beefLayout = new LinearLayoutManager(this.getContext());
-        beefLayout.setOrientation(RecyclerView.HORIZONTAL);
-
-        beefLayout = new LinearLayoutManager(this.getContext());
-        beefLayout.setOrientation(RecyclerView.HORIZONTAL);
-
-        breakfastLayout = new LinearLayoutManager(this.getContext());
-        breakfastLayout.setOrientation(RecyclerView.HORIZONTAL);
-
-        chickenLayout = new LinearLayoutManager(this.getContext());
-        chickenLayout.setOrientation(RecyclerView.HORIZONTAL);
-
-        desertLayout = new LinearLayoutManager(this.getContext());
-        desertLayout.setOrientation(RecyclerView.HORIZONTAL);
-
-    }
+//    private void initLayouts() {
+//        dailyLayout = new LinearLayoutManager(this.getContext());
+//        dailyLayout.setOrientation(RecyclerView.HORIZONTAL);
+//
+//        beefLayout = new LinearLayoutManager(this.getContext());
+//        beefLayout.setOrientation(RecyclerView.HORIZONTAL);
+//
+//        beefLayout = new LinearLayoutManager(this.getContext());
+//        beefLayout.setOrientation(RecyclerView.HORIZONTAL);
+//
+//        breakfastLayout = new LinearLayoutManager(this.getContext());
+//        breakfastLayout.setOrientation(RecyclerView.HORIZONTAL);
+//
+//        chickenLayout = new LinearLayoutManager(this.getContext());
+//        chickenLayout.setOrientation(RecyclerView.HORIZONTAL);
+//
+//        desertLayout = new LinearLayoutManager(this.getContext());
+//        desertLayout.setOrientation(RecyclerView.HORIZONTAL);
+//
+//    }
 
     private void initAdapter() {
-        dailyAdapter = new DailyAdapter(requireContext(), new ArrayList<>());
-        beefAdapter = new DailyAdapter(requireContext(), new ArrayList<>());
-        breakfastAdapter = new DailyAdapter(requireContext(), new ArrayList<>());
-        chickenAdapter = new DailyAdapter(requireContext(), new ArrayList<>());
-        desertAdapter = new DailyAdapter(requireContext(), new ArrayList<>());
+        dailyAdapter = new DailyAdapter(requireContext(), new ArrayList<>(),this);
+        beefAdapter = new DailyAdapter(requireContext(), new ArrayList<>(),this);
+        breakfastAdapter = new DailyAdapter(requireContext(), new ArrayList<>(),this);
+        chickenAdapter = new DailyAdapter(requireContext(), new ArrayList<>(),this);
+        desertAdapter = new DailyAdapter(requireContext(), new ArrayList<>(),this);
 
     }
 
@@ -155,6 +182,8 @@ public class HomeScreen extends Fragment implements HomeScreenViewInterface {
         presenterInterface.getChickenCategory();
         presenterInterface.getDesertCategory();
     }
+
+
 }
 
 /*

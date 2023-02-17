@@ -9,13 +9,15 @@ import com.example.mealplannerapplication.network.NetworkInterface;
 
 import java.util.ArrayList;
 
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.disposables.Disposable;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class HomeScreenPresenter implements HomeScreenPresenterInterface, NetworkInterface {
 
     HomeScreenViewInterface viewInterfaceRef;
-    ArrayList<Meal> mealArrayList = new ArrayList<>();
     RepositoryInterface repoRef;
+    ArrayList<Meal> mealArrayList = new ArrayList<>();
 
 
     public HomeScreenPresenter(HomeScreenViewInterface view, RepositoryInterface repoRef) {
@@ -55,8 +57,41 @@ public class HomeScreenPresenter implements HomeScreenPresenterInterface, Networ
 
     @Override
     public void addToFav(Meal meal) {
+        meal.setFav(true);
+        repoRef.addMealToFav(meal);
+        System.out.println("meal added to favorite");
+    }
+
+    @Override
+    public void handleFavMeal(Meal meal) {
+        repoRef.getFavMeal(meal.getIdMeal()).firstOrError()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread()).subscribe(meal1 -> {
+                    if(!meal.isFav()) {
+                        addToFav(meal);
+                        System.out.println("Checked");
+                    }
+                    else {
+                        removeFromFav(meal);
+                        System.out.println("Unchecked");
+                    }
+                });
 
     }
+
+    @Override
+    public void removeFromFav(Meal meal) {
+        meal.setFav(false);
+        repoRef.removeMealFromFav(meal);
+        System.out.println("meal deleted from favorite");
+    }
+
+    @Override
+    public void handlePlanMeal(Meal meal) {
+        System.out.println("meal added to plan");
+    }
+
+
     @Override
     public void onSuccess(ArrayList<Meal> list) {
         mealArrayList.add(list.get(0));

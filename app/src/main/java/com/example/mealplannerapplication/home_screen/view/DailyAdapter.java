@@ -24,10 +24,12 @@ public class DailyAdapter extends RecyclerView.Adapter<DailyAdapter.MyViewHolder
 
     Context myContext;
     ArrayList<Meal> dailyMeal;
+    private OnMealClickListener customListener;
 
-    public DailyAdapter(@NonNull Context context, @Nullable ArrayList<Meal> meals) {
+    public DailyAdapter(@NonNull Context context, @Nullable ArrayList<Meal> meals, OnMealClickListener customListener) {
         this.myContext = context;
         this.dailyMeal = meals;
+        this.customListener = customListener;
     }
 
     @NonNull
@@ -46,8 +48,8 @@ public class DailyAdapter extends RecyclerView.Adapter<DailyAdapter.MyViewHolder
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         Meal currentMeal = dailyMeal.get(position);
         holder.getMealName().setText(currentMeal.getStrMeal());
-        holder.getMealBtn().setOnClickListener(view -> System.out.println("meal added to plan"));
-        holder.getBookmark().setOnClickListener(view -> System.out.println("meal added to favorite"));
+        holder.getMealBtn().setOnClickListener(view -> customListener.onPlanClicked(currentMeal));
+        holder.getBookmark().setOnClickListener(view -> customListener.onFavClicked(currentMeal));
         Glide.with(myContext).load(currentMeal.getStrMealThumb()).into(holder.getMealImg());
     }
 
