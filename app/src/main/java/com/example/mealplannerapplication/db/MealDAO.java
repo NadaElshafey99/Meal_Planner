@@ -8,13 +8,15 @@ import androidx.room.Upsert;
 
 import com.example.mealplannerapplication.model.Meal;
 
+import java.util.List;
+
 import io.reactivex.rxjava3.core.Flowable;
 
 
 @Dao
 public interface MealDAO {
     @Query("SELECT * From meals WHERE isFav = 1")
-    Flowable<Meal> getFavMeals();
+    Flowable<List<Meal>> getFavMeals();
 
     @Query("SELECT * From meals WHERE idMeal = :id")
     Flowable<Meal> getFavMeal(String id);

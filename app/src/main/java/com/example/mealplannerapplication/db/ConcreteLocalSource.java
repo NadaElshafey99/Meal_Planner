@@ -4,6 +4,8 @@ import android.content.Context;
 
 import com.example.mealplannerapplication.model.Meal;
 
+import java.util.List;
+
 import io.reactivex.rxjava3.core.Flowable;
 
 public class ConcreteLocalSource implements LocalSource{
@@ -40,7 +42,7 @@ public class ConcreteLocalSource implements LocalSource{
     }
 
     @Override
-    public Flowable<Meal> getAllFavMeals() {
+    public Flowable<List<Meal>> getAllFavMeals() {
         return dao.getFavMeals();
     }
 

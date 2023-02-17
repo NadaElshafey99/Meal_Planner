@@ -10,6 +10,8 @@ import com.example.mealplannerapplication.network.NetworkInterface;
 import java.util.ArrayList;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.annotations.NonNull;
+import io.reactivex.rxjava3.core.SingleObserver;
 import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
@@ -27,7 +29,7 @@ public class HomeScreenPresenter implements HomeScreenPresenterInterface, Networ
 
     @Override
     public void getDailyMeals() {
-        for(int i=0; i<5; i++) {
+        for (int i = 0; i < 5; i++) {
             repoRef.getUrl("random.php/");
             repoRef.getData(this);
         }
@@ -46,7 +48,7 @@ public class HomeScreenPresenter implements HomeScreenPresenterInterface, Networ
 
     @Override
     public void getChickenCategory() {
-       Disposable d = repoRef.getMealByCategory("Chicken").subscribe(i -> viewInterfaceRef.showChickenCategory(i.getMeals()));
+        Disposable d = repoRef.getMealByCategory("Chicken").subscribe(i -> viewInterfaceRef.showChickenCategory(i.getMeals()));
     }
 
     @Override
@@ -64,19 +66,34 @@ public class HomeScreenPresenter implements HomeScreenPresenterInterface, Networ
 
     @Override
     public void handleFavMeal(Meal meal) {
-        repoRef.getFavMeal(meal.getIdMeal()).firstOrError()
+        repoRef.getFavMeal(meal.getIdMeal())
+                .firstOrError()
                 .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread()).subscribe(meal1 -> {
-                    if(!meal.isFav()) {
-                        addToFav(meal);
-                        System.out.println("Checked");
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new SingleObserver<Meal>() {
+                    @Override
+                    public void onSubscribe(@NonNull Disposable d) {
+                        System.out.println("subscribed");
+                        repoRef.addMealToFav(meal);
                     }
-                    else {
-                        removeFromFav(meal);
-                        System.out.println("Unchecked");
+
+                    @Override
+                    public void onSuccess(Meal favMeal) {
+                        // The meal is in the database
+                        if (!meal.isFav()) {
+                            addToFav(meal);
+                            System.out.println("Checked");
+                        } else {
+                            removeFromFav(meal);
+                            System.out.println("Unchecked");
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        System.out.println("Error");
                     }
                 });
-
     }
 
     @Override

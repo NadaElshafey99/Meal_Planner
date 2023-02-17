@@ -12,16 +12,23 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mealplannerapplication.R;
+import com.example.mealplannerapplication.db.ConcreteLocalSource;
+import com.example.mealplannerapplication.fav_screen.view.presenter.FavScreenPresenter;
+import com.example.mealplannerapplication.fav_screen.view.presenter.FavScreenPresenterInterface;
 import com.example.mealplannerapplication.home_screen.view.OnMealClickListener;
 import com.example.mealplannerapplication.model.Meal;
+import com.example.mealplannerapplication.model.Repository;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class FavoriteScreen extends Fragment implements FavScreenViewInterface, OnMealClickListener {
 
     RecyclerView favRec;
-    //FavAdapter favAdapter;
+    FavAdapter favAdapter;
+    FavScreenPresenterInterface favPresenterInterface;
+
     public FavoriteScreen() {
         // Required empty public constructor
     }
@@ -29,6 +36,9 @@ public class FavoriteScreen extends Fragment implements FavScreenViewInterface, 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        favPresenterInterface = new FavScreenPresenter(this,
+                Repository.getInstance(ConcreteLocalSource.getInstance(getContext()),
+                        getContext()));
 
     }
 
@@ -43,25 +53,28 @@ public class FavoriteScreen extends Fragment implements FavScreenViewInterface, 
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         favRec = view.findViewById(R.id.fav_rec);
-        //favAdapter = new FavAdapter(requireContext(),new ArrayList<>(),this);
-        favRec.setLayoutManager(new GridLayoutManager(getContext(),2));
+        favRec.setLayoutManager(new GridLayoutManager(getContext(), 2));
+        favAdapter = new FavAdapter(requireContext(), new ArrayList<>(), this);
+        favPresenterInterface.getFavMeals();
+
 
     }
 
     @Override
-    public void showFavorites(ArrayList<Meal> meals) {
-//        favAdapter.setFavList(meals);
-//        favAdapter.notifyDataSetChanged();
-//        favRec.setAdapter(favAdapter);
+    public void showFavorites(List<Meal> meals) {
+
+        favAdapter.setFavList(meals);
+        favAdapter.notifyDataSetChanged();
+        favRec.setAdapter(favAdapter);
     }
 
     @Override
     public void onFavClicked(Meal meal) {
-
+        favPresenterInterface.handleFavMeal(meal);
     }
 
     @Override
     public void onPlanClicked(Meal meal) {
-
+        favPresenterInterface.handlePlanMeal(meal);
     }
 }

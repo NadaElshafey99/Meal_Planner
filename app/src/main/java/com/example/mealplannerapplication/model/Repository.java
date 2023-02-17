@@ -6,6 +6,8 @@ import com.example.mealplannerapplication.db.LocalSource;
 import com.example.mealplannerapplication.network.NetworkInterface;
 import com.example.mealplannerapplication.network.RemoteSource;
 
+import java.util.List;
+
 import io.reactivex.rxjava3.core.Flowable;
 import io.reactivex.rxjava3.core.Observable;
 
@@ -30,6 +32,13 @@ public class Repository implements RepositoryInterface {
         return repository;
     }
 
+    public static Repository getInstance(LocalSource localSource,Context context) {
+        if (repository == null) {
+            repository = new Repository(localSource,context);
+        }
+        return repository;
+    }
+
     private Repository(RemoteSource remoteSource,LocalSource localSource, Context context)
     {
         this.remoteSource=remoteSource;
@@ -40,6 +49,12 @@ public class Repository implements RepositoryInterface {
     private Repository(RemoteSource remoteSource, Context context)
     {
         this.remoteSource=remoteSource;
+        this.context=context;
+    }
+
+    private Repository(LocalSource localSource, Context context)
+    {
+        this.localSource=localSource;
         this.context=context;
     }
 
@@ -60,7 +75,7 @@ public class Repository implements RepositoryInterface {
     }
 
     @Override
-    public Flowable<Meal> getFavMeals() {
+    public Flowable<List<Meal>> getFavMeals() {
        return localSource.getAllFavMeals();
     }
 
