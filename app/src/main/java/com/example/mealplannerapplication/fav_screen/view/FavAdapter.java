@@ -1,4 +1,4 @@
-package com.example.mealplannerapplication.home_screen.view;
+package com.example.mealplannerapplication.fav_screen.view;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -16,37 +16,38 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.mealplannerapplication.R;
+import com.example.mealplannerapplication.home_screen.view.OnMealClickListener;
 import com.example.mealplannerapplication.model.Meal;
 
-import java.util.ArrayList;
+import java.util.List;
 
-public class DailyAdapter extends RecyclerView.Adapter<DailyAdapter.MyViewHolder> {
+public class FavAdapter extends RecyclerView.Adapter<FavAdapter.MyViewHolder> {
 
     Context myContext;
-    ArrayList<Meal> dailyMeal;
+    private List<Meal> favMeals;
     private OnMealClickListener customListener;
 
-    public DailyAdapter(@NonNull Context context, @Nullable ArrayList<Meal> meals, OnMealClickListener customListener) {
+    public FavAdapter(@NonNull Context context, @Nullable List<Meal> meals, OnMealClickListener customListener) {
         this.myContext = context;
-        this.dailyMeal = meals;
+        this.favMeals = meals;
         this.customListener = customListener;
     }
 
     @NonNull
     @Override
-    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public FavAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = (LayoutInflater) myContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View view = layoutInflater.inflate(R.layout.meal_card, parent, false);
-        return new MyViewHolder(view);
+        return new FavAdapter.MyViewHolder(view);
     }
 
-    public void setDailyList(ArrayList<Meal> updatedMeals){
-        this.dailyMeal = updatedMeals;
+    public void setFavList (List<Meal> updatedMeals){
+        this.favMeals = updatedMeals;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        Meal currentMeal = dailyMeal.get(position);
+    public void onBindViewHolder(@NonNull FavAdapter.MyViewHolder holder, int position) {
+        Meal currentMeal = favMeals.get(position);
         holder.getMealName().setText(currentMeal.getStrMeal());
         holder.getMealBtn().setOnClickListener(view -> customListener.onPlanClicked(currentMeal));
         holder.getBookmark().setOnClickListener(view -> customListener.onFavClicked(currentMeal));
@@ -55,7 +56,7 @@ public class DailyAdapter extends RecyclerView.Adapter<DailyAdapter.MyViewHolder
 
     @Override
     public int getItemCount() {
-        return dailyMeal.size();
+        return favMeals.size();
     }
 
     static class MyViewHolder extends RecyclerView.ViewHolder {
@@ -100,5 +101,4 @@ public class DailyAdapter extends RecyclerView.Adapter<DailyAdapter.MyViewHolder
             return mealImg;
         }
 
-    }
-}
+    }}

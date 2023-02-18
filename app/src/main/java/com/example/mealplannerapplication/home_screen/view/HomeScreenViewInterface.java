@@ -17,5 +17,7 @@ public interface HomeScreenViewInterface {
     void breakfast(ArrayList<Meal> meals);
     void showChickenCategory(ArrayList<Meal> meals);
     void showDesertCategory(ArrayList<Meal> meals);
-    void addMeal (Meal meal);
+    void handleFavBookmark(Meal meal);
+
+    void handlePlanBtn(Meal meal);
 }
