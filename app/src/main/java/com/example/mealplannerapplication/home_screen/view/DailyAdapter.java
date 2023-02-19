@@ -30,10 +30,11 @@ import java.util.List;
 
 public class DailyAdapter extends RecyclerView.Adapter<DailyAdapter.MyViewHolder> {
 
-    Context myContext;
-    ArrayList<Meal> dailyMeal;
-    private OnMealClickListener customListener;
+
+    static Context myContext;
+    static ArrayList<Meal> dailyMeal;
     static MealDetailsView mealDetailsView;
+    private OnMealClickListener customListener;
 
 
     public DailyAdapter(@NonNull Context context, @Nullable ArrayList<Meal> meals, OnMealClickListener customListener) {
