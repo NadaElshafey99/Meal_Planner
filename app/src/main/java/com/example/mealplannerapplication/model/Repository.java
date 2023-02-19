@@ -2,9 +2,11 @@ package com.example.mealplannerapplication.model;
 
 import android.content.Context;
 
+import com.example.mealplannerapplication.db.FirebaseDB;
 import com.example.mealplannerapplication.db.LocalSource;
 import com.example.mealplannerapplication.network.NetworkInterface;
 import com.example.mealplannerapplication.network.RemoteSource;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.List;
 
@@ -16,8 +18,11 @@ public class Repository implements RepositoryInterface {
 
     private Context context;
     private RemoteSource remoteSource;
+    private FirebaseDB firebaseDB;
     private LocalSource localSource;
     private static Repository repository = null;
+
+
     public static Repository getInstance(RemoteSource remoteSource,LocalSource localSource,Context context) {
         if (repository == null) {
             repository = new Repository(remoteSource,localSource,context);
@@ -31,6 +36,7 @@ public class Repository implements RepositoryInterface {
         }
         return repository;
     }
+
 
     public static Repository getInstance(LocalSource localSource,Context context) {
         if (repository == null) {
@@ -58,7 +64,6 @@ public class Repository implements RepositoryInterface {
         this.context=context;
     }
 
-
     @Override
     public void getData(NetworkInterface networkInterfaceRef) {
         remoteSource.enqueueCall(networkInterfaceRef);
@@ -80,6 +85,11 @@ public class Repository implements RepositoryInterface {
     }
 
     @Override
+    public Flowable<List<Meal>> getWeeklyMeals() {
+        return localSource.getAllWeeklyMeals();
+    }
+
+    @Override
     public Flowable<Meal> getFavMeal(String id) {
         return localSource.getFavMeal(id);
     }
@@ -90,8 +100,25 @@ public class Repository implements RepositoryInterface {
     }
 
     @Override
+    public void addMealToPlanner(Meal meal) {
+        localSource.insertPlanMeal(meal);
+    }
+
+    @Override
+    public void addMealToFirebasePlanner(Meal meal,FirebaseDB firebaseDB) {
+        this.firebaseDB=firebaseDB;
+        this.firebaseDB.insertPlanMeal(meal);
+        
+    }
+
+    @Override
     public void removeMealFromFav(Meal meal) {
         localSource.insertFavMeal(meal);
+    }
+
+    @Override
+    public Flowable<Meal> getPlanMeal(String id) {
+        return null;
     }
 
 }

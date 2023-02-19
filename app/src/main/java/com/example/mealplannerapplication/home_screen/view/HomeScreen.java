@@ -1,6 +1,8 @@
 package com.example.mealplannerapplication.home_screen.view;
 
+import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +20,7 @@ import com.example.mealplannerapplication.R;
 import com.example.mealplannerapplication.db.ConcreteLocalSource;
 import com.example.mealplannerapplication.home_screen.presenter.HomeScreenPresenter;
 import com.example.mealplannerapplication.home_screen.presenter.HomeScreenPresenterInterface;
+import com.example.mealplannerapplication.login_screen.presenter.LoginPresenter;
 import com.example.mealplannerapplication.model.Meal;
 import com.example.mealplannerapplication.model.Repository;
 
@@ -27,6 +30,8 @@ import java.util.ArrayList;
 
 public class HomeScreen extends Fragment implements HomeScreenViewInterface,OnMealClickListener {
 
+    public static Resources resource;
+    public static String pck;
     RecyclerView myDailyRec;
     RecyclerView beefRec;
     RecyclerView breakfastRec;
@@ -51,7 +56,8 @@ public class HomeScreen extends Fragment implements HomeScreenViewInterface,OnMe
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        resource=getResources();
+        pck= getActivity().getPackageName();
         presenterInterface = new HomeScreenPresenter(this,
                 Repository.getInstance(RetrofitClient.getInstance(),
                         ConcreteLocalSource.getInstance(getContext()),getContext()));
@@ -70,6 +76,22 @@ public class HomeScreen extends Fragment implements HomeScreenViewInterface,OnMe
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_home_screen, container, false);
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        logoutBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sharedPreferences= HomeScreen.this.getActivity().getSharedPreferences(LoginPresenter.SHRED_PREFERENCE_FILE, Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.clear();
+                editor.commit();
+                getActivity().finish();
+
+            }
+        });
     }
 
     @Override
@@ -135,7 +157,7 @@ public class HomeScreen extends Fragment implements HomeScreenViewInterface,OnMe
         breakfastRec = view.findViewById(R.id.breakfast_rec);
         chickenRec = view.findViewById(R.id.chicken_rec);
         desertRec = view.findViewById(R.id.desert_rec);
-
+        logoutBtn=view.findViewById(R.id.logoutBtn);
         myDailyRec.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false));
         beefRec.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false));
         breakfastRec.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false));

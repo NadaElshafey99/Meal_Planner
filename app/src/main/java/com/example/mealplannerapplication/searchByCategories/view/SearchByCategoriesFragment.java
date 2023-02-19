@@ -104,7 +104,7 @@ public class SearchByCategoriesFragment extends Fragment implements SearchByCate
         observable.subscribe(c->{
             filteredList=new ArrayList<>(categories
                     .stream()
-                    .filter(i-> i.getStrCategory().toLowerCase().contains(c.toString()))
+                    .filter(i-> i.getStrCategory().toLowerCase().startsWith(c.toString()))
                     .collect(Collectors.toList()));
             myAdapter.setList(filteredList);
             myAdapter.notifyDataSetChanged();
@@ -122,7 +122,7 @@ public class SearchByCategoriesFragment extends Fragment implements SearchByCate
 
     @Override
     public void failedToShowCategories(String errMsg) {
-        Toast.makeText(getContext(), errMsg, Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(), getString(R.string.somethingWentWrong), Toast.LENGTH_SHORT).show();
     }
 
     @Override

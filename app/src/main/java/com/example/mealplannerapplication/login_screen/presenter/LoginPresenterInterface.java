@@ -7,4 +7,5 @@ import com.example.mealplannerapplication.model.User;
 public interface LoginPresenterInterface {
     public void checkUser(User user);
     public void userToStillLogin(SharedPreferences sharedPreferences);
+    void getDataWeeklyMealsFromFirebase();
 }

@@ -37,6 +37,7 @@ dependencies {
 
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'com.google.android.material:material:1.8.0'
+    implementation 'com.google.android.material:material:1.9.0-alpha01'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation 'androidx.navigation:navigation-fragment:2.5.3'
     implementation 'androidx.navigation:navigation-ui:2.5.3'
@@ -49,10 +50,11 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth:21.1.0'
     implementation 'com.google.firebase:firebase-database:20.1.0'
 
-    //Rx
+    //Rx/Room
     implementation 'com.github.akarnokd:rxjava3-retrofit-adapter:3.0.0'
     implementation 'io.reactivex.rxjava3:rxjava:3.1.6'
     implementation 'io.reactivex.rxjava3:rxandroid:3.0.2'
+    implementation 'androidx.room:room-rxjava3:2.5.0'
     implementation "com.squareup.retrofit2:adapter-rxjava2:2.9.0"
 
     //Retrofit
@@ -69,6 +71,7 @@ dependencies {
 
     implementation 'jp.wasabeef:blurry:4.0.1'
     implementation 'com.airbnb.android:lottie:3.4.1'
+    implementation 'com.pierfrancescosoffritti.androidyoutubeplayer:core:11.1.0'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
     testImplementation 'junit:junit:4.13.2'

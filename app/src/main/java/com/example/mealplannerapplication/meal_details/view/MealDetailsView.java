@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -18,9 +19,11 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.mealplannerapplication.R;
+import com.example.mealplannerapplication.addMealToWeeklyPlan.view.AddMealToWeeklyPlanner;
 import com.example.mealplannerapplication.meal_details.presenter.MealDetailsPresenter;
 import com.example.mealplannerapplication.model.Ingredients;
 import com.example.mealplannerapplication.model.Meal;
@@ -48,8 +51,8 @@ public class MealDetailsView extends Fragment implements MealDetailsViewInterfac
     private RecyclerView ingredientsRecyclerView;
     private FragmentManager fragmentManager;
     private ResultFromSearchFragment resultFromSearchFragment;
-
-    private android.app.FragmentTransaction fragmentTransaction;
+    private AddMealToWeeklyPlanner addMealToWeeklyPlanner;
+    private FragmentTransaction fragmentTransaction;
     private ArrayList<String> ingredientList;
     private ArrayList<String> measureList;
     private YouTubePlayerView youTubePlayer;
@@ -90,7 +93,7 @@ public class MealDetailsView extends Fragment implements MealDetailsViewInterfac
         mealImage=view.findViewById(R.id.details_image);
         countryMealImage=view.findViewById(R.id.country_img);
         ingredientsRecyclerView=view.findViewById(R.id.detail_ingredientsRecyclerView);
-        addToPlan=view.findViewById(R.id.details_addBtn2);
+        addToPlan=view.findViewById(R.id.addToPlanButton);
         ingredientsAdapter=new IngredientsAdapter(getContext(),ingredientList,measureList);
 
         return view;
@@ -101,17 +104,13 @@ public class MealDetailsView extends Fragment implements MealDetailsViewInterfac
         super.onViewCreated(view, savedInstanceState);
         ingredientsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false));
         fragmentManager=getActivity().getSupportFragmentManager();
-        mealDetailsPresenter=new MealDetailsPresenter
-                (this,
-                        Repository.getInstance(RetrofitClient.getInstance(),getContext())
-                );
+        mealDetailsPresenter=new MealDetailsPresenter(this, Repository.getInstance(RetrofitClient.getInstance(),getContext()));
         mealDetailsPresenter.getMealDetails(sendUrl());
         ingredientsRecyclerView.setAdapter(ingredientsAdapter);
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getActivity().finish();
-
+                getActivity().getSupportFragmentManager().popBackStack();
             }
         });
 
@@ -140,16 +139,30 @@ public class MealDetailsView extends Fragment implements MealDetailsViewInterfac
                 public void onReady(@NonNull YouTubePlayer youTubePlayer) {
                     if (youtubeURLFound) {
                         String videoId = splitYoutubeUrl[1];
-                        youTubePlayer.cueVideo(videoId,0);
-//                        youTubePlayer.loadVideo(videoId, 0);
-                    }
+                        youTubePlayer.cueVideo(videoId,0);}
                 }
             });
         } else {
             youTubePlayer.setVisibility(View.GONE);
         }
+        addToPlan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle bundle = new Bundle();
+                bundle.putString("IdMeal",meal.getIdMeal());
+                bundle.putString("urlImage",meal.getStrMealThumb());
+                bundle.putString("mealName",meal.getStrMeal());
+                addMealToWeeklyPlanner=new AddMealToWeeklyPlanner();
+                addMealToWeeklyPlanner.setArguments(bundle);
+                fragmentTransaction=fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.fragmentContainerView,addMealToWeeklyPlanner);
+                fragmentTransaction.addToBackStack("mealDetailsFragment");
+                fragmentTransaction.commit();
+            }
+        });
 
     }
+
 
     private void getAllIngredients(Meal meal) {
         finishIngredients=false;
@@ -332,7 +345,7 @@ public class MealDetailsView extends Fragment implements MealDetailsViewInterfac
 
     @Override
     public void failedToShowMealDetails(String errMsg) {
-
+        Toast.makeText(getContext(), getString(R.string.somethingWentWrong), Toast.LENGTH_SHORT).show();
     }
 
     @Override

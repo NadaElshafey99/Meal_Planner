@@ -27,7 +27,7 @@ public class SearchByIngredientsPresenter implements SearchByIngredientsPresente
 
     @Override
     public void onSuccess(ArrayList<Meal> list) {
-        searchByIngredientsViewInterface.showCategories(list);
+        searchByIngredientsViewInterface.showIngredients(list);
     }
 
     @Override
@@ -37,6 +37,6 @@ public class SearchByIngredientsPresenter implements SearchByIngredientsPresente
 
     @Override
     public void onFailure(String errMsg) {
-        searchByIngredientsViewInterface.failedToShowCategories(errMsg);
+        searchByIngredientsViewInterface.failedToShowIngredients(errMsg);
     }
 }
