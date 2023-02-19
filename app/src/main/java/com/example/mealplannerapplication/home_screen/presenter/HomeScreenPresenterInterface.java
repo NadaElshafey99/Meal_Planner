@@ -14,4 +14,10 @@ public interface HomeScreenPresenterInterface {
     void getDesertCategory();
 
     void addToFav(Meal meal);
+
+    void handleFavMeal(Meal meal);
+
+    void removeFromFav(Meal meal);
+
+    void handlePlanMeal(Meal meal);
 }
