@@ -2,23 +2,22 @@ package com.example.mealplannerapplication.db;
 
 import android.content.Context;
 
-import androidx.lifecycle.LiveData;
-
 import com.example.mealplannerapplication.model.Meal;
 
-import java.util.ArrayList;
 import java.util.List;
+
+import io.reactivex.rxjava3.core.Flowable;
 
 public class ConcreteLocalSource implements LocalSource{
 
     private MealDAO dao;
     private static ConcreteLocalSource localSource = null;
-    private LiveData<List<Meal>> favMeals;
+
 
     private ConcreteLocalSource(Context context){
         AppDataBase db = AppDataBase.getInstance(context.getApplicationContext());
         dao = db.mealDAO();
-        favMeals = dao.getFavMeals();
+
     }
 
     public static ConcreteLocalSource getInstance(Context context){
@@ -28,17 +27,27 @@ public class ConcreteLocalSource implements LocalSource{
         return localSource;
     }
     @Override
-    public void insertMovie(Meal meal) {
+    public void insertFavMeal(Meal meal) {
         new Thread(() -> dao.addMeal(meal)).start();
     }
 
     @Override
-    public void deleteMovie(Meal meal) {
+    public void insertPlanMeal(Meal meal) {
+        new Thread(() -> dao.addMeal(meal)).start();
+    }
+
+    @Override
+    public void deleteMeal(Meal meal) {
         new Thread(() -> dao.delete(meal)).start();
     }
 
     @Override
-    public LiveData<List<Meal>> getAllFavMeals() {
-        return favMeals;
+    public Flowable<List<Meal>> getAllFavMeals() {
+        return dao.getFavMeals();
+    }
+
+    @Override
+    public Flowable<Meal> getFavMeal(String id) {
+        return dao.getFavMeal(id);
     }
 }

@@ -2,11 +2,15 @@ package com.example.mealplannerapplication.model;
 
 import androidx.annotation.Keep;
 
+import java.util.ArrayList;
+
 @Keep
 public class User {
    private String userName;
    private String userEmail;
    private String userPassword;
+
+   private ArrayList<Meal> favMeals;
    private String userConfirmPassword;
 
        public User()
@@ -56,5 +60,13 @@ public class User {
 
     public void setUserPassword(String userPassword) {
         this.userPassword = userPassword;
+    }
+
+    public ArrayList<Meal> getFavMeals() {
+        return favMeals;
+    }
+
+    public void setFavMeals(ArrayList<Meal> favMeals) {
+        this.favMeals = favMeals;
     }
 }

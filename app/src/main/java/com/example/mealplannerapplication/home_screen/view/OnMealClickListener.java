@@ -4,5 +4,6 @@ import com.example.mealplannerapplication.model.Meal;
 
 public interface OnMealClickListener {
 
-    void onClick (Meal meal);
+    void onFavClicked(Meal meal);
+    void onPlanClicked(Meal meal);
 }
