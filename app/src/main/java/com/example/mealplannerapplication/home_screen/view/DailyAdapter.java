@@ -23,7 +23,6 @@ import com.example.mealplannerapplication.R;
 import com.example.mealplannerapplication.SearchByGroupActivity;
 import com.example.mealplannerapplication.meal_details.view.MealDetailsView;
 import com.example.mealplannerapplication.model.Meal;
-import com.example.mealplannerapplication.resultFromSearchView.view.ResultFromSearchFragment;
 import com.example.mealplannerapplication.search.view.SearchFragment;
 
 import java.util.ArrayList;

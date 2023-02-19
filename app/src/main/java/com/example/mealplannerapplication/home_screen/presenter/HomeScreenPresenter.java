@@ -33,8 +33,23 @@ public class HomeScreenPresenter implements HomeScreenPresenterInterface, Networ
             repoRef.getUrl("random.php/");
             repoRef.getData(this);
         }
+                  /*  @Override
+                    public void onSuccess(Meal favMeal) {
+                        // The meal is in the database
+                        if (!meal.isFav()) {
+                            addToFav(meal);
+                            System.out.println("Checked");
+                        } else {
+                            removeFromFav(meal);
+                            System.out.println("Unchecked");
+                        }
+                    }
 
-    }
+                    @Override
+                    public void onError(Throwable e) {
+                        System.out.println("Error");
+                    }*/
+                };
 
 
     public void getBeefCategory() {
