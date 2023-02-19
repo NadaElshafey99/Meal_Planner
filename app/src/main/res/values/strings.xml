@@ -56,4 +56,9 @@
     <string name="favorite">favorite</string>
     <string name="myPlan">my plan</string>
     <string name="noIngredientsAdded">No ingredients selected</string>
+    <string name="mealName">Meal name: </string>
+    <string name="mealCountry">Meal country</string>
+    <string name="mealDescription">Meal Description</string>
+    <string name="step">Steps</string>
+    <string name="showDetails">Show details</string>
 </resources>

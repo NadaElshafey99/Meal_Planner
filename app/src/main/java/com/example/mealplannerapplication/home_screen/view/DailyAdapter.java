@@ -1,6 +1,10 @@
 package com.example.mealplannerapplication.home_screen.view;
 
+import static com.example.mealplannerapplication.search.view.SearchFragment.FRAGMENT_NAME;
+
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,15 +20,23 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.mealplannerapplication.R;
+import com.example.mealplannerapplication.SearchByGroupActivity;
+import com.example.mealplannerapplication.meal_details.view.MealDetailsView;
 import com.example.mealplannerapplication.model.Meal;
+import com.example.mealplannerapplication.resultFromSearchView.view.ResultFromSearchFragment;
+import com.example.mealplannerapplication.search.view.SearchFragment;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class DailyAdapter extends RecyclerView.Adapter<DailyAdapter.MyViewHolder> {
 
-    Context myContext;
-    ArrayList<Meal> dailyMeal;
+
+    static Context myContext;
+    static ArrayList<Meal> dailyMeal;
+    static MealDetailsView mealDetailsView;
     private OnMealClickListener customListener;
+
 
     public DailyAdapter(@NonNull Context context, @Nullable ArrayList<Meal> meals, OnMealClickListener customListener) {
         this.myContext = context;
@@ -48,7 +60,14 @@ public class DailyAdapter extends RecyclerView.Adapter<DailyAdapter.MyViewHolder
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         Meal currentMeal = dailyMeal.get(position);
         holder.getMealName().setText(currentMeal.getStrMeal());
-        holder.getMealBtn().setOnClickListener(view -> customListener.onPlanClicked(currentMeal));
+        holder.getMealBtn().setOnClickListener(view -> {
+            Intent intent = new Intent(myContext, SearchByGroupActivity.class);
+            intent.putExtra(SearchFragment.FRAGMENT_NAME, "mealDetailsFragment");
+            intent.putExtra("IdMeal", currentMeal.getIdMeal());
+            mealDetailsView=new MealDetailsView();
+            myContext.startActivity(intent);
+
+        });
         holder.getBookmark().setOnClickListener(view -> customListener.onFavClicked(currentMeal));
         Glide.with(myContext).load(currentMeal.getStrMealThumb()).into(holder.getMealImg());
     }

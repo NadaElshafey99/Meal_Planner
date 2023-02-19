@@ -1,22 +1,29 @@
 package com.example.mealplannerapplication.search.view;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.InputType;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 
 import com.example.mealplannerapplication.R;
 import com.example.mealplannerapplication.SearchByGroupActivity;
 import com.example.mealplannerapplication.model.Ingredients;
+import com.example.mealplannerapplication.searchBar.view.SearchBarActionScreen;
+import com.google.android.material.internal.TextWatcherAdapter;
 
 import java.util.ArrayList;
 
@@ -27,6 +34,7 @@ public class SearchFragment extends Fragment {
     private ArrayList<Ingredients> sampleIngredientsList;
     private ArrayList<Ingredients> sampleCategoriesList;
     private ArrayList<Ingredients> sampleCountriesList;
+    private EditText editTextSearchByMeals;
     private MyAdapter myAdapter;
     private AdapterForIngredients adapterForIngredients;
     public static final String FRAGMENT_NAME="FRAGMENT_NAME";
@@ -53,6 +61,7 @@ public class SearchFragment extends Fragment {
         viewIngredients_btn=view.findViewById(R.id.viewAll_ingredients_btn);
         viewCategories_btn=view.findViewById(R.id.viewAll_categories_btn);
         viewCountries_btn=view.findViewById(R.id.viewAll_countries_btn);
+        editTextSearchByMeals=view.findViewById(R.id.editTextSearchByMeals);
         ingredientsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false));
         categoriesRecyclerView.setLayoutManager(new GridLayoutManager(getContext(),2));
         countriesRecyclerView.setLayoutManager(new GridLayoutManager(getContext(),2));
@@ -86,6 +95,15 @@ public class SearchFragment extends Fragment {
         sampleIngredientsList.add(new Ingredients("Tomatoes","https://www.themealdb.com/images/ingredients/tomatoes.png"));
         adapterForIngredients =new AdapterForIngredients(getContext(),sampleIngredientsList);
         ingredientsRecyclerView.setAdapter(adapterForIngredients);
+
+        editTextSearchByMeals.setInputType(InputType.TYPE_NULL);
+        editTextSearchByMeals.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(getActivity(), SearchBarActionScreen.class);
+                startActivity(intent);
+            }
+        });
 
         viewIngredients_btn.setOnClickListener(new View.OnClickListener() {
             @Override

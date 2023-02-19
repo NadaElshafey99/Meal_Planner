@@ -51,14 +51,14 @@ public class RetrofitClient implements RemoteSource {
         Observable<RetrievedList> call = callsToServer.getDataFomApi(url);
         call.subscribeOn(Schedulers.io())
                 .map(RetrievedList::getMeals)
+                .doOnError(throwable ->networkInterface.onFailure(throwable.getMessage()))
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         item -> {
                             mealsList = (ArrayList<Meal>) item;
                             networkInterface.onSuccess(mealsList);
-                        }
-
-                );
+                        },
+                        err->networkInterface.onFailure("something went wrong"));
     }
 
     @Override

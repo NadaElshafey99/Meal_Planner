@@ -24,10 +24,6 @@ public class ChosenIngredientsFragment extends Fragment {
     private RecyclerView ingredientsChosenRecyclerView;
     private ArrayList<Meal> chosenIngredientList;
     private AdapterForChosenIngredients adapterForChosenIngredients;
-    private static FragmentManager fragmentManager;
-    private static ResultFromSearchFragment resultFromSearchFragment;
-
-    private static FragmentTransaction fragmentTransaction;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

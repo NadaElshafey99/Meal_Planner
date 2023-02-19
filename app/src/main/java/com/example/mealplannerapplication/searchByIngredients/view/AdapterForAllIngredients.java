@@ -27,16 +27,16 @@ public class AdapterForAllIngredients extends RecyclerView.Adapter<AdapterForAll
     Context context;
     Meal ingredient;
     Communicator communicator;
-    protected static ArrayList<? extends Parcelable>  ingredientsList;
+    protected List<Meal> ingredientsList;
     private LayoutInflater inflater;
 
-    public AdapterForAllIngredients(Context context,ArrayList<? extends Parcelable> ingredientsList ,Communicator communicator){
+    public AdapterForAllIngredients(Context context,List<Meal> ingredientsList,Communicator communicator){
         this.context=context;
         this.ingredientsList=ingredientsList;
         this.communicator=communicator;
     }
-    public void setList(List<?> updatedCategories){
-        this.ingredientsList = (ArrayList<? extends Parcelable>) updatedCategories;
+    public void setList(List<Meal> updatedCategories){
+        this.ingredientsList =updatedCategories;
 
     }
     @NonNull

@@ -9,6 +9,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.Navigation;
 
+import com.example.mealplannerapplication.meal_details.view.MealDetailsView;
 import com.example.mealplannerapplication.search.view.SearchFragment;
 import com.example.mealplannerapplication.searchByCategories.view.SearchByCategoriesFragment;
 import com.example.mealplannerapplication.searchByCountry.view.SearchByCountriesFragment;
@@ -19,8 +20,10 @@ public class SearchByGroupActivity extends AppCompatActivity {
     private SearchByCategoriesFragment searchByCategoriesFragment;
     private SearchByCountriesFragment searchByCountriesFragment;
     private SearchByIngredientFragment searchByIngredientFragment;
+    private MealDetailsView mealDetailsView;
     private FragmentManager fragmentManager;
     private FragmentTransaction fragmentTransaction;
+
     private Bundle savedInstanceState;
 
     @Override
@@ -30,22 +33,15 @@ public class SearchByGroupActivity extends AppCompatActivity {
         fragmentManager=getSupportFragmentManager();
         fragmentTransaction= fragmentManager.beginTransaction();
         if (savedInstanceState != null) {
-            //Restore the fragment's instance
             searchByIngredientFragment = (SearchByIngredientFragment) getSupportFragmentManager().getFragment(savedInstanceState, "myFragmentName");
         }
         else
         {
             searchByIngredientFragment=new SearchByIngredientFragment();
         }
-
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
         Intent intent = getIntent();
-
         String fragment = intent.getExtras().getString(SearchFragment.FRAGMENT_NAME);
+        String idMeal = intent.getExtras().getString("IdMeal");
         switch(fragment){
 
             case "searchByCategoriesFragment":
@@ -67,14 +63,28 @@ public class SearchByGroupActivity extends AppCompatActivity {
                         .add(R.id.fragmentContainerView,searchByIngredientFragment);
                 fragmentTransaction.commit();
                 break;
-        }
 
+            case "mealDetailsFragment":
+                mealDetailsView=new MealDetailsView();
+                if(idMeal!=null)
+                {
+                    Bundle bundle=new Bundle();
+                    bundle.putString("IdMeal",idMeal);
+                    mealDetailsView.setArguments(bundle);
+                }
+                fragmentTransaction
+                        .add(R.id.fragmentContainerView,mealDetailsView );
+                fragmentTransaction.commit();
+                break;
+        }
     }
+
+
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        if(searchByIngredientFragment!=null) {
+       /* if(searchByIngredientFragment!=null) {
             getSupportFragmentManager().putFragment(outState, "myFragmentName", searchByIngredientFragment);
-        }
+        }*/
     }
 }

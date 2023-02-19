@@ -42,12 +42,16 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder>{
     Meal category;
     private List<Meal> categoriesList;
     private List<Meal> filteredList;
+    private List<Meal> savedCategoryList=new ArrayList<>();
     private LayoutInflater inflater;
     private Meal clickedDataItem;
     public MyAdapter(Context context,List<Meal> categoriesList){
         this.context=context;
         this.categoriesList=categoriesList;
+        savedCategoryList=categoriesList;
     }
+
+
     @NonNull
     @Override
     public MyAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -56,16 +60,15 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder>{
         MyViewHolder myViewHolder=new MyViewHolder(view);
         return myViewHolder;
     }
-
     @Override
     public void onBindViewHolder(@NonNull MyAdapter.MyViewHolder holder, int position) {
         category=categoriesList.get(position);
         holder.categoryName.setText(category.getStrCategory());
         Glide.with(context).load("https://www.themealdb.com//images//category//"+category.getStrCategory()+".png")
                 .placeholder(new ColorDrawable(Color.TRANSPARENT))
+//                .placeholder(context.getDrawable(R.drawable.home))
                 .into(holder.categoryImage);
     }
-
     @Override
     public int getItemCount() {
         return categoriesList.size();
@@ -79,42 +82,23 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder>{
         ConstraintLayout layout;
         TextView categoryName;
         ImageView categoryImage;
+
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            layout=itemView.findViewById(R.id.recyclerViewCategories);
-            categoryImage=itemView.findViewById(R.id.categories_image);
-            categoryName=itemView.findViewById(R.id.tv_categories);
-            itemView.setOnClickListener(new View.OnClickListener(){
+            layout = itemView.findViewById(R.id.recyclerViewCategories);
+            categoryImage = itemView.findViewById(R.id.categories_image);
+            categoryName = itemView.findViewById(R.id.tv_categories);
+            itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     int pos = getAdapterPosition();
                     // check if item still exists
-                    if(pos != RecyclerView.NO_POSITION){
+                    if (pos != RecyclerView.NO_POSITION) {
                         clickedDataItem = categoriesList.get(pos);
                         SearchByCategoriesFragment.getMealsOfSelectedItem(clickedDataItem);
                     }
                 }
             });
-            /*Observable<CharSequence> observable= Observable.create(i->{
-                @SuppressLint("RestrictedApi")
-                TextWatcher textWatcher=new TextWatcherAdapter(){
-                    @Override
-                    public void onTextChanged(@NonNull CharSequence s, int start, int before, int count) {
-                        i.onNext(s);
-                    }
-                };
-                editTextSearchByCategories.addTextChangedListener(textWatcher);
-                i.setCancellable(()->editTextSearchByCategories.removeTextChangedListener(textWatcher));
-            });
-
-            observable.subscribe(c->{
-                filteredList=new ArrayList<>(categoriesList
-                        .stream()
-                        .filter(i-> i.getStrCategory().startsWith(c.toString()))
-                        .collect(Collectors.toList()));
-                setList(filteredList);
-                notifyDataSetChanged();});*/
         }
-
-        }
+     }
     }
