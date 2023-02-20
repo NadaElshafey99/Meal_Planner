@@ -23,8 +23,10 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
+import com.example.mealplannerapplication.HasNetworkConnection;
 import com.example.mealplannerapplication.NavigationActivity;
 import com.example.mealplannerapplication.R;
+import com.example.mealplannerapplication.db.ConcreteFirebaseDB;
 import com.example.mealplannerapplication.login_screen.presenter.LoginPresenter;
 import com.example.mealplannerapplication.model.User;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -37,9 +39,10 @@ import com.google.firebase.auth.FirebaseAuthInvalidUserException;
 import com.google.firebase.auth.FirebaseUser;
 
 
-public class LoginScreen extends Fragment implements LoginScreenInterface{
-    private TextView forgotten;
+public class LoginScreen extends Fragment implements LoginScreenInterface {
     Button mySkip;
+    SharedPreferences sharedPreferences;
+    private TextView forgotten;
     private Button signInButton;
     private TextInputLayout email;
     private TextInputLayout password;
@@ -47,7 +50,7 @@ public class LoginScreen extends Fragment implements LoginScreenInterface{
     private Editable userPassword;
     private LoginPresenter loginPresenter;
     private User user;
-    SharedPreferences sharedPreferences;
+    private ConcreteFirebaseDB concreteFirebaseDB;
 
     public LoginScreen() {
         // Required empty public constructor
@@ -56,27 +59,27 @@ public class LoginScreen extends Fragment implements LoginScreenInterface{
     @Override
     public void onStart() {
         super.onStart();
-        sharedPreferences= this.getActivity().getSharedPreferences(LoginPresenter.SHRED_PREFERENCE_FILE, Context.MODE_PRIVATE);
+        sharedPreferences = this.getActivity().getSharedPreferences(LoginPresenter.SHRED_PREFERENCE_FILE, Context.MODE_PRIVATE);
         loginPresenter.userToStillLogin(sharedPreferences);
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
+        concreteFirebaseDB=new ConcreteFirebaseDB(getContext());
     }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_main_screen, container, false);
         mySkip = view.findViewById(R.id.skipBtn);
         forgotten = view.findViewById(R.id.forgetText);
-        signInButton=view.findViewById(R.id.singInBtn);
-        email=view.findViewById(R.id.emailLayout);
-        password=view.findViewById(R.id.passwordLayout);
-        userEmail=email.getEditText().getText();
-        userPassword=password.getEditText().getText();
-        loginPresenter=new LoginPresenter(this);
+        signInButton = view.findViewById(R.id.singInBtn);
+        email = view.findViewById(R.id.emailLayout);
+        password = view.findViewById(R.id.passwordLayout);
+        userEmail = email.getEditText().getText();
+        userPassword = password.getEditText().getText();
+        loginPresenter = new LoginPresenter(this,concreteFirebaseDB);
         signInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -91,10 +94,17 @@ public class LoginScreen extends Fragment implements LoginScreenInterface{
                 } else {
                     password.setError(null);
                 }
-                if(!TextUtils.isEmpty(userEmail) && !TextUtils.isEmpty(userPassword))
-                {
-                    user=new User(userEmail.toString(),userPassword.toString());
-                    loginPresenter.checkUser(user);
+                if (!TextUtils.isEmpty(userEmail) && !TextUtils.isEmpty(userPassword)) {
+                    user = new User(userEmail.toString(), userPassword.toString());
+                   
+                    if (HasNetworkConnection.getInstance(getContext()).isOnline()) {
+
+                        loginPresenter.checkUser(user);
+
+                    } else {
+
+                        Toast.makeText(getContext(), getString(R.string.pleaseCheckYourConnection), Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
         });
@@ -105,7 +115,7 @@ public class LoginScreen extends Fragment implements LoginScreenInterface{
         forgotten.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                 Navigation.findNavController(view).navigate(R.id.action_mainScreen_to_forgetPasswordFragment2);
+                Navigation.findNavController(view).navigate(R.id.action_mainScreen_to_forgetPasswordFragment2);
 
             }
         });
@@ -133,18 +143,20 @@ public class LoginScreen extends Fragment implements LoginScreenInterface{
 
     @Override
     public void onSuccessCheckUser() {
+        loginPresenter.getDataWeeklyMealsFromFirebase();
         Toast.makeText(getActivity(), "Successful", Toast.LENGTH_SHORT).show();
-        Intent intent=new Intent(getActivity(),  NavigationActivity.class);
+        Intent intent = new Intent(getActivity(), NavigationActivity.class);
         startActivity(intent);
     }
+
     @Override
     public void onFailureCheckUser() {
-        Toast.makeText(getActivity(),getString(R.string.somethingWentWrong), Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), getString(R.string.somethingWentWrong), Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void alreadyLogin() {
-        Intent intent=new Intent(getActivity(), NavigationActivity.class);
+        Intent intent = new Intent(getActivity(), NavigationActivity.class);
         startActivity(intent);
     }
 
@@ -159,7 +171,6 @@ public class LoginScreen extends Fragment implements LoginScreenInterface{
         password.setError(getString(R.string.invalidCredentials));
 
     }
-
 
 
 }

@@ -20,6 +20,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.mealplannerapplication.HasNetworkConnection;
 import com.example.mealplannerapplication.R;
 import com.example.mealplannerapplication.SearchByGroupActivity;
 import com.example.mealplannerapplication.model.Meal;
@@ -34,37 +35,42 @@ import java.util.stream.Collectors;
 
 import io.reactivex.rxjava3.core.Observable;
 
-public class SearchByIngredientFragment extends Fragment implements SearchByIngredientsViewInterface,Communicator{
+public class SearchByIngredientFragment extends Fragment implements SearchByIngredientsViewInterface, Communicator {
 
+    public static final String FRAGMENT_NAME = "FRAGMENT_NAME";
     private static ChosenIngredientsFragment chosenIngredientsFragment;
     private static AllIngredientsFragment allIngredientsFragment;
-    private String url;
     private static FragmentManager fragmentManager;
     private static FragmentTransaction fragmentTransaction;
-    private SearchByIngredientsPresenter searchByIngredientsPresenter;
     private static ResultFromSearchFragment resultFromSearchFragment;
+    boolean emptyList = true;
+    private String url;
+    private SearchByIngredientsPresenter searchByIngredientsPresenter;
     private ImageView backBtn;
     private Button searchBtn;
     private EditText editTextSearchByIngredients;
-    boolean emptyList=true;
-    public static final String FRAGMENT_NAME="FRAGMENT_NAME";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if(savedInstanceState!=null)
-        {
-            allIngredientsFragment = (AllIngredientsFragment)getActivity().getSupportFragmentManager().getFragment(savedInstanceState, "saveFragment");
+        if (savedInstanceState != null) {
+            allIngredientsFragment = (AllIngredientsFragment) getActivity().getSupportFragmentManager().getFragment(savedInstanceState, "saveFragment");
+        } else {
+            allIngredientsFragment = new AllIngredientsFragment(this);
         }
-        else
-        {
-            allIngredientsFragment=new AllIngredientsFragment(this);
-        }
-        chosenIngredientsFragment=new ChosenIngredientsFragment();
-        searchByIngredientsPresenter=new SearchByIngredientsPresenter
+        chosenIngredientsFragment = new ChosenIngredientsFragment();
+        searchByIngredientsPresenter = new SearchByIngredientsPresenter
                 (this,
-                        Repository.getInstance(RetrofitClient.getInstance(),getContext()));
-        searchByIngredientsPresenter.getIngredients(sendUrl());
+                        Repository.getInstance(RetrofitClient.getInstance(), getContext()));
+        if (HasNetworkConnection.getInstance(getContext()).isOnline()) {
+
+           searchByIngredientsPresenter.getIngredients(sendUrl());
+
+        } else {
+
+            Toast.makeText(getContext(), getString(R.string.pleaseCheckYourConnection), Toast.LENGTH_SHORT).show();
+        }
+
 
     }
 
@@ -72,27 +78,30 @@ public class SearchByIngredientFragment extends Fragment implements SearchByIngr
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view=inflater.inflate(R.layout.fragment_search_by_ingredient, container, false);
-        searchBtn=view.findViewById(R.id.search_btn);
-        backBtn=view.findViewById(R.id.back_arrow);
-        editTextSearchByIngredients=view.findViewById(R.id.editTextSearchByIngredients);
+        View view = inflater.inflate(R.layout.fragment_search_by_ingredient, container, false);
+        searchBtn = view.findViewById(R.id.search_btn);
+        backBtn = view.findViewById(R.id.back_arrow);
+        editTextSearchByIngredients = view.findViewById(R.id.editTextSearchByIngredients);
         return view;
     }
+
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         //Save the fragment's instance
-      getActivity().getSupportFragmentManager().putFragment(outState, "saveFragment", allIngredientsFragment);
+        getActivity().getSupportFragmentManager().putFragment(outState, "saveFragment", allIngredientsFragment);
     }
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        fragmentManager=getActivity().getSupportFragmentManager();
-        fragmentTransaction= fragmentManager.beginTransaction();
-        if (!allIngredientsFragment.isAdded()){
-            fragmentTransaction.add(R.id.ingredientsRecyclerView,allIngredientsFragment,"saveFragment");}
-        if (!chosenIngredientsFragment.isAdded()){
-            fragmentTransaction.add(R.id.selectedIngredientsRecyclerView,chosenIngredientsFragment);
+        fragmentManager = getActivity().getSupportFragmentManager();
+        fragmentTransaction = fragmentManager.beginTransaction();
+        if (!allIngredientsFragment.isAdded()) {
+            fragmentTransaction.add(R.id.ingredientsRecyclerView, allIngredientsFragment, "saveFragment");
+        }
+        if (!chosenIngredientsFragment.isAdded()) {
+            fragmentTransaction.add(R.id.selectedIngredientsRecyclerView, chosenIngredientsFragment);
         }
         fragmentTransaction.commit();
 
@@ -100,12 +109,10 @@ public class SearchByIngredientFragment extends Fragment implements SearchByIngr
         searchBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(!emptyList) {
+                if (!emptyList) {
                     getMealsOfSelectedItems((ArrayList<Meal>) AdapterForChosenIngredients.ingredientsList);
-                }
-                else
-                {
-                    Toast.makeText(getContext(),getString(R.string.noIngredientsAdded), Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getContext(), getString(R.string.noIngredientsAdded), Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -117,51 +124,51 @@ public class SearchByIngredientFragment extends Fragment implements SearchByIngr
             }
         });
 
-        Observable<CharSequence> observable= Observable.create(i->{
+        Observable<CharSequence> observable = Observable.create(i -> {
             @SuppressLint("RestrictedApi")
-            TextWatcher textWatcher=new TextWatcherAdapter(){
+            TextWatcher textWatcher = new TextWatcherAdapter() {
                 @Override
                 public void onTextChanged(@NonNull CharSequence s, int start, int before, int count) {
                     i.onNext(s);
                 }
             };
             editTextSearchByIngredients.addTextChangedListener(textWatcher);
-            i.setCancellable(()->editTextSearchByIngredients.removeTextChangedListener(textWatcher));
+            i.setCancellable(() -> editTextSearchByIngredients.removeTextChangedListener(textWatcher));
         });
         allIngredientsFragment.filterList(observable);
-        }
+    }
+
     @Override
     public void addIngredients(Meal item) {
-        emptyList=false;
+        emptyList = false;
         searchBtn.setBackgroundColor(Color.BLACK);
         chosenIngredientsFragment.updateRecyclerView(item);
     }
 
     @Override
-    public void showCategories(ArrayList<Meal> ingredients) {
-        allIngredientsFragment.showCategories(ingredients);
+    public void showIngredients(ArrayList<Meal> ingredients) {
+        allIngredientsFragment.showIngredients(ingredients);
     }
 
     @Override
-    public void failedToShowCategories(String errMsg) {
-        allIngredientsFragment.failedToShowCategories(errMsg);
+    public void failedToShowIngredients(String errMsg) {
+        allIngredientsFragment.failedToShowIngredients(errMsg);
     }
 
     @Override
     public String sendUrl() {
-        url="list.php?i=list";
-        return  url;
+        url = "list.php?i=list";
+        return url;
     }
-     void getMealsOfSelectedItems(ArrayList<Meal> meal)
-    {
-        if(meal !=null)
-        {
+
+    void getMealsOfSelectedItems(ArrayList<Meal> meal) {
+        if (meal != null) {
             Bundle bundle = new Bundle();
-            bundle.putString("url","filter.php?i="+meal.get(0).getStrIngredient());
-            resultFromSearchFragment=new ResultFromSearchFragment();
+            bundle.putString("url", "filter.php?i=" + meal.get(0).getStrIngredient());
+            resultFromSearchFragment = new ResultFromSearchFragment();
             resultFromSearchFragment.setArguments(bundle);
-            fragmentTransaction=fragmentManager.beginTransaction();
-            fragmentTransaction.replace(R.id.fragmentContainerView,resultFromSearchFragment);
+            fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.fragmentContainerView, resultFromSearchFragment);
             fragmentTransaction.commit();
         }
 

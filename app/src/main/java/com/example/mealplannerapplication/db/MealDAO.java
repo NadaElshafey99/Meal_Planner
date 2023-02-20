@@ -18,6 +18,9 @@ public interface MealDAO {
     @Query("SELECT * From meals WHERE isFav = 1")
     Flowable<List<Meal>> getFavMeals();
 
+    @Query("SELECT * From meals WHERE isFav = 0 AND mealDay IS NOT NULL ")
+    Flowable<List<Meal>> getWeeklyMeals();
+
     @Query("SELECT * From meals WHERE idMeal = :id")
     Flowable<Meal> getFavMeal(String id);
 

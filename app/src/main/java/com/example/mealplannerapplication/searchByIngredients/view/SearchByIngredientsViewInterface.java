@@ -5,7 +5,7 @@ import com.example.mealplannerapplication.model.Meal;
 import java.util.ArrayList;
 
 public interface SearchByIngredientsViewInterface {
-    void showCategories(ArrayList<Meal> ingredients);
-    void failedToShowCategories(String errMsg);
+    void showIngredients(ArrayList<Meal> ingredients);
+    void failedToShowIngredients(String errMsg);
     String sendUrl();
 }

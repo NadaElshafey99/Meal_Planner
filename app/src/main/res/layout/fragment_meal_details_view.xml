@@ -15,7 +15,7 @@
         app:layout_constraintGuide_percent="0.04" />
 
     <Button
-        android:id="@+id/details_addBtn2"
+        android:id="@+id/addToPlanButton"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="32dp"

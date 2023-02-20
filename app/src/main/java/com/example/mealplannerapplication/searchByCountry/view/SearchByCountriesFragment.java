@@ -19,6 +19,8 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import com.example.mealplannerapplication.HasNetworkConnection;
 import com.example.mealplannerapplication.R;
 import com.example.mealplannerapplication.model.Meal;
 import com.example.mealplannerapplication.model.Repository;
@@ -77,7 +79,15 @@ public class SearchByCountriesFragment extends Fragment implements SearchByCount
         fragmentManager=getActivity().getSupportFragmentManager();
         searchByCountriesPresenter=new SearchByCountriesPresenter(this,
                 Repository.getInstance(RetrofitClient.getInstance(),getContext()));
-        searchByCountriesPresenter.getCountries(sendUrl());
+        if (HasNetworkConnection.getInstance(getContext()).isOnline()) {
+
+            searchByCountriesPresenter.getCountries(sendUrl());
+
+        } else {
+
+            Toast.makeText(getContext(), getString(R.string.pleaseCheckYourConnection), Toast.LENGTH_SHORT).show();
+        }
+
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -99,7 +109,7 @@ public class SearchByCountriesFragment extends Fragment implements SearchByCount
         observable.subscribe(c->{
             filteredList=new ArrayList<>(countryMeals
                     .stream()
-                    .filter(i-> i.getStrArea().toLowerCase().contains(c.toString()))
+                    .filter(i-> i.getStrArea().toLowerCase().startsWith(c.toString()))
                     .collect(Collectors.toList()));
             myAdapter.setList(filteredList);
             myAdapter.notifyDataSetChanged();
@@ -115,9 +125,8 @@ public class SearchByCountriesFragment extends Fragment implements SearchByCount
     }
 
     @Override
-    public void failedToShowCategories(String errMsg) {
-        Toast.makeText(getContext(), errMsg, Toast.LENGTH_SHORT).show();
-    }
+    public void failedToShowCountries(String errMsg) {
+        Toast.makeText(getContext(), getString(R.string.somethingWentWrong), Toast.LENGTH_SHORT).show();    }
 
     @Override
     public String sendUrl() {

@@ -14,6 +14,8 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import com.example.mealplannerapplication.HasNetworkConnection;
 import com.example.mealplannerapplication.R;
 import com.example.mealplannerapplication.model.Meal;
 import com.example.mealplannerapplication.model.Repository;
@@ -81,7 +83,14 @@ public class SearchBarActionScreen extends AppCompatActivity implements SearchBa
                 public void onTextChanged(@NonNull CharSequence s, int start, int before, int count) {
 //                    i.onNext(s);
                     if(!s.toString().isEmpty()) {
-                        searchBarPresenter.getMealsFiltered(sendUrl()+s);
+
+                        if (HasNetworkConnection.getInstance(SearchBarActionScreen.this).isOnline()) {
+                            searchBarPresenter.getMealsFiltered(sendUrl()+s);
+
+                        } else {
+
+                            Toast.makeText(SearchBarActionScreen.this, getString(R.string.pleaseCheckYourConnection), Toast.LENGTH_SHORT).show();
+                        }
                     }
                 }
             };
@@ -106,7 +115,7 @@ public class SearchBarActionScreen extends AppCompatActivity implements SearchBa
 
     @Override
     public void failedToShowResult(String errMsg) {
-        Toast.makeText(this, errMsg, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, getString(R.string.somethingWentWrong), Toast.LENGTH_SHORT).show();
     }
 
     @Override

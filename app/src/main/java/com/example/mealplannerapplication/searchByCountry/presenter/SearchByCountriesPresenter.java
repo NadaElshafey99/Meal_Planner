@@ -36,6 +36,6 @@ public class SearchByCountriesPresenter implements SearchByCountriesPresenterInt
 
     @Override
     public void onFailure(String errMsg) {
-        searchByCountriesViewInterface.failedToShowCategories(errMsg);
+        searchByCountriesViewInterface.failedToShowCountries(errMsg);
     }
 }
