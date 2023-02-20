@@ -142,4 +142,9 @@ public class Repository implements RepositoryInterface {
         return null;
     }
 
+    @Override
+    public void removeData() {
+        localSource.deleteTable();
+    }
+
 }

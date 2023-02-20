@@ -134,6 +134,11 @@ public class HomeScreenPresenter implements HomeScreenPresenterInterface, Networ
         System.out.println("meal added to plan");
     }
 
+    @Override
+    public void clearUserData() {
+        repoRef.removeData();
+    }
+
 
     @Override
     public void onSuccess(ArrayList<Meal> list) {
