@@ -13,9 +13,13 @@ public interface RepositoryInterface {
     void getUrl(String url);
 
     Flowable<List<Meal>> getFavMeals();
+
+    Flowable<List<Meal>> getAllMeals();
     Flowable<Meal> getFavMeal(String id);
     void addMealToFav(Meal meal);
 
     void removeMealFromFav(Meal meal);
+
+    void backupFvs();
 
 }

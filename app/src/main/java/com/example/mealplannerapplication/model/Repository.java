@@ -2,14 +2,17 @@ package com.example.mealplannerapplication.model;
 
 import android.content.Context;
 
+import com.example.mealplannerapplication.BackupMeal;
 import com.example.mealplannerapplication.db.LocalSource;
 import com.example.mealplannerapplication.network.NetworkInterface;
 import com.example.mealplannerapplication.network.RemoteSource;
 
 import java.util.List;
 
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Flowable;
 import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 
 
 public class Repository implements RepositoryInterface {
@@ -18,6 +21,7 @@ public class Repository implements RepositoryInterface {
     private RemoteSource remoteSource;
     private LocalSource localSource;
     private static Repository repository = null;
+    BackupMeal backupMeal;
     public static Repository getInstance(RemoteSource remoteSource,LocalSource localSource,Context context) {
         if (repository == null) {
             repository = new Repository(remoteSource,localSource,context);
@@ -80,12 +84,18 @@ public class Repository implements RepositoryInterface {
     }
 
     @Override
+    public Flowable<List<Meal>> getAllMeals() {
+        return localSource.getAllMeals();
+    }
+
+    @Override
     public Flowable<Meal> getFavMeal(String id) {
         return localSource.getFavMeal(id);
     }
 
     @Override
     public void addMealToFav(Meal meal) {
+
         localSource.insertFavMeal(meal);
     }
 
@@ -93,5 +103,16 @@ public class Repository implements RepositoryInterface {
     public void removeMealFromFav(Meal meal) {
         localSource.insertFavMeal(meal);
     }
+
+    @Override
+    public void backupFvs() {
+        backupMeal = new BackupMeal();
+        getAllMeals()
+                .firstOrError()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(i -> backupMeal.backupMeals(i));
+    }
+
 
 }

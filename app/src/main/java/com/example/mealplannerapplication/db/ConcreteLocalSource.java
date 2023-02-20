@@ -50,4 +50,9 @@ public class ConcreteLocalSource implements LocalSource{
     public Flowable<Meal> getFavMeal(String id) {
         return dao.getFavMeal(id);
     }
+
+    @Override
+    public Flowable<List<Meal>> getAllMeals() {
+        return dao.getAllMeals();
+    }
 }

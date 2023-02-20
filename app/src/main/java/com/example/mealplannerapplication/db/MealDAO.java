@@ -10,6 +10,8 @@ import com.example.mealplannerapplication.model.Meal;
 
 import java.util.List;
 
+
+import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Flowable;
 
 
@@ -21,9 +23,16 @@ public interface MealDAO {
     @Query("SELECT * From meals WHERE idMeal = :id")
     Flowable<Meal> getFavMeal(String id);
 
+    @Query("SELECT * From meals")
+    Flowable<List<Meal>> getAllMeals();
+
     @Upsert
     void addMeal(Meal meal);
 
     @Delete
     void delete(Meal meal);
+
+    @Query("DELETE FROM meals")
+    public Completable clearTable();
+
 }
