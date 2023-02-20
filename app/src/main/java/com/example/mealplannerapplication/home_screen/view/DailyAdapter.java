@@ -40,7 +40,7 @@ public class DailyAdapter extends RecyclerView.Adapter<DailyAdapter.MyViewHolder
 //    boolean isFav=false;
 
 
-    public DailyAdapter(@NonNull Context context, @Nullable List<Meal> meals, OnMealClickListener customListener) {
+    public DailyAdapter(@NonNull Context context, @Nullable ArrayList<Meal> meals, OnMealClickListener customListener) {
         this.myContext = context;
         this.dailyMeal = meals;
         this.customListener = customListener;
@@ -62,24 +62,28 @@ public class DailyAdapter extends RecyclerView.Adapter<DailyAdapter.MyViewHolder
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         Meal currentMeal = dailyMeal.get(position);
         holder.getMealName().setText(currentMeal.getStrMeal());
-        holder.getMealBtn().setOnClickListener(view -> {
+        holder.getMealConstLayout().setOnClickListener(view -> {
             Intent intent = new Intent(myContext, SearchByGroupActivity.class);
             intent.putExtra(SearchFragment.FRAGMENT_NAME, "mealDetailsFragment");
             intent.putExtra("IdMeal", currentMeal.getIdMeal());
             mealDetailsView=new MealDetailsView();
             myContext.startActivity(intent);
         });
+        holder.getMealBtn().setOnClickListener(view -> {
+            System.out.println("meal added to plan");
+
+        });
         holder.getBookmark().setOnClickListener(view ->
                 {
                     customListener.onFavClicked(currentMeal);
-//                   changeImage(holder,currentMeal);
+                   changeImage(holder,currentMeal);
                 }
         );
         Glide.with(myContext).load(currentMeal.getStrMealThumb()).into(holder.getMealImg());
 
     }
 
-   /* private void changeImage(MyViewHolder myViewHolder,Meal currentMeal) {
+    private void changeImage(MyViewHolder myViewHolder,Meal currentMeal) {
         if(currentMeal.isFav()==false)
         {
             int imageResource = HomeScreen.resource.getIdentifier("drawable/bookmark_yellow", null,HomeScreen.pck);
@@ -91,7 +95,7 @@ public class DailyAdapter extends RecyclerView.Adapter<DailyAdapter.MyViewHolder
             Drawable drawable = HomeScreen.resource.getDrawable(imageResource);
             myViewHolder.bookmark.setImageDrawable(drawable);
         }
-    }*/
+    }
 
     @Override
     public int getItemCount() {

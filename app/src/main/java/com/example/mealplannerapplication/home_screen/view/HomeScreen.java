@@ -172,8 +172,7 @@ public class HomeScreen extends Fragment implements HomeScreenViewInterface,OnMe
         chickenRec.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false));
         desertRec.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false));
     }
-//ingredientsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false));
-//    categoriesRecyclerView.setLayoutManager(new GridLayoutManager(getContext(),2));
+
 
 
     private void initAdapter() {
