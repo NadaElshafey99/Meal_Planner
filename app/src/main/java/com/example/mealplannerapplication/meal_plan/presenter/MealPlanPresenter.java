@@ -20,7 +20,6 @@ public class MealPlanPresenter implements MealPlanPresenterInterface{
     }
     @Override
     public void getWeeklyMeals() {
-
         repositoryInterface.getWeeklyMeals().subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(meals -> mealPlanScreenInterface.showWeeklyMeals(meals));

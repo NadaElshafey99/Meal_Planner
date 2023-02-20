@@ -17,6 +17,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+
 import com.example.mealplannerapplication.HasNetworkConnection;
 import com.example.mealplannerapplication.R;
 import com.example.mealplannerapplication.db.ConcreteLocalSource;
@@ -61,6 +62,7 @@ public class MealPlan extends Fragment implements MealPlanScreenInterface{
                 Repository.getInstance(ConcreteLocalSource.getInstance(getContext()),
                 getContext()));
            mealPlanPresenter.getWeeklyMeals();
+
         fragmentManager = getActivity().getSupportFragmentManager();
         fragmentTransaction = fragmentManager.beginTransaction();
     }
