@@ -2,12 +2,11 @@ package com.example.mealplannerapplication.model;
 
 import android.content.Context;
 
-import com.example.mealplannerapplication.BackupMeal;
+import com.example.mealplannerapplication.FavoriteFireStore;
 import com.example.mealplannerapplication.db.FirebaseDB;
 import com.example.mealplannerapplication.db.LocalSource;
 import com.example.mealplannerapplication.network.NetworkInterface;
 import com.example.mealplannerapplication.network.RemoteSource;
-import com.google.firebase.auth.FirebaseUser;
 
 import java.util.List;
 
@@ -24,7 +23,7 @@ public class Repository implements RepositoryInterface {
     private FirebaseDB firebaseDB;
     private LocalSource localSource;
     private static Repository repository = null;
-    BackupMeal backupMeal;
+    FavoriteFireStore backupMeal;
 
     public static Repository getInstance(RemoteSource remoteSource,LocalSource localSource,Context context) {
         if (repository == null) {
@@ -126,12 +125,16 @@ public class Repository implements RepositoryInterface {
 
     @Override
     public void backupFvs() {
-        backupMeal = new BackupMeal();
         getAllMeals()
                 .firstOrError()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(i -> backupMeal.backupMeals(i));
+                .subscribe(i -> FavoriteFireStore.getInstance().backupMeals(i));
+    }
+
+    @Override
+    public void restoreFvs() {
+        //backupMeal = new FavoriteFireStore();
     }
 
 
