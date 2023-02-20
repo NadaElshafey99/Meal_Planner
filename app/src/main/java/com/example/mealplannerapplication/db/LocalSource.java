@@ -12,6 +12,7 @@ public interface LocalSource {
     void insertPlanMeal(Meal meal);
     void deleteMeal(Meal meal);
     Flowable<List<Meal>> getAllFavMeals();
+    Flowable<List<Meal>> getAllWeeklyMeals();
     Flowable<Meal> getFavMeal(String id);
 
     Flowable<List<Meal>> getAllMeals();

@@ -38,9 +38,9 @@ public class SignupPresenter implements SignupPresenterInterface {
                             FirebaseUser firebaseUser = authentication.getCurrentUser();
                             //Enter data of user
                             //Extracting user reference from DB
-                            DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Registered Users");
+                            DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Registered Users");
                             //to refer to data later very asy with unique ID
-                            databaseReference.child(firebaseUser.getUid()).setValue(user)
+                            databaseReference.child(firebaseUser.getUid()).child("Personal Information").setValue(user)
                                     .addOnCompleteListener(new OnCompleteListener<Void>() {
                                         @Override
                                         public void onComplete(@NonNull Task<Void> task) {

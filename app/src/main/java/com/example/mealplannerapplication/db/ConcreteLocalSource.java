@@ -33,7 +33,7 @@ public class ConcreteLocalSource implements LocalSource{
 
     @Override
     public void insertPlanMeal(Meal meal) {
-        new Thread(() -> dao.addMeal(meal)).start();
+         dao.addMeal(meal);
     }
 
     @Override
@@ -44,6 +44,11 @@ public class ConcreteLocalSource implements LocalSource{
     @Override
     public Flowable<List<Meal>> getAllFavMeals() {
         return dao.getFavMeals();
+    }
+
+    @Override
+    public Flowable<List<Meal>> getAllWeeklyMeals() {
+        return dao.getWeeklyMeals();
     }
 
     @Override

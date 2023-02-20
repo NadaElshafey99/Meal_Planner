@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/frameLayout3"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/corner_background"
+    tools:context=".addMealToWeeklyPlan.view.AddMealToWeeklyPlanner">
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_mealName">
+
+        <RadioGroup
+            android:id="@+id/radioGroupForTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/breakFast"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:background="@drawable/radio_selector"
+                android:button="@android:color/transparent"
+                android:elevation="4dp"
+                android:gravity="center"
+                android:padding="8dp"
+
+                android:text="@string/breakfast"
+                android:textColor="@drawable/radio_selector_text"
+                android:textStyle="bold" />
+
+            <RadioButton
+                android:id="@+id/launch"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:background="@drawable/radio_selector"
+                android:button="@android:color/transparent"
+                android:elevation="4dp"
+                android:gravity="center"
+                android:padding="8dp"
+                android:text="@string/launch"
+                android:textColor="@drawable/radio_selector_text"
+                android:textStyle="bold" />
+
+            <RadioButton
+                android:id="@+id/dinner"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:background="@drawable/radio_selector"
+                android:button="@android:color/transparent"
+                android:elevation="4dp"
+                android:gravity="center"
+                android:padding="8dp"
+                android:text="@string/dinner"
+                android:textColor="@drawable/radio_selector_text"
+                android:textStyle="bold" />
+        </RadioGroup>
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/meal_image"
+        android:layout_width="0dp"
+        android:layout_height="150dp"
+        android:scaleType="centerInside"
+        android:src="@drawable/home"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/guideline17"
+        app:layout_constraintTop_toTopOf="@+id/guideline18" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_weight="1"
+        android:text="@string/chooseDay"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="@+id/guideline17"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+
+    <TextView
+        android:id="@+id/tv_mealName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:layout_weight="1"
+        android:textColor="@color/black"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/guideline17"
+        app:layout_constraintTop_toBottomOf="@+id/meal_image" />
+
+    <RadioGroup
+        android:id="@+id/radio_grp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_weight="7"
+        android:weightSum="7"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/guideline17"
+        app:layout_constraintTop_toBottomOf="@+id/textView">
+
+        <RadioButton
+            android:id="@+id/saturday"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/saturday"
+            android:textSize="16sp"
+            android:buttonTint="@color/mainColor"/>
+
+        <RadioButton
+            android:id="@+id/sunday"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:buttonTint="@color/mainColor"
+            android:text="@string/sunday"
+            android:textSize="16sp" />
+
+        <RadioButton
+            android:id="@+id/monday"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/monday"
+            android:buttonTint="@color/mainColor"
+            android:textSize="16sp" />
+
+        <RadioButton
+            android:id="@+id/tuesday"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:buttonTint="@color/mainColor"
+            android:text="@string/tuesday"
+            android:textSize="16sp" />
+
+        <RadioButton
+            android:id="@+id/wednesday"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/wednesday"
+            android:buttonTint="@color/mainColor"
+            android:textSize="16sp" />
+
+        <RadioButton
+            android:id="@+id/thursday"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/thursday"
+            android:buttonTint="@color/mainColor"
+            android:textSize="16sp" />
+
+        <RadioButton
+            android:id="@+id/friday"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/friday"
+            android:buttonTint="@color/mainColor"
+            android:textSize="16sp" />
+
+    </RadioGroup>
+
+
+    <ImageView
+        android:id="@+id/back_arrow"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:background="@drawable/circle_shadow"
+        android:backgroundTint="@color/mainColor"
+        android:src="@drawable/arrow_back"
+        app:layout_constraintStart_toStartOf="@+id/guideline17"
+        app:layout_constraintTop_toTopOf="@+id/guideline18" />
+
+    <Button
+        android:id="@+id/addToPlanButton"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="32dp"
+        android:backgroundTint="@color/mainColor"
+        android:elevation="20dp"
+        android:text="Add To Plan"
+        app:cornerRadius="25dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/radio_grp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline17"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.050890584" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline18"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.026751593" />
+</androidx.constraintlayout.widget.ConstraintLayout>
