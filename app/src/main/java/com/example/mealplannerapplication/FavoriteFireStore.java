@@ -38,8 +38,7 @@ public class FavoriteFireStore {
     public void backupMeals(List<Meal> mealList){
         Root myMeals = new Root();
         ArrayList<Meal> myMealsArray = new ArrayList<>(mealList);
-//        ArrayList<String> arrayList = list.stream().collect(Collectors.toCollection(ArrayList::new));
-//        someMethod(arrayList);
+
         myMeals.setMeals(myMealsArray);
         firestore.document(currentUserPath() + favoritesPath).set(myMeals).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
