@@ -62,12 +62,15 @@ public class DailyAdapter extends RecyclerView.Adapter<DailyAdapter.MyViewHolder
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         Meal currentMeal = dailyMeal.get(position);
         holder.getMealName().setText(currentMeal.getStrMeal());
-        holder.getMealBtn().setOnClickListener(view -> {
+        holder.getMealConstLayout().setOnClickListener(view -> {
             Intent intent = new Intent(myContext, SearchByGroupActivity.class);
             intent.putExtra(SearchFragment.FRAGMENT_NAME, "mealDetailsFragment");
             intent.putExtra("IdMeal", currentMeal.getIdMeal());
             mealDetailsView=new MealDetailsView();
             myContext.startActivity(intent);
+        });
+        holder.getMealBtn().setOnClickListener(view -> {
+            System.out.println("meal added to plan");
 
         });
         holder.getBookmark().setOnClickListener(view ->

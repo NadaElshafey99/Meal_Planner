@@ -30,6 +30,8 @@ import com.example.mealplannerapplication.model.Meal;
 import com.example.mealplannerapplication.model.Repository;
 
 import com.example.mealplannerapplication.network.RetrofitClient;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 
@@ -42,11 +44,6 @@ public class HomeScreen extends Fragment implements HomeScreenViewInterface,OnMe
     RecyclerView breakfastRec;
     RecyclerView chickenRec;
     RecyclerView desertRec;
-    LinearLayoutManager dailyLayout;
-    LinearLayoutManager beefLayout;
-    LinearLayoutManager breakfastLayout;
-    LinearLayoutManager chickenLayout;
-    LinearLayoutManager desertLayout;
     DailyAdapter dailyAdapter;
     private Button logoutBtn;
     SharedPreferences sharedPreferences;
@@ -72,7 +69,6 @@ public class HomeScreen extends Fragment implements HomeScreenViewInterface,OnMe
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        //initLayouts();
         initUI(view);
         initAdapter();
         loadData();
@@ -173,26 +169,6 @@ public class HomeScreen extends Fragment implements HomeScreenViewInterface,OnMe
 //ingredientsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false));
 //    categoriesRecyclerView.setLayoutManager(new GridLayoutManager(getContext(),2));
 
-//    private void initLayouts() {
-//        dailyLayout = new LinearLayoutManager(this.getContext());
-//        dailyLayout.setOrientation(RecyclerView.HORIZONTAL);
-//
-//        beefLayout = new LinearLayoutManager(this.getContext());
-//        beefLayout.setOrientation(RecyclerView.HORIZONTAL);
-//
-//        beefLayout = new LinearLayoutManager(this.getContext());
-//        beefLayout.setOrientation(RecyclerView.HORIZONTAL);
-//
-//        breakfastLayout = new LinearLayoutManager(this.getContext());
-//        breakfastLayout.setOrientation(RecyclerView.HORIZONTAL);
-//
-//        chickenLayout = new LinearLayoutManager(this.getContext());
-//        chickenLayout.setOrientation(RecyclerView.HORIZONTAL);
-//
-//        desertLayout = new LinearLayoutManager(this.getContext());
-//        desertLayout.setOrientation(RecyclerView.HORIZONTAL);
-//
-//    }
 
     private void initAdapter() {
         dailyAdapter = new DailyAdapter(requireContext(), new ArrayList<>(),this);

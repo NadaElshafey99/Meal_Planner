@@ -2,6 +2,7 @@ package com.example.mealplannerapplication.model;
 
 import android.content.Context;
 
+import com.example.mealplannerapplication.BackupMeal;
 import com.example.mealplannerapplication.db.FirebaseDB;
 import com.example.mealplannerapplication.db.LocalSource;
 import com.example.mealplannerapplication.network.NetworkInterface;
@@ -10,8 +11,10 @@ import com.google.firebase.auth.FirebaseUser;
 
 import java.util.List;
 
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Flowable;
 import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 
 
 public class Repository implements RepositoryInterface {
@@ -21,7 +24,7 @@ public class Repository implements RepositoryInterface {
     private FirebaseDB firebaseDB;
     private LocalSource localSource;
     private static Repository repository = null;
-
+    BackupMeal backupMeal;
 
     public static Repository getInstance(RemoteSource remoteSource,LocalSource localSource,Context context) {
         if (repository == null) {
@@ -85,6 +88,9 @@ public class Repository implements RepositoryInterface {
     }
 
     @Override
+    public Flowable<List<Meal>> getAllMeals() {
+        return localSource.getAllMeals();
+
     public Flowable<List<Meal>> getWeeklyMeals() {
         return localSource.getAllWeeklyMeals();
     }
@@ -96,6 +102,7 @@ public class Repository implements RepositoryInterface {
 
     @Override
     public void addMealToFav(Meal meal) {
+
         localSource.insertFavMeal(meal);
     }
 
@@ -117,6 +124,16 @@ public class Repository implements RepositoryInterface {
     }
 
     @Override
+    public void backupFvs() {
+        backupMeal = new BackupMeal();
+        getAllMeals()
+                .firstOrError()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(i -> backupMeal.backupMeals(i));
+    }
+
+
     public Flowable<Meal> getPlanMeal(String id) {
         return null;
     }

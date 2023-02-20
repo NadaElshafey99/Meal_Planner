@@ -13,6 +13,7 @@ public interface RepositoryInterface {
     Observable <Root> getMealByCategory(String category);
     void getUrl(String url);
     Flowable<List<Meal>> getFavMeals();
+    Flowable<List<Meal>> getAllMeals();
     Flowable<List<Meal>> getWeeklyMeals();
     Flowable<Meal> getFavMeal(String id);
     void addMealToFav(Meal meal);
@@ -21,5 +22,7 @@ public interface RepositoryInterface {
     void removeMealFromFav(Meal meal);
     Flowable<Meal> getPlanMeal(String id);
 
+
+    void backupFvs();
 
 }
