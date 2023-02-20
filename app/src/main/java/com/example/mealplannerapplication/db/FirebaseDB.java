@@ -7,5 +7,6 @@ import com.google.firebase.auth.FirebaseUser;
 
 public interface FirebaseDB {
     void insertPlanMeal(Meal meal);
+
     void getWeeklyMeals();
 }
