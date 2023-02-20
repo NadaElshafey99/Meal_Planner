@@ -58,11 +58,10 @@ public class FavoriteScreen extends Fragment implements FavScreenViewInterface, 
         favRec = view.findViewById(R.id.fav_rec);
         favRec.setLayoutManager(new GridLayoutManager(getContext(), 2));
         favAdapter = new DailyAdapter(requireContext(), new ArrayList<>(), this);
-        if(LoginScreen.isGuest==false) {
+        if (LoginScreen.isGuest == false) {
             favPresenterInterface.getFavMeals();
-        }
-        else {
-            Toast.makeText(getContext(),getString(R.string.youAreGuest), Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(getContext(), getString(R.string.youAreGuest), Toast.LENGTH_SHORT).show();
         }
 
     }

@@ -8,24 +8,25 @@ import java.util.List;
 
 import io.reactivex.rxjava3.core.Flowable;
 
-public class ConcreteLocalSource implements LocalSource{
+public class ConcreteLocalSource implements LocalSource {
 
-    private MealDAO dao;
     private static ConcreteLocalSource localSource = null;
+    private MealDAO dao;
 
 
-    private ConcreteLocalSource(Context context){
+    private ConcreteLocalSource(Context context) {
         AppDataBase db = AppDataBase.getInstance(context.getApplicationContext());
         dao = db.mealDAO();
 
     }
 
-    public static ConcreteLocalSource getInstance(Context context){
-        if(localSource == null){
+    public static ConcreteLocalSource getInstance(Context context) {
+        if (localSource == null) {
             localSource = new ConcreteLocalSource(context);
         }
         return localSource;
     }
+
     @Override
     public void insertFavMeal(Meal meal) {
         new Thread(() -> dao.addMeal(meal)).start();
@@ -33,7 +34,7 @@ public class ConcreteLocalSource implements LocalSource{
 
     @Override
     public void insertPlanMeal(Meal meal) {
-         dao.addMeal(meal);
+        dao.addMeal(meal);
     }
 
     @Override

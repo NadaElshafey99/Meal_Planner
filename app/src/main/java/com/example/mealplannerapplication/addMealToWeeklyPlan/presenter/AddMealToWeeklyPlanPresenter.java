@@ -13,11 +13,11 @@ public class AddMealToWeeklyPlanPresenter implements AddMealToWeeklyPlanPresente
     private AddMealToWeeklyPlannerInterface addMealToWeeklyPlannerInterface;
     private RepositoryInterface repositoryInterface;
     private FirebaseDB firebaseDB;
-    public AddMealToWeeklyPlanPresenter(AddMealToWeeklyPlannerInterface addMealToWeeklyPlannerInterface, RepositoryInterface repositoryInterface, FirebaseDB firebaseDB)
-    {
-     this.addMealToWeeklyPlannerInterface=addMealToWeeklyPlannerInterface;
-     this.repositoryInterface=repositoryInterface;
-     this.firebaseDB=firebaseDB;
+
+    public AddMealToWeeklyPlanPresenter(AddMealToWeeklyPlannerInterface addMealToWeeklyPlannerInterface, RepositoryInterface repositoryInterface, FirebaseDB firebaseDB) {
+        this.addMealToWeeklyPlannerInterface = addMealToWeeklyPlannerInterface;
+        this.repositoryInterface = repositoryInterface;
+        this.firebaseDB = firebaseDB;
     }
 
     @Override
@@ -29,6 +29,7 @@ public class AddMealToWeeklyPlanPresenter implements AddMealToWeeklyPlanPresente
     public void failedToInsertMeal(String errMsg) {
         addMealToWeeklyPlannerInterface.failedToGetMeal(errMsg);
     }
+
     @Override
     public void getMealDetails(String Url) {
         repositoryInterface.getUrl(Url);
@@ -43,9 +44,8 @@ public class AddMealToWeeklyPlanPresenter implements AddMealToWeeklyPlanPresente
 
     @Override
     public void insertMealToFirebaseDB(Meal meal) {
-        repositoryInterface.addMealToFirebasePlanner(meal,firebaseDB);
+        repositoryInterface.addMealToFirebasePlanner(meal, firebaseDB);
     }
-    
 
 
     @Override
