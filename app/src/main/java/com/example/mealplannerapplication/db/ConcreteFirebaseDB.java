@@ -57,30 +57,30 @@ public class ConcreteFirebaseDB implements FirebaseDB {
         authentication = FirebaseAuth.getInstance();
         firebaseUser = authentication.getCurrentUser();
         DatabaseReference registered_users = FirebaseDatabase.getInstance().getReference().child("Registered Users");
-        DatabaseReference planFav=registered_users.child(firebaseUser.getUid()).child("Weekly Planner").child("Id Meal");
-                planFav.addValueEventListener(new ValueEventListener() {
+        DatabaseReference planFav = registered_users.child(firebaseUser.getUid()).child("Weekly Planner").child("Id Meal");
+        planFav.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                new Thread(new Runnable() {
                     @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-                            new Thread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    for (DataSnapshot meals : snapshot.getChildren()) {
-                                        Meal mealList=meals.getChildren().iterator().next().getValue(Meal.class);
-                                        repository = Repository.getInstance(ConcreteLocalSource.getInstance(context), context);
-                                        repository.addMealToPlanner(mealList);
-                                    }
-                                }
-                            }).start();
-
-
+                    public void run() {
+                        for (DataSnapshot meals : snapshot.getChildren()) {
+                            Meal mealList = meals.getChildren().iterator().next().getValue(Meal.class);
+                            repository = Repository.getInstance(ConcreteLocalSource.getInstance(context), context);
+                            repository.addMealToPlanner(mealList);
+                        }
                     }
+                }).start();
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-                        Toast.makeText(context, context.getString(R.string.somethingWentWrong), Toast.LENGTH_SHORT).show();
-                    }
-                });
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(context, context.getString(R.string.somethingWentWrong), Toast.LENGTH_SHORT).show();
+            }
+        });
 
     }
 }

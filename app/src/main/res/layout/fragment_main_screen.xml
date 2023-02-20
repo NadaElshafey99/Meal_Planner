@@ -10,7 +10,7 @@
         android:id="@+id/forgetText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="8dp"
         android:text="@string/forgetYourPassword"
         app:layout_constraintEnd_toEndOf="@+id/passwordLayout"
         app:layout_constraintTop_toBottomOf="@+id/passwordLayout" />
@@ -33,7 +33,7 @@
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="48dp"
+        android:layout_marginTop="24dp"
         android:layout_marginEnd="20dp"
         app:boxCornerRadiusBottomEnd="45dp"
         app:boxCornerRadiusBottomStart="45dp"
@@ -91,9 +91,9 @@
 
     <Button
         android:id="@+id/singInBtn"
-        android:layout_width="107dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="20dp"
+        android:layout_width="200dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="24dp"
         android:backgroundTint="#f25c54"
         android:text="@string/signIn"
         app:cornerRadius="45dp"
@@ -114,12 +114,38 @@
         app:srcCompat="@drawable/logo2" />
 
     <TextView
-        android:id="@+id/testView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/textgoogle"
+        android:layout_width="250dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="32dp"
         android:layout_marginTop="10dp"
+        android:layout_marginEnd="32dp"
+        android:background="@drawable/border_text_field"
+        android:gravity="center"
+        android:text="@string/signinWithGoogle"
+        android:textColor="@color/mainColor"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="@+id/singInBtn"
         app:layout_constraintStart_toStartOf="@+id/singInBtn"
         app:layout_constraintTop_toBottomOf="@+id/singInBtn" />
+
+    <TextView
+        android:id="@+id/testView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="@+id/singInBtn"
+        app:layout_constraintStart_toStartOf="@+id/singInBtn"
+        app:layout_constraintTop_toBottomOf="@+id/textgoogle" />
+
+    <ImageView
+        android:id="@+id/google"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="8dp"
+        android:src="@drawable/google_logo"
+        app:layout_constraintBottom_toBottomOf="@+id/textgoogle"
+        app:layout_constraintStart_toStartOf="@+id/textgoogle"
+        app:layout_constraintTop_toTopOf="@+id/textgoogle" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
