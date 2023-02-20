@@ -62,7 +62,7 @@ public class FavoriteScreen extends Fragment implements FavScreenViewInterface, 
             favPresenterInterface.getFavMeals();
         }
         else {
-            Toast.makeText(getContext(), getString(R.string.youShouldSignInToAddFav), Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(),getString(R.string.youAreGuest), Toast.LENGTH_SHORT).show();
         }
 
     }

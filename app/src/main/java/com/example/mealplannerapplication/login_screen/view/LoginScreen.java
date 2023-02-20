@@ -103,6 +103,7 @@ public class LoginScreen extends Fragment implements LoginScreenInterface {
 
                         loginPresenter.checkUser(user);
 
+
                     } else {
                         Toast.makeText(getContext(), getString(R.string.pleaseCheckYourConnection), Toast.LENGTH_SHORT).show();
                     }
@@ -145,8 +146,9 @@ public class LoginScreen extends Fragment implements LoginScreenInterface {
 
     @Override
     public void onSuccessCheckUser() {
+        isGuest=false;
         loginPresenter.getDataWeeklyMealsFromFirebase();
-        Toast.makeText(getActivity(), "Successful", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), getString(R.string.success), Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(getActivity(), NavigationActivity.class);
         startActivity(intent);
     }

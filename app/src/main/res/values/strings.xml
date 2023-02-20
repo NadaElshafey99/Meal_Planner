@@ -78,5 +78,6 @@
     <string name="pleaseCheckYourConnection">Please check your connection</string>
     <string name="youShouldSignInToAddFav">you can\'t add meals to fav, please signup</string>
     <string name="youShouldSignInToAddPlan">you can\'t add meals to plan, please Signup</string>
+    <string name="youAreGuest">you are guest, you can\'t see meals, please Signup</string>
     <string name="signup">Signup</string>
 </resources>

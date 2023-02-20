@@ -66,7 +66,7 @@ public class MealPlan extends Fragment implements MealPlanScreenInterface{
             mealPlanPresenter.getWeeklyMeals();
         }
         else {
-            Toast.makeText(getContext(), getString(R.string.youShouldSignInToAddFav), Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), getString(R.string.youAreGuest), Toast.LENGTH_SHORT).show();
         }
 
 
