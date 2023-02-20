@@ -26,6 +26,7 @@ import com.example.mealplannerapplication.db.ConcreteLocalSource;
 import com.example.mealplannerapplication.home_screen.presenter.HomeScreenPresenter;
 import com.example.mealplannerapplication.home_screen.presenter.HomeScreenPresenterInterface;
 import com.example.mealplannerapplication.login_screen.presenter.LoginPresenter;
+import com.example.mealplannerapplication.login_screen.view.LoginScreen;
 import com.example.mealplannerapplication.model.Meal;
 import com.example.mealplannerapplication.model.Repository;
 
@@ -135,7 +136,12 @@ public class HomeScreen extends Fragment implements HomeScreenViewInterface,OnMe
 
     @Override
     public void handleFavBookmark(Meal meal) {
-        presenterInterface.handleFavMeal(meal);
+        if(LoginScreen.isGuest==false) {
+            presenterInterface.handleFavMeal(meal);
+        }
+        else {
+            Toast.makeText(getContext(), getString(R.string.youShouldSignInToAddFav), Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override

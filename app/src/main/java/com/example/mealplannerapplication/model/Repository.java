@@ -90,7 +90,8 @@ public class Repository implements RepositoryInterface {
     @Override
     public Flowable<List<Meal>> getAllMeals() {
         return localSource.getAllMeals();
-
+    }
+    @Override
     public Flowable<List<Meal>> getWeeklyMeals() {
         return localSource.getAllWeeklyMeals();
     }

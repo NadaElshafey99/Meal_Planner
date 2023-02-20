@@ -25,6 +25,7 @@ import com.bumptech.glide.Glide;
 import com.example.mealplannerapplication.HasNetworkConnection;
 import com.example.mealplannerapplication.R;
 import com.example.mealplannerapplication.addMealToWeeklyPlan.view.AddMealToWeeklyPlanner;
+import com.example.mealplannerapplication.login_screen.view.LoginScreen;
 import com.example.mealplannerapplication.meal_details.presenter.MealDetailsPresenter;
 import com.example.mealplannerapplication.model.Ingredients;
 import com.example.mealplannerapplication.model.Meal;
@@ -158,16 +159,21 @@ public class MealDetailsView extends Fragment implements MealDetailsViewInterfac
         addToPlan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Bundle bundle = new Bundle();
-                bundle.putString("IdMeal",meal.getIdMeal());
-                bundle.putString("urlImage",meal.getStrMealThumb());
-                bundle.putString("mealName",meal.getStrMeal());
-                addMealToWeeklyPlanner=new AddMealToWeeklyPlanner();
-                addMealToWeeklyPlanner.setArguments(bundle);
-                fragmentTransaction=fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.fragmentContainerView,addMealToWeeklyPlanner);
-                fragmentTransaction.addToBackStack("mealDetailsFragment");
-                fragmentTransaction.commit();
+                if(LoginScreen.isGuest==false) {
+                    Bundle bundle = new Bundle();
+                    bundle.putString("IdMeal",meal.getIdMeal());
+                    bundle.putString("urlImage",meal.getStrMealThumb());
+                    bundle.putString("mealName",meal.getStrMeal());
+                    addMealToWeeklyPlanner=new AddMealToWeeklyPlanner();
+                    addMealToWeeklyPlanner.setArguments(bundle);
+                    fragmentTransaction=fragmentManager.beginTransaction();
+                    fragmentTransaction.replace(R.id.fragmentContainerView,addMealToWeeklyPlanner);
+                    fragmentTransaction.addToBackStack("mealDetailsFragment");
+                    fragmentTransaction.commit();
+                }
+                else {
+                    Toast.makeText(getContext(), getString(R.string.youShouldSignInToAddFav), Toast.LENGTH_SHORT).show();
+                }
             }
         });
 

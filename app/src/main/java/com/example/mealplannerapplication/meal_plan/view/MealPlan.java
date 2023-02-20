@@ -21,6 +21,7 @@ import android.widget.Toast;
 import com.example.mealplannerapplication.HasNetworkConnection;
 import com.example.mealplannerapplication.R;
 import com.example.mealplannerapplication.db.ConcreteLocalSource;
+import com.example.mealplannerapplication.login_screen.view.LoginScreen;
 import com.example.mealplannerapplication.meal_details.view.MealDetailsView;
 import com.example.mealplannerapplication.meal_plan.presenter.MealPlanPresenter;
 import com.example.mealplannerapplication.model.Meal;
@@ -61,7 +62,13 @@ public class MealPlan extends Fragment implements MealPlanScreenInterface{
         mealPlanPresenter=new MealPlanPresenter(this,
                 Repository.getInstance(ConcreteLocalSource.getInstance(getContext()),
                 getContext()));
-           mealPlanPresenter.getWeeklyMeals();
+        if(LoginScreen.isGuest==false) {
+            mealPlanPresenter.getWeeklyMeals();
+        }
+        else {
+            Toast.makeText(getContext(), getString(R.string.youShouldSignInToAddFav), Toast.LENGTH_SHORT).show();
+        }
+
 
         fragmentManager = getActivity().getSupportFragmentManager();
         fragmentTransaction = fragmentManager.beginTransaction();
@@ -121,7 +128,8 @@ public class MealPlan extends Fragment implements MealPlanScreenInterface{
                     dinnerAdapter.setList(dinnerList);
                     dinnerAdapter.notifyDataSetChanged();
                 } else {
-                    if (meals.get(i).getMealTime().equals("Launch") && meals.get(i).getMealDay().toUpperCase().startsWith(selectedDay)) {
+                    if (meals.get(i).getMealTime().equals("Launch") && meals.get(i).getMealDay().toUpperCase().startsWith(selectedDay))
+                    {
                         launchList.add(meals.get(i));
                         launchAdapter.setList(launchList);
                         breakfastAdapter.notifyDataSetChanged();

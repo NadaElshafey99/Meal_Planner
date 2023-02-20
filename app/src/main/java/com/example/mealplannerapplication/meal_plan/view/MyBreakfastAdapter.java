@@ -30,7 +30,7 @@ public class MyBreakfastAdapter extends RecyclerView.Adapter<MyBreakfastAdapter.
 
     Context context;
     Meal meal;
-    protected static List<Meal> mealList;
+    protected List<Meal> mealList;
     private LayoutInflater inflater;
 
     public MyBreakfastAdapter(Context context, List<Meal> mealList){

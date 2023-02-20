@@ -51,6 +51,7 @@ public class LoginScreen extends Fragment implements LoginScreenInterface {
     private LoginPresenter loginPresenter;
     private User user;
     private ConcreteFirebaseDB concreteFirebaseDB;
+    public static boolean isGuest=false;
 
     public LoginScreen() {
         // Required empty public constructor
@@ -77,12 +78,13 @@ public class LoginScreen extends Fragment implements LoginScreenInterface {
         signInButton = view.findViewById(R.id.singInBtn);
         email = view.findViewById(R.id.emailLayout);
         password = view.findViewById(R.id.passwordLayout);
-        userEmail = email.getEditText().getText();
-        userPassword = password.getEditText().getText();
+
         loginPresenter = new LoginPresenter(this,concreteFirebaseDB);
         signInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                userEmail = email.getEditText().getText();
+                userPassword = password.getEditText().getText();
                 if (TextUtils.isEmpty(userEmail)) {
                     email.setError(getString(R.string.pleaseEnterEmail));
                 } else {
@@ -102,7 +104,6 @@ public class LoginScreen extends Fragment implements LoginScreenInterface {
                         loginPresenter.checkUser(user);
 
                     } else {
-
                         Toast.makeText(getContext(), getString(R.string.pleaseCheckYourConnection), Toast.LENGTH_SHORT).show();
                     }
                 }
@@ -110,6 +111,7 @@ public class LoginScreen extends Fragment implements LoginScreenInterface {
         });
         mySkip.setOnClickListener(view12 -> {
             Intent myIntent = new Intent(getActivity(), NavigationActivity.class);
+            isGuest=true;
             startActivity(myIntent);
         });
         forgotten.setOnClickListener(new View.OnClickListener() {

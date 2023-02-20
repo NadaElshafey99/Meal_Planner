@@ -61,7 +61,7 @@ public class SignupPresenter implements SignupPresenterInterface {
                             } catch (FirebaseAuthUserCollisionException exception) {
                                 signupScreenInterface.onFailureRegistered();
                             } catch (Exception e) {
-                                throw new RuntimeException(e);
+                                signupScreenInterface.onFailureRegistered();
                             }
                         }
                     }
