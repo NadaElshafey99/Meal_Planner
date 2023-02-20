@@ -20,4 +20,6 @@ public interface HomeScreenPresenterInterface {
     void removeFromFav(Meal meal);
 
     void handlePlanMeal(Meal meal);
+
+
 }

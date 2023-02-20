@@ -34,7 +34,6 @@ public class SignupScreen extends Fragment implements SignupScreenInterface {
     private Editable userPassword;
     private Editable userConfirmPassword;
     private SignupPresenter signupPresenter;
-    private boolean noError = true;
     private User user;
 
 
@@ -59,10 +58,6 @@ public class SignupScreen extends Fragment implements SignupScreenInterface {
         password = view.findViewById(R.id.signup_passwordField);
         confirmPassword = view.findViewById(R.id.signup_confirmPass);
         signupButton = view.findViewById(R.id.signup_btn);
-        userName = name.getEditText().getText();
-        userEmail = email.getEditText().getText();
-        userPassword = password.getEditText().getText();
-        userConfirmPassword = confirmPassword.getEditText().getText();
         signupPresenter = new SignupPresenter(this);
         return view;
     }
@@ -73,7 +68,10 @@ public class SignupScreen extends Fragment implements SignupScreenInterface {
         signupButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                userName = name.getEditText().getText();
+                userEmail = email.getEditText().getText();
+                userPassword = password.getEditText().getText();
+                userConfirmPassword = confirmPassword.getEditText().getText();
                 if (TextUtils.isEmpty(userName)) {
                     name.setError(getString(R.string.pleaseEnterUserName));
                 } else {
@@ -85,7 +83,6 @@ public class SignupScreen extends Fragment implements SignupScreenInterface {
                 } else {
                     if (!Patterns.EMAIL_ADDRESS.matcher(userEmail).matches()) {
                         email.setError(getString(R.string.pleaseEnterValidEmail));
-                        noError=false;
                     } else {
                         email.setError(null);
                     }

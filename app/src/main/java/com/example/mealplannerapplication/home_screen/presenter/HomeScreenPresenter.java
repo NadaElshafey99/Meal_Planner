@@ -1,13 +1,25 @@
 package com.example.mealplannerapplication.home_screen.presenter;
 
 import android.util.Log;
+import android.widget.Toast;
 
+import androidx.fragment.app.Fragment;
+
+import com.example.mealplannerapplication.BackupMeal;
+import com.example.mealplannerapplication.home_screen.view.HomeScreen;
 import com.example.mealplannerapplication.home_screen.view.HomeScreenViewInterface;
 import com.example.mealplannerapplication.model.Meal;
 import com.example.mealplannerapplication.model.RepositoryInterface;
 import com.example.mealplannerapplication.network.NetworkInterface;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Objects;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.annotations.NonNull;
@@ -20,6 +32,8 @@ public class HomeScreenPresenter implements HomeScreenPresenterInterface, Networ
     HomeScreenViewInterface viewInterfaceRef;
     RepositoryInterface repoRef;
     ArrayList<Meal> mealArrayList = new ArrayList<>();
+    private FirebaseAuth firebaseAuth;
+    private FirebaseUser firebaseUser;
 
 
     public HomeScreenPresenter(HomeScreenViewInterface view, RepositoryInterface repoRef) {
@@ -33,23 +47,8 @@ public class HomeScreenPresenter implements HomeScreenPresenterInterface, Networ
             repoRef.getUrl("random.php/");
             repoRef.getData(this);
         }
-                  /*  @Override
-                    public void onSuccess(Meal favMeal) {
-                        // The meal is in the database
-                        if (!meal.isFav()) {
-                            addToFav(meal);
-                            System.out.println("Checked");
-                        } else {
-                            removeFromFav(meal);
-                            System.out.println("Unchecked");
-                        }
-                    }
 
-                    @Override
-                    public void onError(Throwable e) {
-                        System.out.println("Error");
-                    }*/
-                };
+    }
 
 
     public void getBeefCategory() {
@@ -74,9 +73,19 @@ public class HomeScreenPresenter implements HomeScreenPresenterInterface, Networ
 
     @Override
     public void addToFav(Meal meal) {
-        meal.setFav(true);
-        repoRef.addMealToFav(meal);
-        System.out.println("meal added to favorite");
+
+        firebaseAuth =FirebaseAuth.getInstance();
+        firebaseAuth.getCurrentUser();
+        if(firebaseAuth.getCurrentUser()==null)
+        {
+            Toast.makeText(((Fragment) viewInterfaceRef).requireContext(), "please sign in to use this feature", Toast.LENGTH_SHORT).show();
+        }
+        else{meal.setFav(true);
+            repoRef.addMealToFav(meal);
+            repoRef.backupFvs();
+            System.out.println("meal added to favorite");
+
+        }
     }
 
     @Override
@@ -113,9 +122,18 @@ public class HomeScreenPresenter implements HomeScreenPresenterInterface, Networ
 
     @Override
     public void removeFromFav(Meal meal) {
-        meal.setFav(false);
-        repoRef.removeMealFromFav(meal);
-        System.out.println("meal deleted from favorite");
+        firebaseAuth =FirebaseAuth.getInstance();
+        firebaseAuth.getCurrentUser();
+        if(firebaseAuth.getCurrentUser()==null)
+        {
+            Toast.makeText(((Fragment) viewInterfaceRef).requireContext(), "please sign in to use this feature", Toast.LENGTH_SHORT).show();
+        }
+        else{meal.setFav(false);
+            repoRef.removeMealFromFav(meal);
+            repoRef.backupFvs();
+            System.out.println("meal deleted from favorite");
+
+        }
     }
 
     @Override

@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -15,7 +16,9 @@ import com.example.mealplannerapplication.R;
 import com.example.mealplannerapplication.db.ConcreteLocalSource;
 import com.example.mealplannerapplication.fav_screen.view.presenter.FavScreenPresenter;
 import com.example.mealplannerapplication.fav_screen.view.presenter.FavScreenPresenterInterface;
+import com.example.mealplannerapplication.home_screen.view.DailyAdapter;
 import com.example.mealplannerapplication.home_screen.view.OnMealClickListener;
+import com.example.mealplannerapplication.login_screen.view.LoginScreen;
 import com.example.mealplannerapplication.model.Meal;
 import com.example.mealplannerapplication.model.Repository;
 
@@ -26,7 +29,7 @@ import java.util.List;
 public class FavoriteScreen extends Fragment implements FavScreenViewInterface, OnMealClickListener {
 
     RecyclerView favRec;
-    FavAdapter favAdapter;
+    DailyAdapter favAdapter;
     FavScreenPresenterInterface favPresenterInterface;
 
     public FavoriteScreen() {
@@ -54,16 +57,20 @@ public class FavoriteScreen extends Fragment implements FavScreenViewInterface, 
         super.onViewCreated(view, savedInstanceState);
         favRec = view.findViewById(R.id.fav_rec);
         favRec.setLayoutManager(new GridLayoutManager(getContext(), 2));
-        favAdapter = new FavAdapter(requireContext(), new ArrayList<>(), this);
-        favPresenterInterface.getFavMeals();
-
+        favAdapter = new DailyAdapter(requireContext(), new ArrayList<>(), this);
+        if(LoginScreen.isGuest==false) {
+            favPresenterInterface.getFavMeals();
+        }
+        else {
+            Toast.makeText(getContext(), getString(R.string.youShouldSignInToAddFav), Toast.LENGTH_SHORT).show();
+        }
 
     }
 
     @Override
     public void showFavorites(List<Meal> meals) {
 
-        favAdapter.setFavList(meals);
+        favAdapter.setDailyList(meals);
         favAdapter.notifyDataSetChanged();
         favRec.setAdapter(favAdapter);
     }
