@@ -22,6 +22,7 @@ public interface RepositoryInterface {
     void removeMealFromFav(Meal meal);
     Flowable<Meal> getPlanMeal(String id);
 
+    void removeData();
     void backupFvs();
     void restoreFvs();
 

@@ -21,4 +21,6 @@ public interface LocalSource {
     Flowable<Meal> getFavMeal(String id);
 
     Flowable<List<Meal>> getAllMeals();
+
+    void deleteTable();
 }

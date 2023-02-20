@@ -35,7 +35,5 @@ public interface MealDAO {
     @Delete
     void delete(Meal meal);
 
-    @Query("DELETE FROM meals")
-    public Completable clearTable();
 
 }

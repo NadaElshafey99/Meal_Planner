@@ -2,20 +2,23 @@ package com.example.mealplannerapplication.db;
 
 import android.content.Context;
 
+import com.example.mealplannerapplication.FavoriteFireStore;
 import com.example.mealplannerapplication.model.Meal;
 
 import java.util.List;
 
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Flowable;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class ConcreteLocalSource implements LocalSource {
 
     private static ConcreteLocalSource localSource = null;
     private MealDAO dao;
-
+    AppDataBase db;
 
     private ConcreteLocalSource(Context context) {
-        AppDataBase db = AppDataBase.getInstance(context.getApplicationContext());
+        db = AppDataBase.getInstance(context.getApplicationContext());
         dao = db.mealDAO();
 
     }
@@ -60,5 +63,10 @@ public class ConcreteLocalSource implements LocalSource {
     @Override
     public Flowable<List<Meal>> getAllMeals() {
         return dao.getAllMeals();
+    }
+
+    @Override
+    public void deleteTable() {
+        new Thread(() -> db.clearAllTables()).start();
     }
 }

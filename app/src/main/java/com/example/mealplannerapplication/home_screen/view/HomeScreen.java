@@ -90,6 +90,7 @@ public class HomeScreen extends Fragment implements HomeScreenViewInterface,OnMe
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 editor.clear();
                 editor.commit();
+                presenterInterface.clearUserData();
                 Intent intent = new Intent(getActivity(), MainActivity.class);
                 startActivity(intent);
 

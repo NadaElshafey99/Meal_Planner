@@ -21,5 +21,6 @@ public interface HomeScreenPresenterInterface {
 
     void handlePlanMeal(Meal meal);
 
+    void clearUserData();
 
 }
