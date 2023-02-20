@@ -57,9 +57,10 @@ public class FavoriteFireStore {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 Root list = documentSnapshot.toObject(Root.class);
-                assert list != null;
-                setList(list.getMeals(), context);
-                Log.i("TAG", "onSuccess: retrieved" + list.getMeals().get(0).getStrMeal());
+                if(list !=null) {
+                    setList(list.getMeals(), context);
+                    Log.i("TAG", "onSuccess: retrieved" + list.getMeals().get(0).getStrMeal());
+                }
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override

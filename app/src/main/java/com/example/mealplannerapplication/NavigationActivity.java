@@ -48,7 +48,7 @@ public class NavigationActivity extends AppCompatActivity {
         super.onResume();
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseAuth.getCurrentUser();
-        if (firebaseAuth.getCurrentUser() != null) {
+        if (firebaseAuth.getCurrentUser() != null ) {
             FavoriteFireStore.getInstance().retrieveMeals(this);
         }
     }
