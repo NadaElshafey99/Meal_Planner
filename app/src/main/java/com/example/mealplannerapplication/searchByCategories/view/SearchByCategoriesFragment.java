@@ -22,6 +22,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.mealplannerapplication.HasNetworkConnection;
 import com.example.mealplannerapplication.R;
 import com.example.mealplannerapplication.model.Meal;
 import com.example.mealplannerapplication.model.Repository;
@@ -81,7 +82,15 @@ public class SearchByCategoriesFragment extends Fragment implements SearchByCate
                 (this,
                         Repository.getInstance(RetrofitClient.getInstance(),getContext())
                 );
-        searchByCategoriesPresenter.getCategories(sendUrl());
+        if (HasNetworkConnection.getInstance(getContext()).isOnline()) {
+
+            searchByCategoriesPresenter.getCategories(sendUrl());
+
+        } else {
+
+            Toast.makeText(getContext(), getString(R.string.pleaseCheckYourConnection), Toast.LENGTH_SHORT).show();
+        }
+
         recyclerViewShowCategories.setLayoutManager(new GridLayoutManager(getContext(),2));
         recyclerViewShowCategories.setAdapter(myAdapter);
         backBtn.setOnClickListener(new View.OnClickListener() {

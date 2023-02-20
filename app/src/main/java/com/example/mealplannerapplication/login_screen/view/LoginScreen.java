@@ -23,6 +23,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
+import com.example.mealplannerapplication.HasNetworkConnection;
 import com.example.mealplannerapplication.NavigationActivity;
 import com.example.mealplannerapplication.R;
 import com.example.mealplannerapplication.db.ConcreteFirebaseDB;
@@ -95,7 +96,15 @@ public class LoginScreen extends Fragment implements LoginScreenInterface {
                 }
                 if (!TextUtils.isEmpty(userEmail) && !TextUtils.isEmpty(userPassword)) {
                     user = new User(userEmail.toString(), userPassword.toString());
-                    loginPresenter.checkUser(user);
+                   
+                    if (HasNetworkConnection.getInstance(getContext()).isOnline()) {
+
+                        loginPresenter.checkUser(user);
+
+                    } else {
+
+                        Toast.makeText(getContext(), getString(R.string.pleaseCheckYourConnection), Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
         });

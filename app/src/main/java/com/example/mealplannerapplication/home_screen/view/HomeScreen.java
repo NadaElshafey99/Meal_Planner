@@ -1,6 +1,7 @@
 package com.example.mealplannerapplication.home_screen.view;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Bundle;
@@ -8,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -15,6 +17,9 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.mealplannerapplication.HasNetworkConnection;
+import com.example.mealplannerapplication.MainActivity;
+import com.example.mealplannerapplication.NavigationActivity;
 import com.example.mealplannerapplication.R;
 
 import com.example.mealplannerapplication.db.ConcreteLocalSource;
@@ -88,7 +93,8 @@ public class HomeScreen extends Fragment implements HomeScreenViewInterface,OnMe
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 editor.clear();
                 editor.commit();
-                getActivity().finish();
+                Intent intent = new Intent(getActivity(), MainActivity.class);
+                startActivity(intent);
 
             }
         });
@@ -198,11 +204,20 @@ public class HomeScreen extends Fragment implements HomeScreenViewInterface,OnMe
     }
 
     private void loadData(){
-        presenterInterface.getDailyMeals();
-        presenterInterface.getBeefCategory();
-        presenterInterface.getBreakfastCategory();
-        presenterInterface.getChickenCategory();
-        presenterInterface.getDesertCategory();
+
+        if (HasNetworkConnection.getInstance(getContext()).isOnline()) {
+
+            presenterInterface.getDailyMeals();
+            presenterInterface.getBeefCategory();
+            presenterInterface.getBreakfastCategory();
+            presenterInterface.getChickenCategory();
+            presenterInterface.getDesertCategory();
+
+        } else {
+
+            Toast.makeText(getContext(), getString(R.string.pleaseCheckYourConnection), Toast.LENGTH_SHORT).show();
+        }
+
     }
 
 

@@ -22,6 +22,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.mealplannerapplication.HasNetworkConnection;
 import com.example.mealplannerapplication.R;
 import com.example.mealplannerapplication.addMealToWeeklyPlan.view.AddMealToWeeklyPlanner;
 import com.example.mealplannerapplication.meal_details.presenter.MealDetailsPresenter;
@@ -105,7 +106,16 @@ public class MealDetailsView extends Fragment implements MealDetailsViewInterfac
         ingredientsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false));
         fragmentManager=getActivity().getSupportFragmentManager();
         mealDetailsPresenter=new MealDetailsPresenter(this, Repository.getInstance(RetrofitClient.getInstance(),getContext()));
-        mealDetailsPresenter.getMealDetails(sendUrl());
+
+        if (HasNetworkConnection.getInstance(getContext()).isOnline()) {
+
+            mealDetailsPresenter.getMealDetails(sendUrl());
+
+        } else {
+
+            Toast.makeText(getContext(), getString(R.string.pleaseCheckYourConnection), Toast.LENGTH_SHORT).show();
+        }
+
         ingredientsRecyclerView.setAdapter(ingredientsAdapter);
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override

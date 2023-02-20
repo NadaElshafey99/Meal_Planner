@@ -20,6 +20,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.mealplannerapplication.HasNetworkConnection;
 import com.example.mealplannerapplication.R;
 import com.example.mealplannerapplication.SearchByGroupActivity;
 import com.example.mealplannerapplication.model.Meal;
@@ -61,7 +62,15 @@ public class SearchByIngredientFragment extends Fragment implements SearchByIngr
         searchByIngredientsPresenter = new SearchByIngredientsPresenter
                 (this,
                         Repository.getInstance(RetrofitClient.getInstance(), getContext()));
-        searchByIngredientsPresenter.getIngredients(sendUrl());
+        if (HasNetworkConnection.getInstance(getContext()).isOnline()) {
+
+           searchByIngredientsPresenter.getIngredients(sendUrl());
+
+        } else {
+
+            Toast.makeText(getContext(), getString(R.string.pleaseCheckYourConnection), Toast.LENGTH_SHORT).show();
+        }
+
 
     }
 

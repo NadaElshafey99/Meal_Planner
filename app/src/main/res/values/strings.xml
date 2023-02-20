@@ -75,4 +75,5 @@
     <string name="success">Successfully</string>
     <string name="pleaseCheckTimeAndData">Time and date are required</string>
     <string name="weeklyPlanner">Weekly plan</string>
+    <string name="pleaseCheckYourConnection">Please check your connection</string>
 </resources>
