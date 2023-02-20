@@ -4,6 +4,7 @@ import static com.example.mealplannerapplication.search.view.SearchFragment.FRAG
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,6 +25,7 @@ import com.example.mealplannerapplication.SearchByGroupActivity;
 import com.example.mealplannerapplication.meal_details.view.MealDetailsView;
 import com.example.mealplannerapplication.model.Meal;
 import com.example.mealplannerapplication.search.view.SearchFragment;
+import com.example.mealplannerapplication.searchByCountry.view.SearchByCountriesFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +37,7 @@ public class DailyAdapter extends RecyclerView.Adapter<DailyAdapter.MyViewHolder
     static ArrayList<Meal> dailyMeal;
     static MealDetailsView mealDetailsView;
     private OnMealClickListener customListener;
+//    boolean isFav=false;
 
 
     public DailyAdapter(@NonNull Context context, @Nullable ArrayList<Meal> meals, OnMealClickListener customListener) {
@@ -67,8 +70,28 @@ public class DailyAdapter extends RecyclerView.Adapter<DailyAdapter.MyViewHolder
             myContext.startActivity(intent);
 
         });
-        holder.getBookmark().setOnClickListener(view -> customListener.onFavClicked(currentMeal));
+        holder.getBookmark().setOnClickListener(view ->
+                {
+                    customListener.onFavClicked(currentMeal);
+                   changeImage(holder,currentMeal);
+                }
+        );
         Glide.with(myContext).load(currentMeal.getStrMealThumb()).into(holder.getMealImg());
+
+    }
+
+    private void changeImage(MyViewHolder myViewHolder,Meal currentMeal) {
+        if(currentMeal.isFav()==false)
+        {
+            int imageResource = HomeScreen.resource.getIdentifier("drawable/bookmark_yellow", null,HomeScreen.pck);
+            Drawable drawable = HomeScreen.resource.getDrawable(imageResource);
+            myViewHolder.bookmark.setImageDrawable(drawable);
+        }
+        else {
+            int imageResource = HomeScreen.resource.getIdentifier("drawable/bookmark", null,HomeScreen.pck);
+            Drawable drawable = HomeScreen.resource.getDrawable(imageResource);
+            myViewHolder.bookmark.setImageDrawable(drawable);
+        }
     }
 
     @Override

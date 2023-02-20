@@ -22,7 +22,6 @@ public class FavScreenPresenter implements FavScreenPresenterInterface{
         repoRef.getFavMeals().subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(meals -> viewInterfaceRef.showFavorites(meals));
-
     }
 
     @Override

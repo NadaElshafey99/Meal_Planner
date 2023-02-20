@@ -61,21 +61,21 @@ public class AllIngredientsFragment extends Fragment{
         allIngredientsRecyclerView.setAdapter(adapterForAllIngredients);
 
     }
-    public void showCategories(ArrayList<Meal> ingredients) {
+    public void showIngredients(ArrayList<Meal> ingredients) {
         this.allIngredientsList=ingredients;
         adapterForAllIngredients.setList(ingredients);
         adapterForAllIngredients.notifyDataSetChanged();
     }
 
-    public void failedToShowCategories(String errMsg) {
-        Toast.makeText(getContext(), errMsg, Toast.LENGTH_SHORT).show();
+    public void failedToShowIngredients(String errMsg) {
+        Toast.makeText(getContext(), getString(R.string.somethingWentWrong), Toast.LENGTH_SHORT).show();
     }
 
     public void filterList(Observable<CharSequence> observable) {
         observable.subscribe(c->{
             filteredList=new ArrayList<>(allIngredientsList
                     .stream()
-                    .filter(i-> i.getStrIngredient().toLowerCase().contains(c.toString()))
+                    .filter(i-> i.getStrIngredient().toLowerCase().startsWith(c.toString()))
 //                    .filter(i->c.toString().equalsIgnoreCase(i.getStrCategory()))
                     .collect(Collectors.toList()));
             adapterForAllIngredients.setList(filteredList);

@@ -99,7 +99,7 @@ public class SearchByCountriesFragment extends Fragment implements SearchByCount
         observable.subscribe(c->{
             filteredList=new ArrayList<>(countryMeals
                     .stream()
-                    .filter(i-> i.getStrArea().toLowerCase().contains(c.toString()))
+                    .filter(i-> i.getStrArea().toLowerCase().startsWith(c.toString()))
                     .collect(Collectors.toList()));
             myAdapter.setList(filteredList);
             myAdapter.notifyDataSetChanged();
@@ -115,9 +115,8 @@ public class SearchByCountriesFragment extends Fragment implements SearchByCount
     }
 
     @Override
-    public void failedToShowCategories(String errMsg) {
-        Toast.makeText(getContext(), errMsg, Toast.LENGTH_SHORT).show();
-    }
+    public void failedToShowCountries(String errMsg) {
+        Toast.makeText(getContext(), getString(R.string.somethingWentWrong), Toast.LENGTH_SHORT).show();    }
 
     @Override
     public String sendUrl() {

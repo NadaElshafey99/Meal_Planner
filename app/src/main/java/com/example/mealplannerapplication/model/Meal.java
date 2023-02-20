@@ -11,11 +11,12 @@ public class Meal {
     private String idMeal;
     private String strMeal;
     private boolean isFav;
+    private String mealDay;
+    private String mealTime;
     private String strCategory;
     private String strArea;
     private String strInstructions;
     private String strMealThumb;
-
     private String strYoutube;
     private String strIngredient;
     private String strIngredient1;
@@ -59,6 +60,22 @@ public class Meal {
     private String strMeasure19;
     private String strMeasure20;
     private String strSource;
+
+    public String getMealDay() {
+        return mealDay;
+    }
+
+    public void setMealDay(String mealDay) {
+        this.mealDay = mealDay;
+    }
+
+    public String getMealTime() {
+        return mealTime;
+    }
+
+    public void setMealTime(String mealTime) {
+        this.mealTime = mealTime;
+    }
 
     public boolean isFav() {
         return isFav;

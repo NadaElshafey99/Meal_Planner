@@ -106,7 +106,7 @@ public class SearchBarActionScreen extends AppCompatActivity implements SearchBa
 
     @Override
     public void failedToShowResult(String errMsg) {
-        Toast.makeText(this, errMsg, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, getString(R.string.somethingWentWrong), Toast.LENGTH_SHORT).show();
     }
 
     @Override

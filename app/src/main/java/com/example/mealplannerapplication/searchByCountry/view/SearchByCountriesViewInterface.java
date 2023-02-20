@@ -6,6 +6,6 @@ import java.util.ArrayList;
 
 public interface SearchByCountriesViewInterface {
     void showCountries(ArrayList<Meal> countries);
-    void failedToShowCategories(String errMsg);
+    void failedToShowCountries(String errMsg);
     String sendUrl();
 }

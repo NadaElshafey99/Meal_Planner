@@ -41,4 +41,9 @@ public class ResultFromSearchPresenter implements ResultFromSearchPresenterInter
         repositoryInterface.getUrl(Url);
         repositoryInterface.getData(this);
     }
+
+    @Override
+    public void onFavClicked() {
+
+    }
 }

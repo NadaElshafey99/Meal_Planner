@@ -18,6 +18,5 @@ public interface HomeScreenViewInterface {
     void showChickenCategory(ArrayList<Meal> meals);
     void showDesertCategory(ArrayList<Meal> meals);
     void handleFavBookmark(Meal meal);
-
     void handlePlanBtn(Meal meal);
 }

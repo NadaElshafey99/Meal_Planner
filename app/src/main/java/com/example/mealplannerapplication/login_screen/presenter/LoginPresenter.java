@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 
 import com.example.mealplannerapplication.NavigationActivity;
 import com.example.mealplannerapplication.R;
+import com.example.mealplannerapplication.db.ConcreteFirebaseDB;
 import com.example.mealplannerapplication.login_screen.view.LoginScreen;
 import com.example.mealplannerapplication.login_screen.view.LoginScreenInterface;
 import com.example.mealplannerapplication.model.User;
@@ -28,11 +29,13 @@ public class LoginPresenter implements LoginPresenterInterface{
     private FirebaseAuth firebaseAuth;
     private FirebaseUser firebaseUser;
     private SharedPreferences sharedPreferences;
+    private ConcreteFirebaseDB concreteFirebaseDB;
     public static final String SHRED_PREFERENCE_FILE="LoginFile";
     private static final String KEY_EMAIL="email";
     private static final String KEY_PASSWORD="password";
-    public LoginPresenter(LoginScreenInterface loginScreenInterface) {
+    public LoginPresenter(LoginScreenInterface loginScreenInterface, ConcreteFirebaseDB concreteFirebaseDB) {
         this.loginScreenInterface = loginScreenInterface;
+        this.concreteFirebaseDB=concreteFirebaseDB;
         user=new User();
     }
 
@@ -55,6 +58,7 @@ public class LoginPresenter implements LoginPresenterInterface{
                             editor.putString(KEY_PASSWORD, user.getUserPassword());
                             editor.commit();
                            loginScreenInterface.onSuccessCheckUser();
+
 
                         }
                         else {
@@ -83,5 +87,10 @@ public class LoginPresenter implements LoginPresenterInterface{
         {
             loginScreenInterface.alreadyLogin();
         }
+    }
+
+    @Override
+    public void getDataWeeklyMealsFromFirebase() {
+        concreteFirebaseDB.getWeeklyMeals();
     }
 }
